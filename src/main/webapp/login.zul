@@ -1,0 +1,65 @@
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/includes/template-anonymous.zul"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.zkoss.org/2005/zk/native"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+<?link rel="shortcut icon" type="image/x-icon" href="img/nppb_icon.ico" ?>
+    		
+    		<hbox self="@define(content)" vflex="1" hflex="1" align="center" pack="center" spacing="20px" sclass="loginPage">
+        <!-- this form-login-page form is also used as the form-error-page to ask for a login again. -->
+        
+           <window id="loginwin" title="Ecran de connexion" border="normal" width="410px" >
+		       <zscript> 
+		        	<![CDATA[
+		        	     	import javax.servlet.http.HttpServletRequest;
+		               		import org.zkoss.zk.ui.Executions;
+		
+		                	HttpServletRequest request = (HttpServletRequest) Executions.getCurrent().getNativeRequest();
+		                	String info = request.getParameter("login_error");
+		                	String msg = "";
+		                	if(info != null && !info.isEmpty()){
+		                		if("403".equals(info)){
+		                			msg = "Vous n'êtes pas autorisé à utiliser cette application. Veuillez contacter votre administrateur.";
+		                		}
+		                		else{
+		                			msg = "Identifiant ou mot de passe invalide.";
+		                		}
+		                	}        
+		       		]]>
+		       	</zscript>
+       		
+       		 <html style="color:red" if="${not empty param.login_error}">
+        		<![CDATA[
+        	         ${msg}
+       			]]>
+        	</html>
+       		
+            <h:form id="f" name="f" action="j_spring_security_check" method="POST">
+            	<hbox >
+            		<div sclass="login-mairie-div">
+	           			<image sclass="login-mairie-logo" src="/img/DSI-logo-blason-or.png"/>
+	           		</div>
+	                <grid>
+		                <columns>
+								<column hflex="min" align="right" />
+								<column />
+						</columns>
+		                <rows>
+	                        <row>Identifiant: <textbox id="u" name="j_username" onCreate="self.focus()" /></row>
+	                        <row>Mot de passe: <textbox id="p" type="password" name="j_password"/></row>
+	                        <row spans="2">
+	                            <hbox align="center">
+	                                <h:input type="submit" value="Valider"/>
+	                                <h:input type="reset" value="Effacer"/>
+	                            </hbox>
+	                        </row>
+	                    </rows>
+	                </grid>
+                </hbox>
+            </h:form>
+            </window>
+            
+</hbox>
+
+</zk>

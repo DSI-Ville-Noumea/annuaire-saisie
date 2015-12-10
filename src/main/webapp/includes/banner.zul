@@ -1,0 +1,19 @@
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.zkoss.org/2005/zk/native"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    
+	<hbox hflex="1" vflex="1" align="center" sclass="banner">
+		<image src="/img/logo-mairie-transparent.png" width="70px" />
+		<div width="400px">
+			<label value="Gestion des Guest et Locality" sclass="banner-head" />
+		</div>
+		<hbox apply="nc.noumea.mairie.annuairev2.viewModel.BannerViewModel"
+		hflex="1" vflex="1" pack="end" align="end" sclass="user-info" visible="${sec:getUser() ne null}">
+            <label id="user" style="margin-left: 5px" value=""/>
+            <h:a href="j_spring_security_logout">Déconnexion</h:a>
+            <label value=")"/>
+		</hbox>
+	</hbox>
+</zk>

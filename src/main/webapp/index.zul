@@ -1,0 +1,51 @@
+<zk>
+	<?link rel="shortcut icon" type="image/x-icon" href="../img/nppb_icon.ico" ?>
+
+	<window border="none"
+			apply="org.zkoss.bind.BindComposer"
+			viewModel="@id('vmIndex') @init('nc.noumea.mairie.annuairev2.viewModel.IndexViewModel')"
+			contentStyle="overflow:auto;" height="100%">
+
+		<borderlayout  hflex="1" height="100%">
+
+			<north height="60px" border="none" >
+				<include src="/includes/banner.zul"/>
+			</north>
+
+			<!--         Left menu -->
+			<west width="190px" border="none" collapsible="true" splittable="true">
+				<!--<include src="/includes/leftMenu.zul"/> -->
+				<div>
+				<panel width="100%" border="normal" title="Menu">
+					<panelchildren style="padding:5px;">
+						<vbox>
+
+						</vbox>
+					</panelchildren>
+				</panel>
+					<!--<panel width="100%" border="normal" style="margin-top:20px;" title="Project Goals">
+						<panelchildren>
+							<html>
+								&lt;ul&gt;
+								&lt;li&gt;Simple and Rich&lt;/li&gt;
+								&lt;li&gt;Power and Flexible&lt;/li&gt;
+								&lt;li&gt;Direct RIA&lt;/li&gt;
+								&lt;/ul&gt;
+							</html>
+						</panelchildren>
+					</panel> -->
+				</div>
+			</west>
+
+			<center id="mainContent" autoscroll="true" border="none" >
+
+			</center>
+
+			<south height="30px" border="none" >
+				<include src="/includes/footer.zul" />
+			</south>
+
+		</borderlayout>
+		<include id="includeStyleGlobal" src="/global.zul" />
+	</window>
+</zk>
