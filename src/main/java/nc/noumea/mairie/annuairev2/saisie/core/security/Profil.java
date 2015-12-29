@@ -1,5 +1,27 @@
 package nc.noumea.mairie.annuairev2.saisie.core.security;
 
+/*
+ * #%L
+ * Gestion des Guest et Locality
+ * %%
+ * Copyright (C) 2015 Mairie de Nouméa
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
 
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 
@@ -12,13 +34,13 @@ public class Profil extends AbstractEntity {
 
     private static final long serialVersionUID = -7315296392316499948L;
 
-    public static final String TABLENAME = "PROFIL";
+    public static final String TABLENAME = "profil";
 
     /**
      * {@link #getId()}
      */
     private long id;
-    public static final String COLUMNNAME_ID = "ID";
+    public static final String COLUMNNAME_ID = "id";
     public static final String PROPERTYNAME_ID = "id";
     public static final String SEQUENCENAME_ID = "s_profil";
 
@@ -29,7 +51,7 @@ public class Profil extends AbstractEntity {
      * {@link #getNom()}
      */
     private CodeProfil nom;
-    public static final String COLUMNNAME_NOM = "NOM";
+    public static final String COLUMNNAME_NOM = "nom";
     public static final String PROPERTYNAME_NOM = "nom";
 
     /**
@@ -64,7 +86,7 @@ public class Profil extends AbstractEntity {
      * @return the permissions
      */
     @ManyToMany(targetEntity = Permission.class, fetch = FetchType.EAGER)
-    @JoinTable(name = "PROFIL_PERM", joinColumns = @JoinColumn(name = "ID_PROFIL"), inverseJoinColumns = @JoinColumn(name = "ID_PERMISSION"))
+    @JoinTable(name = "profil_perm", joinColumns = @JoinColumn(name = "id_profil"), inverseJoinColumns = @JoinColumn(name = "id_permission"))
     public List<Permission> getPermissions() {
 	return permissions;
     }

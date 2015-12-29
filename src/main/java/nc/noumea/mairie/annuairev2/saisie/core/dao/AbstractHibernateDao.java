@@ -26,7 +26,6 @@ package nc.noumea.mairie.annuairev2.saisie.core.dao;
  */
 
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
-import nc.noumea.mairie.annuairev2.saisie.core.security.SecurityUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,14 +62,7 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = false)
     public Long save(T entity) {
-	    return save(entity, SecurityUtil.getUser());
-    }
-
-    @Override
-    @Transactional(readOnly = false)
-    public Long save(T entity, String userLogin) {
-	if (entity instanceof AbstractEntity) {
-	    return (Long) getCurrentSession().save(entity);
+	    return save(entity);
     }
 
     @Override
@@ -79,11 +71,12 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
 	    getCurrentSession().persist(entity);
     }
 
-    @SuppressWarnings("unchecked")
+    @Override
     @Transactional(readOnly = false)
     public T update(T entity) {
 	    return (T) getCurrentSession().merge(entity);
     }
+
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = false)

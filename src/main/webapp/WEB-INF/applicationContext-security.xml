@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  #%L
-  nppb-v2
-  $Id:$
-  $HeadURL:$
-  %%
-  Copyright (C) 2015 Mairie de Nouméa
-  %%
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as
-  published by the Free Software Foundation, either version 3 of the
-  License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public
-  License along with this program.  If not, see
-  <http://www.gnu.org/licenses/gpl-3.0.html>.
-  #L%
-  -->
-
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xmlns:context="http://www.springframework.org/schema/context"
              xmlns:jee="http://www.springframework.org/schema/jee"
              xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
@@ -46,7 +21,7 @@
         <intercept-url pattern="/img/DSI-logo-blason-or.png" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
         <intercept-url pattern="/css/style.css" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
         <intercept-url pattern="/style.css" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
-        <intercept-url pattern="/img/bg-login.jpg" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/img/bg-login.jpeg" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
         <intercept-url pattern="/img/logo-mairie-transparent.png" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
         <intercept-url pattern="/incident.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
         <intercept-url pattern="/maintenance.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
@@ -76,7 +51,7 @@
             </beans:bean>
         </beans:constructor-arg>
         <beans:constructor-arg name="authoritiesPopulator">
-            <beans:bean class="nc.noumea.mairie.nppbv2.core.security.NppbAuthoritiesPopulator"/>
+            <beans:bean class="nc.noumea.mairie.annuairev2.saisie.core.security.AnnuaireAuthoritiesPopulator"/>
         </beans:constructor-arg>
     </beans:bean>
 

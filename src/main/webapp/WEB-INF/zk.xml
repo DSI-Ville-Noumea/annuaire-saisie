@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk>
-	<!-- [Optional]
-	Uncomment if you want to defines the application's name 
-	
-	<preference>
-		<name>org.zkoss.zk.ui.WebApp.name</name>
-		<value>saisie</value>
-	</preference>
-	-->
+	<desktop-config>
+		<theme-uri>/css/style.css</theme-uri>
+	</desktop-config>
+
+	<!--<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/WEB-INF/sys/error.zul</location>
+	</error-page>-->
+
+	<library-property>
+		<name>org.zkoss.web.preferred.locale</name>
+		<value>fr</value>
+	</library-property>
 	
 </zk>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package nc.noumea.mairie.annuairev2.saisie.core.exception;
+package nc.noumea.mairie.annuairev2.saisie.dao.impl;
 
 /*
  * #%L
@@ -25,19 +25,30 @@ package nc.noumea.mairie.annuairev2.saisie.core.exception;
  * #L%
  */
 
+
+import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
+import nc.noumea.mairie.annuairev2.saisie.dao.IUtilisateurDao;
+import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
+import org.hibernate.Query;
+import org.springframework.stereotype.Repository;
+
 /**
  * @author barmi83
  * @since
  */
-public class BusinessException extends Exception {
+@Repository
+public class UtilisateurDao extends AbstractHibernateDao<Utilisateur> implements IUtilisateurDao {
 
-    private static final long serialVersionUID = -2130502406634041665L;
-
-    public BusinessException() {
-	super();
+    public UtilisateurDao() {
+	setClazz(Utilisateur.class);
     }
 
-    public BusinessException(String message) {
-	super(message);
+    @Override
+    public Utilisateur findByLogin(String login) {
+	Query query = getCurrentSession()
+		.createQuery("from Utilisateur where upper(" + Utilisateur.PROPERTYNAME_IDENTIFIANT + ") = :login");
+	query.setParameter("login", login.toUpperCase());
+	return (Utilisateur) query.uniqueResult();
     }
+
 }

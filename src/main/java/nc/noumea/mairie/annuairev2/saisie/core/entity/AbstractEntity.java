@@ -33,10 +33,10 @@ public abstract class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = -2930543864114152660L;
 
-    /** {@link #getVersion()} */
-    private Integer version;
+	public static final String COLUMNNAME_ID = "id";
+	public static final String PROPERTYNAME_ID = "id";
 
-    public static final String COLUMNNAME_VERSION = "VERSION";
+    public static final String COLUMNNAME_VERSION = "version";
     public static final String PROPERTYNAME_VERSION = "version";
 
     /**
@@ -52,7 +52,6 @@ public abstract class AbstractEntity implements Serializable {
      * 
      * @return
      */
-
     public abstract Integer getVersion();
 
     @Override

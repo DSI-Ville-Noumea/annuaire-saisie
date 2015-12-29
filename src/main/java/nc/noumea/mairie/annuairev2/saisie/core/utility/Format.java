@@ -1,8 +1,8 @@
-package nc.noumea.mairie.annuairev2.saisie.viewmodel;
+package nc.noumea.mairie.annuairev2.saisie.core.utility;
 
 /*
  * #%L
- * The saisie Project
+ * Gestion des Guest et Locality
  * %%
  * Copyright (C) 2015 Mairie de Nouméa
  * %%
@@ -22,26 +22,17 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
  * #L%
  */
 
-import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.Init;
-import org.zkoss.bind.annotation.NotifyChange;
 
-public class MyViewModel {
+/**
+ * Formats standards d'affichage et de saisie des nombres décimaux
+ * 
+ * @author barmi83
+ * @since 0.4.0
+ */
+public class Format {
 
-	private int count;
+    public static final String FORMAT_NUMBER = "#,##0.##";
+    public static final String FORMAT_CFP = "#,##0.## FCFP";
+    public static final String FORMAT_F = "#,##0.## F";
 
-	@Init
-	public void init() {
-		count = 100;
-	}
-
-	@Command
-	@NotifyChange("count")
-	public void cmd() {
-		++count;
-	}
-
-	public int getCount() {
-		return count;
-	}
 }

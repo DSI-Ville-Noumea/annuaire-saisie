@@ -49,4 +49,11 @@ public class ApplicationContextUtils implements ApplicationContextAware {
 	public static ApplicationContext getApplicationContext() {
 		return ctx;
 	}
+
+	public static String getActiveProfile() {
+		if (ctx.getEnvironment().getActiveProfiles().length > 0)
+			return ctx.getEnvironment().getActiveProfiles()[0];
+
+		return "";
+	}
 }

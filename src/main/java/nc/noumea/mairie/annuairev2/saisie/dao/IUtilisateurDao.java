@@ -1,4 +1,7 @@
-package nc.noumea.mairie.annuairev2.saisie.core.security;
+/**
+ * 
+ */
+package nc.noumea.mairie.annuairev2.saisie.dao;
 
 /*
  * #%L
@@ -22,28 +25,18 @@ package nc.noumea.mairie.annuairev2.saisie.core.security;
  * #L%
  */
 
+
+import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
+import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
+
 /**
- * Created by barmi83 on 10/12/15.
+ * @author barmi83
+ * @since 0.2.0
  */
-public class AnnuaireSaisiePerm {
+public interface IUtilisateurDao extends IGenericDao<Utilisateur> {
 
-    public static final String USER_ADMIN = "USER_ADMIN";
+    public static final String BEAN_ID = "utilisateurDao";
 
-    /** Consultation du GUEST */
-    public static final String GUEST_CONSULT = "GUEST_CONSULT";
+    public Utilisateur findByLogin(String login);
 
-    /** Création du GUEST */
-    public static final String GUEST_ADD = "GUEST_ADD";
-
-    /** Suppression du GUEST */
-    public static final String GUEST_DEL = "GUEST_DEL";
-
-    /** Consultation du Lo */
-    public static final String LOCALITY_CONSULT = "LOCALITY_CONSULT";
-
-    /** Création du LOCALITY */
-    public static final String LOCALITY_ADD = "LOCALITY_ADD";
-
-    /** Suppression du LOCALITY */
-    public static final String LOCALITY_DEL = "LOCALITY_DEL";
 }

@@ -1,0 +1,360 @@
+
+/*******************************************
+ *		Login
+ *******************************************/
+ 
+.loginPage {
+	background:url('../img/bg-login.jpeg') no-repeat center center fixed;
+	-webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+}
+
+.login-mairie-div {
+	margin-top : 20px
+}
+
+.login-mairie-logo {
+    width: 100px;
+}
+
+/*******************************************
+ *		Banner / Footer
+ *******************************************/
+.banner {
+	background-color:#3D81A7;
+	color: white;
+	padding: 5px 5px;
+}
+.banner-head{
+	font-size: 2.0em;
+}
+
+.footer {
+	background-color:#3D81A7;
+	color: white;
+ 	padding-top: 5px;	
+}
+
+.user-info span{
+	font-family:  Helvetica,Arial,sans-serif;
+	padding-bottom: 30px; 
+	font-size: small;
+	color: white;
+}
+
+.user-info a {
+    font-family:  Helvetica,Arial,sans-serif;
+    font-size: small;
+   	padding-bottom: 30px; 
+   	color: white;
+}
+
+.user-info a:visited {
+   	color: white;
+}
+
+.footer a,.footer a:VISITED {
+	color: white;	
+}
+
+/*******************************************
+ *		Header ecran principal
+ *******************************************/
+.header-div {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.header-mairie-logo {
+    width: 100px;
+    margin-left: 20px;
+    margin-right: 30px;
+    float: left;
+}
+
+.header-title1 {
+    color: #007b9c;
+    font-family:  Helvetica,Arial,sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.header-title2 {
+    color: black;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: medium;
+
+}
+
+/*******************************************
+ *		Onglets
+ *******************************************/
+
+.z-tab hover{
+    text-decoration: none;
+}
+
+.z-tab-selected .z-tab-text {
+	color:#c99e64 !important;
+	text-decoration: underline !important;
+	font-weight: bold !important;
+	text-transform:uppercase !important;
+}
+
+.alertStyle {
+    cursor: pointer;
+    background-color: lightpink;
+}
+
+.alertStyle -selected {
+    background-color: mediumspringgreen;
+}
+
+.utilisateur-profil-tab {
+    padding: 0px 0px 0px 0px;
+}
+
+.z-loading {
+    top: 50% !important;
+    left: 45% !important;
+    align: center;
+    vertical-align: middle;
+}
+
+/*******************************************
+ *		Fiches projet
+ *******************************************/
+.projet-title-div span {
+	color: #007b9c;
+    font-family:  Helvetica,Arial,sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    height: 50px;
+}
+
+.green {
+	color:#59A259;
+}
+
+.red {
+	color:#EA6C6C;
+}
+
+.greyBlack {
+	color:#636363;
+}
+
+.mediumIcon {
+	font-size: 15px;
+}
+
+.width100pc{
+	width: 100%;
+}
+
+.float-left {
+	float: left;
+}
+
+.detailFicheProjet > table {
+	margin-top: 10px;
+	margin-bottom: 0px;
+	border-style: none;
+}
+
+.detailFicheProjet > tr {
+	background: white;
+}
+
+.resizable-textarea {
+	 resize: ;
+}
+
+
+/***********************************
+ * 		Général
+ ************************************/
+ 
+.align-right {
+	text-align: right;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.alert {
+	color: #555;
+	width: 90pc;
+	padding: 5px; 
+	border: 1px solid #E57175; 
+	text-align: left; 
+	background: #F7AEAE;
+	border-radius: 5px;
+	margin-bottom: 0;
+}
+
+.alertOrange {
+	color: #555;
+	width: 90pc;
+	padding: 5px; 
+	border: 1px solid #ffa672; 
+	text-align: left; 
+	background: #ffddb2;
+	border-radius: 5px;
+	margin-bottom: 0;
+}
+
+.clickable {
+	cursor:pointer;
+}
+
+.notClickable{
+	pointer-events: none; 
+	cursor: default;
+}
+
+.amount {
+	text-align: right;
+}
+
+.annexeAmount>.z-row-content>.z-label span{
+	color : #636363;
+}
+
+.customDisabled{
+	color : #636363;
+}
+
+div.center{
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+/*******************************************
+ *		Dashboard
+ *******************************************/
+
+.dashboardAlertTitle{
+	font-family:  Helvetica,Arial,sans-serif;
+/* 	font-weight: bold;
+ */	color : #007b9c;
+	margin-bottom: 5px;
+}
+
+.dashboardAlert>.z-listcell>.z-listcell-content {
+	color : #F3474D;
+	cursor:pointer;
+}
+
+.blueColor{
+	color : #007b9c;
+}
+
+/*REDEFINITIONS ZK*/
+
+.z-toolbar {
+	background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%);
+	color: white;
+	height: 25px;
+	padding-top: 0px;
+}
+
+.z-toolbar a{
+	text-decoration:none; 
+	cursor:pointer;
+/* 	color: #007b9c; */
+/* 	margin-left: 5px; */
+/* 	font-size: 15px; */
+ }
+ 
+/* .z-toolbar a[disabled="disabled"]{ */
+/* 	cursor:default; */
+/* 	color: gray; */
+/* } */
+
+
+.z-toolbar span {
+    padding-bottom: 5px;
+    margin-left: 5px;
+    font-family:  Helvetica,Arial,sans-serif;
+} 
+
+.z-toolbarbutton-content:hover{
+	font-weight: bold;
+}
+
+.z-toolbarbutton-content {
+	text-decoration:none; 
+	cursor:pointer;
+	color: #007b9c;
+	margin-left: 5px;
+/* 	font-size: 20px; */
+/* 	margin-bottom: 5px; */
+}
+
+.z-toolbarbutton:hover {
+	text-decoration:none; 
+	cursor:pointer;
+	color: #007b9c;
+	margin-left: 4px;
+/* 	font-size: 20px; */
+	border: 0;
+	background: none;
+}
+
+/* .z-toolbarbutton-content:hover { */
+/* 	text-decoration:none;  */
+/* 	cursor:pointer; */
+/* 	color: #007b9c; */
+/* 	margin-left: 5px; */
+/* 	font-size: 18px; */
+/* } */
+
+.z-listheader-content {
+	text-align: center;
+}
+
+
+#logo-excel{
+	background-image:url(../img/file_excel.png);
+    display:inline-block;
+    height:100px;
+    width:460px;
+}
+
+/*******************************************
+ *		Fiche Projet onglets
+ *******************************************/
+ 
+div.tabs-subtitle.z-div{
+	color: #007b9c !important; 
+    font-family:  Helvetica,Arial,sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    height: 50px !important;
+    margin-top: 20px !important;
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    width: 100%;
+}
+
+span.tabs-subtitle.z-label {
+	color: #007b9c !important; 
+    font-family:  Helvetica,Arial,sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    width: 100%;
+    display: inline-block;
+}
+
+.normalFont {
+	font-weight:normal;
+}
+
