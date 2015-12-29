@@ -12,7 +12,7 @@
 		on session expiration as well as webapp lifecycle) -->
 	<!-- <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" /> -->
 
-	<Resource name="jdbc/annuaire-saisie"
+	<Resource name="jdbc/annuairesaisie"
 		auth="Container" 
 		type="javax.sql.DataSource"
 		description="Base de données de gestion des Guest et Locality"
@@ -22,10 +22,10 @@
 		validationQuery="select 1"
 		maxWait="10000" 
 		initialSize="1" 
-		username="annuaire_usr"
+		username="annuairesaisie_usr"
 		password="changeme"
 		driverClassName="org.postgresql.Driver" 
-		url="jdbc:postgresql://localhost:5432/annuaire-saisie"
+		url="jdbc:postgresql://localhost:5432/annuairesaisie"
 		poolPreparedStatements="true" />
 			
 		<!-- AD connection information -->

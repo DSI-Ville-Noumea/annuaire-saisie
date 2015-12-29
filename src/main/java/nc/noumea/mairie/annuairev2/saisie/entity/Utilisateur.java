@@ -1,5 +1,27 @@
 package nc.noumea.mairie.annuairev2.saisie.entity;
 
+/*
+ * #%L
+ * Gestion des Guest et Locality
+ * %%
+ * Copyright (C) 2015 Mairie de Nouméa
+ * %%
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public
+ * License along with this program.  If not, see
+ * <http://www.gnu.org/licenses/gpl-3.0.html>.
+ * #L%
+ */
+
 
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
@@ -13,17 +35,15 @@ import javax.persistence.*;
 @Table(name = Utilisateur.TABLENAME)
 public class Utilisateur extends AbstractEntity {
 
-    public static final String TABLENAME = "UTILISATEUR";
+    public static final String TABLENAME = "utilisateur";
 
     /** {@link #getId()} */
     private Long id;
-    public static final String COLUMNNAME_ID = "ID";
-    public static final String PROPERTYNAME_ID = "id";
     public static final String SEQUENCENAME_ID = "s_utilisateur";
 
     /** {@link #getIdentifiant()} */
     private String identifiant;
-    public static final String COLUMNNAME_IDENTIFIANT = "IDENTIFIANT";
+    public static final String COLUMNNAME_IDENTIFIANT = "identifiant";
     public static final String PROPERTYNAME_IDENTIFIANT = "identifiant";
 
     /** {@link #getNom()} */
@@ -38,12 +58,12 @@ public class Utilisateur extends AbstractEntity {
 
     /** {@link #isActif()} */
     private boolean isActif;
-    public static final String COLUMNNAME_ACTIF = "ACTIF";
+    public static final String COLUMNNAME_ACTIF = "actif";
     public static final String PROPERTYNAME_ACTIF = "actif";
 
     /** {@link #getProfil()} */
     private Profil profil;
-    public static final String JOIN_COLUMNNAME_PROFIL = "ID_PROFIL";
+    public static final String JOIN_COLUMNNAME_PROFIL = "id_profil";
 
     /** {@link #getVersion()} */
     private Integer version;
@@ -119,5 +139,10 @@ public class Utilisateur extends AbstractEntity {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    @Transient
+    public String getFullName(){
+        return nom + " " + prenom;
     }
 }

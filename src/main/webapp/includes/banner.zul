@@ -6,10 +6,10 @@
     
 	<hbox hflex="1" vflex="1" align="center" sclass="banner">
 		<image src="/img/logo-mairie-transparent.png" width="70px" />
-		<div width="400px">
+		<div width="600px">
 			<label value="Gestion des Guest et Locality" sclass="banner-head" />
 		</div>
-		<hbox apply="nc.noumea.mairie.annuairev2.viewModel.BannerViewModel"
+		<hbox apply="nc.noumea.mairie.annuairev2.saisie.viewmodel.BannerViewModel"
 		hflex="1" vflex="1" pack="end" align="end" sclass="user-info" visible="${sec:getUser() ne null}">
             <label id="user" style="margin-left: 5px" value=""/>
             <h:a href="j_spring_security_logout">Déconnexion</h:a>
