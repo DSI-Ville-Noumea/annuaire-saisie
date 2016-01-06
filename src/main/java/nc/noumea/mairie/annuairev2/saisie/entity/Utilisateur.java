@@ -34,7 +34,7 @@ import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
  */
 @Entity
 @Table(name = Utilisateur.TABLENAME)
-public class Utilisateur extends AbstractEntity {
+public class Utilisateur extends AbstractEntity implements Comparable<Utilisateur>{
 
     public static final String TABLENAME = "utilisateur";
 
@@ -160,5 +160,10 @@ public class Utilisateur extends AbstractEntity {
     @Transient
     public boolean isConsultant(){
         return profil.getNom() == CodeProfil.CONSULTANT;
+    }
+    
+     @Override
+    public int compareTo(Utilisateur o) {
+	return getFullName().compareTo(o.getFullName());
     }
 }

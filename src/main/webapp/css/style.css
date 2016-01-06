@@ -167,3 +167,8 @@
 .mediumIcon {
 	font-size: 15px;
 }
+
+div.center{
+    margin-left:auto; 
+    margin-right:auto;
+}

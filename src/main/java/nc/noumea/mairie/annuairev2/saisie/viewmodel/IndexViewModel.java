@@ -154,6 +154,13 @@ public class IndexViewModel extends AbstractViewModel {
         
         openTab(tabId, "Gestion Guest", "/includes/admin/guestEntityAdmin.zul", true, "tab", args);
     }
+    
+    @Command
+    @NotifyChange({"tabsId","tabsList", "selectedTab"})
+    public void openAdminUserTab(){
+        openTab("adminUserTab", "Gestion utilisateurs", "/includes/admin/userAdmin.zul", true, "tab", null);
+    }
+    
 
     @NotifyChange("*")
     private void openTab(String id, String label,

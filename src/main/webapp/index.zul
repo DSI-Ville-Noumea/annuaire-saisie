@@ -22,7 +22,7 @@
                     <panel width="100%" border="normal" title="Administration" visible="@load(vmIndex.user.administrateur)">
                         <panelchildren style="padding:5px;">
                             <vlayout>
-                                <toolbarbutton label="Utilisateurs" onClick=""/>
+                                <toolbarbutton label="Utilisateurs" onClick="@command('openAdminUserTab')"/>
                             </vlayout>
                         </panelchildren>
                     </panel>
