@@ -10,8 +10,8 @@
             </columns>
             <rows>
                 <row hflex="1">
-                    <label  value="Nom" />
-                    <textbox value="@load(vm.selectedEntity.fullName)" style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <label  value="Nom" visible="@load(vm.readOnly)"/>
+                    <textbox value="@load(vm.selectedEntity.fullName)" style="width:100%" readonly="@load(vm.readOnly)" visible="@load(vm.readOnly)"/>
                 </row>
                 <row hflex="1">
                     <label  value="Nom de famille" sclass="" />

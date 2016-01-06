@@ -210,6 +210,7 @@ public class Guest extends AbstractEntity {
     }
 
     @Override
+    @Version
     @Column(name = COLUMNNAME_VERSION)
     public Integer getVersion() {
         return version;

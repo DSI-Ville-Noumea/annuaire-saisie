@@ -56,13 +56,13 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<T> findAll() {
-	    return getCurrentSession().createQuery("from " + clazz.getName()).list();
+	return getCurrentSession().createQuery("from " + clazz.getName()).list();
     }
 
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = false)
     public Long save(T entity) {
-	    return save(entity);
+	return (Long)getCurrentSession().save(entity);
     }
 
     @Override

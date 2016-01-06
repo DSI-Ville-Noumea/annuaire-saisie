@@ -68,6 +68,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
     private boolean readOnly;
     private List<Sectorisation> services;
     private Utilisateur user;
+    private boolean canAdmin;
        
     
     @Init
@@ -75,6 +76,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
     public void initView(@ExecutionArgParam("args") Map<String, Object> args) {
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
         this.readOnly = (user.isGestionnaire() || user.isAdministrateur()) ? false : true ;
+        this.canAdmin = user.isGestionnaire() || user.isAdministrateur();
         this.services = sectorisationService.findAll();
         
         if(args.get("idGuest") != null)
@@ -114,6 +116,15 @@ public class AdminGuestViewModel extends AbstractViewModel {
     public void setUser(Utilisateur user) {
         this.user = user;
     }
+
+    public boolean isCanAdmin() {
+        return canAdmin;
+    }
+
+    public void setCanAdmin(boolean canAdmin) {
+        this.canAdmin = canAdmin;
+    }
+    
     
     
     
