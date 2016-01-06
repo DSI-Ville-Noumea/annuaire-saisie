@@ -37,8 +37,10 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Tab;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.zkoss.bind.annotation.GlobalCommand;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class IndexViewModel extends AbstractViewModel {
@@ -61,8 +63,10 @@ public class IndexViewModel extends AbstractViewModel {
     public void initView() {
         tabsId = new ArrayList<>();
         tabsList = new ArrayList<>();
-        selectedTab = null;
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
+        
+        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+       
     }
 
     /**
@@ -131,19 +135,33 @@ public class IndexViewModel extends AbstractViewModel {
      **************************************************************************************/
 
     @Command
-    @NotifyChange({ "tabsList", "selectedTab" })
-    public void openGestionGuestTab(){
-        openTab("gestionGuestTab", "Gestion Guest", "/includes/searchEntity.zul", true, "tab", null);
+    @NotifyChange("*")
+    public void openViewGuestTab(){
+        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+    }
+    
+    @GlobalCommand
+    @NotifyChange("*")
+    public void openAdminGuestTab(@BindingParam("idGuest") Long guestId){
+        Map<String, Object> args = new HashMap<>();
+        args.put("idGuest", guestId);
+        
+        String tabId = "";
+        if(guestId == null)
+            tabId = "tmpGuestTab";
+        else
+            tabId = "adminGuestTab_"+guestId;
+        
+        openTab(tabId, "Gestion Guest", "/includes/admin/guestEntityAdmin.zul", true, "tab", args);
     }
 
-    @Command
-    @NotifyChange({ "tabsList", "selectedTab" })
-    public void openTab(@BindingParam("id") String id, @BindingParam("label") String label,
-                        @BindingParam("zulTemplate") String zulTemplate,
-                        @BindingParam("closable") boolean closable,
-                        @BindingParam("sclass") String sclass,
-                        @BindingParam("args") Map<String, Object> args) {
-
+    @NotifyChange("*")
+    private void openTab(String id, String label,
+                        String zulTemplate,
+                        boolean closable,
+                        String sclass,
+                        Map<String, Object> args) {
+        
         if (tabsId.contains(id)) {
             for (TabModel tabm : tabsList) {
                 if (tabm.getId().equals(id)) {
@@ -162,8 +180,9 @@ public class IndexViewModel extends AbstractViewModel {
 
     @NotifyChange("selectedTab")
     @Command
-    public void selectTab(@BindingParam("item") TabModel tabModel) {
+    public void selectTab(@BindingParam("tabModel") TabModel tabModel) {
         selectedTab = tabModel;
+
     }
 
     @Command
@@ -176,8 +195,8 @@ public class IndexViewModel extends AbstractViewModel {
         tabsId.remove(tabModel.getId());
     }
 
-    @Command
-    @NotifyChange({ "tabsList", "selectedTab" })
+    @GlobalCommand
+    @NotifyChange({ "tabsList", "selectedTab","tabsId" })
     public void closeSelectedTab() {
         TabModel oldSelectedTab = selectedTab;
         tabsList.remove(oldSelectedTab);
@@ -185,6 +204,39 @@ public class IndexViewModel extends AbstractViewModel {
             selectedTab = tabsList.get(tabsList.size() - 1);
         }
         tabsId.remove(oldSelectedTab.getId());
+    }
+    
+    @GlobalCommand
+    @NotifyChange({ "tabsList", "selectedTab", "tabsId" })
+    public void closeTabById(@BindingParam("tabId") String tabId) {
+	if (tabsId.contains(tabId)) {
+	    for (TabModel tabm : tabsList) {
+		if (tabm.getId().equals(tabId)) {
+		    tabsId.remove(tabm.getId());
+		    selectedTab = tabsList.get(tabsList.size() - 1);
+		    tabsList.remove(tabm);
+		    break;
+		}
+	    }
+	}
+    }
+    
+    @Command
+    @GlobalCommand
+    @NotifyChange({ "tabsId" })
+    public void refreshNewGuestTabId(@BindingParam("tmpTabId") String tmpTabId,
+	    @BindingParam("idGuest") Long id) {
+
+	if (tabsId.contains(tmpTabId)) {
+	    for (TabModel tabm : tabsList) {
+		if (tabm.getId().equals(tmpTabId)) {
+		    tabsId.remove(tabm.getId());
+		    tabm.setId("adminGuestTab_" + id);
+		    tabsId.add(tabm.getId());
+		    break;
+		}
+	    }
+	}
     }
 
 }

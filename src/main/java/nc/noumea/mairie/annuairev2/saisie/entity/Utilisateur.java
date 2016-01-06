@@ -27,6 +27,7 @@ import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
 
 import javax.persistence.*;
+import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
 
 /**
  * Created by barmi83 on 09/12/15.
@@ -144,5 +145,20 @@ public class Utilisateur extends AbstractEntity {
     @Transient
     public String getFullName(){
         return nom + " " + prenom;
+    }
+    
+    @Transient
+    public boolean isAdministrateur(){
+        return profil.getNom() == CodeProfil.ADMIN;
+    }
+    
+    @Transient
+    public boolean isGestionnaire(){
+        return profil.getNom() == CodeProfil.GESTIONNAIRE;
+    }
+    
+    @Transient
+    public boolean isConsultant(){
+        return profil.getNom() == CodeProfil.CONSULTANT;
     }
 }

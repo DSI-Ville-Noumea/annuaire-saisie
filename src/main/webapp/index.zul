@@ -19,23 +19,27 @@
 
                 <div>
                     <space height="5px"/>
-                    <panel width="100%" border="normal" title="Administration">
+                    <panel width="100%" border="normal" title="Administration" visible="@load(vmIndex.user.administrateur)">
                         <panelchildren style="padding:5px;">
-                            <vbox>
-                                <label>Utilisateurs</label>
-                            </vbox>
+                            <vlayout>
+                                <toolbarbutton label="Utilisateurs" onClick=""/>
+                            </vlayout>
                         </panelchildren>
                     </panel>
                     <space height="5px"/>
                     <panel width="100%" border="normal" title="Annuaire">
                         <panelchildren style="padding:5px;">
-                            <vbox>
-                                <label>Rechercher</label>
-                                <label>Gestion Guest</label>
-                                <label>Gestion Locality</label>
-                            </vbox>
+                            <vlayout>
+                                <toolbarbutton label="Mairie"
+                                               onClick=""/>
+                                <toolbarbutton label="Guest"
+                                               onClick="@command('openViewGuestTab')"/>
+                                <toolbarbutton label="Locality"
+                                               onClick=""/>
+                            </vlayout>
                         </panelchildren>
                     </panel>
+           
                 </div>
             </west>
 
@@ -44,13 +48,13 @@
                     <tabs children="@load(vmIndex.tabsList)">
                         <template name="children">
                             <tab id="@load(each.id)" label="@load(each.label)"  closable="@load(each.closable)" sclass="@load(each.sclass)" onClose="@command('closeTab', tabModel=each, tab=self)"
-                                 selected="@load(vmIndex.selectedTab eq each)" onClick="@command('selectTab',item=each)" />
+                                 selected="@load(vmIndex.selectedTab eq each)" onClick="@command('selectTab', tabModel=each)" />
                         </template>
                     </tabs>
                     <tabpanels children="@load(vmIndex.tabsList)" >
                         <template name="children">
                             <tabpanel droppable="true" style="overflow:auto">
-                                <include src="@load(each.zulTemplate)"/>
+                                <include args="@load(each.args)" src="@load(each.zulTemplate)"/>
                             </tabpanel>
                         </template>
                     </tabpanels>

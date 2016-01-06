@@ -123,17 +123,35 @@
     vertical-align: middle;
 }
 
-/*******************************************
- *		Fiches projet
- *******************************************/
-.projet-title-div span {
-	color: #007b9c;
-    font-family:  Helvetica,Arial,sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    height: 50px;
+/*****************************************************************************
+ *      Administrattion Guest
+ *****************************************************************************/
+
+.detailGuest {
+    margin-left: 20px;
 }
 
+.detailGuest > table {
+/*	margin-top: 10px;
+	margin-bottom: 0px;*/
+	border-style: none;
+}
+
+.detailGuest > tr {
+	background: white;
+}
+
+.detailGuest > tr.z-row-over > td.z-row-inner {
+    border-bottom: 1px solid white;
+    border-top: 1px solid white;
+}
+.detailGuest > tr.z-row-over > td.z-row-inner, tr.z-row-over > .z-cell {
+    background-image: none;
+}
+
+/******************************************************************************
+ *   Commun
+ ******************************************************************************/
 .green {
 	color:#59A259;
 }
@@ -149,212 +167,3 @@
 .mediumIcon {
 	font-size: 15px;
 }
-
-.width100pc{
-	width: 100%;
-}
-
-.float-left {
-	float: left;
-}
-
-.detailFicheProjet > table {
-	margin-top: 10px;
-	margin-bottom: 0px;
-	border-style: none;
-}
-
-.detailFicheProjet > tr {
-	background: white;
-}
-
-.resizable-textarea {
-	 resize: ;
-}
-
-
-/***********************************
- * 		Général
- ************************************/
- 
-.align-right {
-	text-align: right;
-}
-
-.align-center {
-	text-align: center;
-}
-
-.align-left {
-	text-align: left;
-}
-
-.alert {
-	color: #555;
-	width: 90pc;
-	padding: 5px; 
-	border: 1px solid #E57175; 
-	text-align: left; 
-	background: #F7AEAE;
-	border-radius: 5px;
-	margin-bottom: 0;
-}
-
-.alertOrange {
-	color: #555;
-	width: 90pc;
-	padding: 5px; 
-	border: 1px solid #ffa672; 
-	text-align: left; 
-	background: #ffddb2;
-	border-radius: 5px;
-	margin-bottom: 0;
-}
-
-.clickable {
-	cursor:pointer;
-}
-
-.notClickable{
-	pointer-events: none; 
-	cursor: default;
-}
-
-.amount {
-	text-align: right;
-}
-
-.annexeAmount>.z-row-content>.z-label span{
-	color : #636363;
-}
-
-.customDisabled{
-	color : #636363;
-}
-
-div.center{
-    margin-left:auto; 
-    margin-right:auto;
-}
-
-/*******************************************
- *		Dashboard
- *******************************************/
-
-.dashboardAlertTitle{
-	font-family:  Helvetica,Arial,sans-serif;
-/* 	font-weight: bold;
- */	color : #007b9c;
-	margin-bottom: 5px;
-}
-
-.dashboardAlert>.z-listcell>.z-listcell-content {
-	color : #F3474D;
-	cursor:pointer;
-}
-
-.blueColor{
-	color : #007b9c;
-}
-
-/*REDEFINITIONS ZK*/
-
-.z-toolbar {
-	background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%);
-	color: white;
-	height: 25px;
-	padding-top: 0px;
-}
-
-.z-toolbar a{
-	text-decoration:none; 
-	cursor:pointer;
-/* 	color: #007b9c; */
-/* 	margin-left: 5px; */
-/* 	font-size: 15px; */
- }
- 
-/* .z-toolbar a[disabled="disabled"]{ */
-/* 	cursor:default; */
-/* 	color: gray; */
-/* } */
-
-
-.z-toolbar span {
-    padding-bottom: 5px;
-    margin-left: 5px;
-    font-family:  Helvetica,Arial,sans-serif;
-} 
-
-.z-toolbarbutton-content:hover{
-	font-weight: bold;
-}
-
-.z-toolbarbutton-content {
-	text-decoration:none; 
-	cursor:pointer;
-	color: #007b9c;
-	margin-left: 5px;
-/* 	font-size: 20px; */
-/* 	margin-bottom: 5px; */
-}
-
-.z-toolbarbutton:hover {
-	text-decoration:none; 
-	cursor:pointer;
-	color: #007b9c;
-	margin-left: 4px;
-/* 	font-size: 20px; */
-	border: 0;
-	background: none;
-}
-
-/* .z-toolbarbutton-content:hover { */
-/* 	text-decoration:none;  */
-/* 	cursor:pointer; */
-/* 	color: #007b9c; */
-/* 	margin-left: 5px; */
-/* 	font-size: 18px; */
-/* } */
-
-.z-listheader-content {
-	text-align: center;
-}
-
-
-#logo-excel{
-	background-image:url(../img/file_excel.png);
-    display:inline-block;
-    height:100px;
-    width:460px;
-}
-
-/*******************************************
- *		Fiche Projet onglets
- *******************************************/
- 
-div.tabs-subtitle.z-div{
-	color: #007b9c !important; 
-    font-family:  Helvetica,Arial,sans-serif !important;
-    font-size: 16px !important;
-    font-weight: bold !important;
-    height: 50px !important;
-    margin-top: 20px !important;
-    margin-bottom: 20px !important;
-    text-align: center !important;
-    width: 100%;
-}
-
-span.tabs-subtitle.z-label {
-	color: #007b9c !important; 
-    font-family:  Helvetica,Arial,sans-serif !important;
-    font-size: 16px !important;
-    font-weight: bold !important;
-    width: 100%;
-    display: inline-block;
-}
-
-.normalFont {
-	font-weight:normal;
-}
-

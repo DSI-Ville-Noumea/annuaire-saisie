@@ -46,7 +46,7 @@ public class TabModel {
 	this.setClosable(closable);
 	this.setSclass(sclass);
 	this.setZulTemplate(zulTemplate);
-	this.setArgs(new HashMap<String, Object>());
+	this.setArgs(new HashMap<>());
     }
 
     public TabModel(String id, String label, String zulTemplate, boolean closable, String sclass,
@@ -56,7 +56,8 @@ public class TabModel {
 	this.setClosable(closable);
 	this.setSclass(sclass);
 	this.setZulTemplate(zulTemplate);
-	this.setArgs(args);
+        this.setArgs(args == null ? new HashMap<>() : args);
+
     }
 
     public String getId() {
@@ -113,4 +114,7 @@ public class TabModel {
     public void setArgs(Map<String, Object> args) {
 	this.args = args;
     }
+
+
+    
 }

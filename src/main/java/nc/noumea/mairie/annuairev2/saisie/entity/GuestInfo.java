@@ -1,10 +1,15 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package nc.noumea.mairie.annuairev2.saisie.entity;
 
 /*
  * #%L
  * Gestion des Guest et Locality
  * %%
- * Copyright (C) 2015 Mairie de Nouméa
+ * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -22,22 +27,30 @@ package nc.noumea.mairie.annuairev2.saisie.entity;
  * #L%
  */
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
-
-import javax.persistence.*;
+import static nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity.COLUMNNAME_ID;
+import org.zkoss.bind.annotation.Immutable;
 
 /**
- * Created by barmi83 on 09/12/15.
+ *
+ * @author barmi83
  */
 @Entity
-@Table(name = Guest.TABLENAME)
-public class Guest extends AbstractEntity {
-
-    public static final String TABLENAME = "guest";
-
+@Table(name = GuestInfo.TABLENAME)
+@Immutable
+public class GuestInfo extends AbstractEntity {
+    
+    public static final String TABLENAME = Guest.TABLENAME;
+    
     private Long id;
-    public static final String SEQUENCENAME_ID = "s_guest";
-
+    
     /** {@link #getNom()} */
     private String nom;
     public static final String COLUMNNAME_NOM = "nom";
@@ -62,45 +75,13 @@ public class Guest extends AbstractEntity {
     private String poste;
     public static final String COLUMNNAME_POSTE = "poste";
     public static final String PROPERTYNAME_POSTE = "poste";
-
-    /** {@link #getLigneDirecte()}  */
-    private String ligneDirecte;
-    public static final String COLUMNNAME_LIGNEDIRECTE = "lignedirecte";
-    public static final String PROPERTYNAME_LIGNEDIRECTE = "ligneDirecte";
-
-    /** {@link #getFax()}   */
-    private String fax;
-    public static final String COLUMNNAME_FAX = "fax";
-    public static final String PROPERTYNAME_FAX = "fax";
-
-    /** {@link #getMobile()}    */
-    private String mobile;
-    public static final String COLUMNNAME_MOBILE = "mobile";
-    public static final String PROPERTYNAME_MOBILE = "mobile";
-
-    /** {@link #getMail()}    */
-    private String mail;
-    public static final String COLUMNNAME_MAIL = "mail";
-    public static final String PROPERTYNAME_MAIL = "mail";
-
-    /** {@link #getMobilePrive()}    */
-    private String mobilePrive;
-    public static final String COLUMNNAME_MOBILEPRIVE = "mobileprive";
-    public static final String PROPERTYNAME_MOBILEPRIVE = "mobilePrive";
-
-    /** {@link #getTelephoneDomicile()}    */
-    private String telephoneDomicile;
-    public static final String COLUMNNAME_TELDOMICILE= "telephonedomicile";
-    public static final String PROPERTYNAME_TELDOMICILE = "telephoneDomicile";
-
+    
     /** {@link #getVersion()} */
     private Integer version;
-
-    @Override
+    
+    
     @Id
     @Column(name = COLUMNNAME_ID)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCENAME_ID)
-    @SequenceGenerator(name = SEQUENCENAME_ID, sequenceName = SEQUENCENAME_ID, allocationSize = 1)
     public Long getId() {
         return id;
     }
@@ -126,43 +107,7 @@ public class Guest extends AbstractEntity {
     public void setFonction(String fonction) {
         this.fonction = fonction;
     }
-
-    @Column(name = COLUMNNAME_MOBILE)
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
-
-    @Column(name = COLUMNNAME_MAIL)
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
-    @Column(name = COLUMNNAME_MOBILEPRIVE)
-    public String getMobilePrive() {
-        return mobilePrive;
-    }
-
-    public void setMobilePrive(String mobilePrive) {
-        this.mobilePrive = mobilePrive;
-    }
-
-    @Column(name = COLUMNNAME_TELDOMICILE)
-    public String getTelephoneDomicile() {
-        return telephoneDomicile;
-    }
-
-    public void setTelephoneDomicile(String telephoneDomicile) {
-        this.telephoneDomicile = telephoneDomicile;
-    }
-
+    
     @Column(name = COLUMNNAME_NOM)
     public String getNom() {
         return nom;
@@ -190,25 +135,7 @@ public class Guest extends AbstractEntity {
     public void setPoste(String poste) {
         this.poste = poste;
     }
-
-    @Column(name = COLUMNNAME_LIGNEDIRECTE)
-    public String getLigneDirecte() {
-        return ligneDirecte;
-    }
-
-    public void setLigneDirecte(String ligneDirecte) {
-        this.ligneDirecte = ligneDirecte;
-    }
-
-    @Column(name = COLUMNNAME_FAX)
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
-    }
-
+    
     @Override
     @Column(name = COLUMNNAME_VERSION)
     public Integer getVersion() {
@@ -218,8 +145,8 @@ public class Guest extends AbstractEntity {
     public void setVersion(Integer version){
         this.version = version;
     }
-
-    @Transient
+    
+        @Transient
     public String getIdentifiant(){
         return "G" + String.format("%04d", getId());
     }

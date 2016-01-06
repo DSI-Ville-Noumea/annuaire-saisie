@@ -121,5 +121,9 @@ public abstract class AbstractViewModel implements Serializable {
     public void showNotificationStandard(String message) {
 	Clients.showNotification(message, "info", null, "top_center", 0);
     }
+    
+    public void showBottomRightNotification(String message) {
+	Clients.showNotification(message, "info", null, "bottom_right", 0);
+    }
 
 }

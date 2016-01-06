@@ -1,5 +1,7 @@
-/**
- * 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package nc.noumea.mairie.annuairev2.saisie.service;
 
@@ -7,7 +9,7 @@ package nc.noumea.mairie.annuairev2.saisie.service;
  * #%L
  * Gestion des Guest et Locality
  * %%
- * Copyright (C) 2015 Mairie de Nouméa
+ * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -25,33 +27,23 @@ package nc.noumea.mairie.annuairev2.saisie.service;
  * #L%
  */
 
-import nc.noumea.mairie.annuairev2.saisie.core.exception.BusinessException;
+import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.security.AnnuaireSaisiePerm;
-import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
+import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 import org.springframework.security.access.annotation.Secured;
 
-import java.util.List;
-
 /**
+ *
  * @author barmi83
- * @since
  */
-public interface IUtilisateurService {
+public interface ISectorisationService {
+    
+    public static final String BEAN_ID = "sectorisationService";
 
-    public static final String BEAN_ID = "utilisateurService";
-
-    public Utilisateur findById(Long id);
-
-    public Utilisateur findByLogin(String login);
-
-    public List<Utilisateur> findAll();
-
-    @Secured({ AnnuaireSaisiePerm.USER_ADMIN })
-    public Utilisateur createUtilisateur(Utilisateur newUtilisateur) throws BusinessException;
-
-    @Secured({ AnnuaireSaisiePerm.USER_ADMIN })
-    public Utilisateur updateUtilisateur(Utilisateur utilisateur) throws BusinessException;
-
-    @Secured({ AnnuaireSaisiePerm.USER_ADMIN })
-    public void deleteUtilisateur(Utilisateur utilisateur);
+    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
+    public List<Sectorisation> findAll();
+    
+    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
+    public Sectorisation findById(Long id);
+    
 }

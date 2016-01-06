@@ -29,7 +29,7 @@ public class Locality {
 
     private Long id;
     private String nom;
-    private Service service;
+    private Sectorisation service;
     private String poste;
     private String ligneDirecte;
     private String fax;
@@ -50,11 +50,11 @@ public class Locality {
         this.nom = nom;
     }
 
-    public Service getService() {
+    public Sectorisation getService() {
         return service;
     }
 
-    public void setService(Service service) {
+    public void setService(Sectorisation service) {
         this.service = service;
     }
 
