@@ -65,7 +65,7 @@ public class IndexViewModel extends AbstractViewModel {
         tabsList = new ArrayList<>();
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
         
-        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+        openTab("viewGuestTab", "Recherche Guest", "/includes/searchGuest.zul", true, "tab", null);
        
     }
 
@@ -137,7 +137,13 @@ public class IndexViewModel extends AbstractViewModel {
     @Command
     @NotifyChange("*")
     public void openViewGuestTab(){
-        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+        openTab("viewGuestTab", "Recherche Guest", "/includes/searchGuest.zul", true, "tab", null);
+    }
+    
+    @Command
+    @NotifyChange("*")
+    public void openViewLocalityTab(){
+        openTab("viewLocalityTab", "Recherche Locality", "/includes/searchLocality.zul", true, "tab", null);
     }
     
     @GlobalCommand
@@ -153,6 +159,21 @@ public class IndexViewModel extends AbstractViewModel {
             tabId = "adminGuestTab_"+guestId;
         
         openTab(tabId, "Gestion Guest", "/includes/admin/guestEntityAdmin.zul", true, "tab", args);
+    }
+    
+    @GlobalCommand
+    @NotifyChange("*")
+    public void openAdminLocalityTab(@BindingParam("idLocality") Long localityId){
+        Map<String, Object> args = new HashMap<>();
+        args.put("idLocality", localityId);
+        
+        String tabId = "";
+        if(localityId == null)
+            tabId = "tmpLocalityTab";
+        else
+            tabId = "adminLocalityTab_"+localityId;
+        
+        openTab(tabId, "Gestion Locality", "/includes/admin/localityEntityAdmin.zul", true, "tab", args);
     }
     
     @Command
@@ -239,6 +260,24 @@ public class IndexViewModel extends AbstractViewModel {
 		if (tabm.getId().equals(tmpTabId)) {
 		    tabsId.remove(tabm.getId());
 		    tabm.setId("adminGuestTab_" + id);
+		    tabsId.add(tabm.getId());
+		    break;
+		}
+	    }
+	}
+    }
+    
+    @Command
+    @GlobalCommand
+    @NotifyChange({ "tabsId" })
+    public void refreshNewLocalityTabId(@BindingParam("tmpTabId") String tmpTabId,
+	    @BindingParam("idLocality") Long id) {
+
+	if (tabsId.contains(tmpTabId)) {
+	    for (TabModel tabm : tabsList) {
+		if (tabm.getId().equals(tmpTabId)) {
+		    tabsId.remove(tabm.getId());
+		    tabm.setId("adminLocalityTab_" + id);
 		    tabsId.add(tabm.getId());
 		    break;
 		}

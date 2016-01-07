@@ -31,7 +31,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Guest.TABLENAME)
-public class Guest extends AbstractEntity {
+public class Guest extends AbstractEntity implements IContact{
 
     public static final String TABLENAME = "guest";
 
@@ -164,47 +164,69 @@ public class Guest extends AbstractEntity {
     }
 
     @Column(name = COLUMNNAME_NOM)
+    @Override
     public String getNom() {
         return nom;
     }
 
+    @Override
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     @ManyToOne
     @JoinColumn(name = JOIN_COLUMNNAME_SERVICE)
+    @Override
     public Sectorisation getService() {
         return service;
     }
 
+    /**
+     *
+     * @param service
+     */
+    @Override
     public void setService(Sectorisation service) {
         this.service = service;
     }
 
     @Column(name = COLUMNNAME_POSTE)
+    @Override
     public String getPoste() {
         return poste;
     }
 
+    /**
+     *
+     * @param poste
+     */
+    @Override
     public void setPoste(String poste) {
         this.poste = poste;
     }
 
     @Column(name = COLUMNNAME_LIGNEDIRECTE)
+    @Override
     public String getLigneDirecte() {
         return ligneDirecte;
     }
 
+    @Override
     public void setLigneDirecte(String ligneDirecte) {
         this.ligneDirecte = ligneDirecte;
     }
 
     @Column(name = COLUMNNAME_FAX)
+    @Override
     public String getFax() {
         return fax;
     }
 
+    @Override
     public void setFax(String fax) {
         this.fax = fax;
     }
@@ -221,11 +243,13 @@ public class Guest extends AbstractEntity {
     }
 
     @Transient
+    @Override
     public String getIdentifiant(){
         return "G" + String.format("%04d", getId());
     }
 
     @Transient
+    @Override
     public String getFullName(){
         if(nom != null && prenom != null)
             return nom + " " + prenom;

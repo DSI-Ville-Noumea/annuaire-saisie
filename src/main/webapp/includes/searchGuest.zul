@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
     <window vflex="1" hflex="1" border="none"
             apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('vmSearch') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.SearchViewModel')"
+            viewModel="@id('vmSearch') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.GuestSearchViewModel')"
             contentStyle="overflow:auto;">
         
         <toolbar mold="default" visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)">

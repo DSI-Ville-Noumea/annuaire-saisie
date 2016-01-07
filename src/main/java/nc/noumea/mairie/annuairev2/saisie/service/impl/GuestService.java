@@ -61,6 +61,12 @@ public class GuestService implements IGuestService {
     public Guest findById(Long id) {
         return guestDao.findById(id);      
     }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Guest findByIdentifiant(String identifiant) {
+        return guestDao.findByIdentifiant(identifiant);      
+    }
 
     @Override
     @Transactional(readOnly = false)

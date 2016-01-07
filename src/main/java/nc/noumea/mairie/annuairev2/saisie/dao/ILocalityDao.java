@@ -24,17 +24,15 @@ package nc.noumea.mairie.annuairev2.saisie.dao;
 
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 
 /**
  * Created by barmi83 on 30/12/15.
  */
-public interface IGuestDao extends IGenericDao<Guest> {
+public interface ILocalityDao extends IGenericDao<Locality> {
 
-    public static final String BEAN_ID = "guestDao";
+    public static final String BEAN_ID = "localityDao";
     
-    public Guest findByIdentifiant(String identifiant);
-    
-    public List<Guest> findByNomEtService(String nom, String service);
+    public List<Locality> findByNomEtService(String nom, String service);
 
 }

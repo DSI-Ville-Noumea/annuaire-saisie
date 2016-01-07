@@ -37,8 +37,6 @@ public class Sectorisation extends AbstractEntity {
 
     /** {@link #getId()} */
     private Long id;
-    public static final String COLUMNNAME_ID = "id";
-    public static final String PROPERTYNAME_ID = "id";
     public static final String SEQUENCENAME_ID = "s_service";
 
     /** {@link #getVersion()} */

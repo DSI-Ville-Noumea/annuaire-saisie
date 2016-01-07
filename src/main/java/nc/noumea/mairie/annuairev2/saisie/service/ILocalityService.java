@@ -27,38 +27,30 @@ import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.security.AnnuaireSaisiePerm;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 import org.springframework.security.access.annotation.Secured;
 
 /**
  * Created by barmi83 on 30/12/15.
  */
-public interface IGuestService {
+public interface ILocalityService {
 
-    public static final String BEAN_ID = "guestService";
+    public static final String BEAN_ID = "localityService";
 
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public List<Guest> findAll();
+    @Secured({ AnnuaireSaisiePerm.LOCALITY_CONSULT })
+    public List<Locality> findAll();
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public List<GuestInfo> findAllGuestInfo();
+    @Secured({ AnnuaireSaisiePerm.LOCALITY_CONSULT })
+    public Locality findById(Long id);
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public Guest findById(Long id);
+    @Secured({ AnnuaireSaisiePerm.LOCALITY_ADD })
+    public Locality saveOrUpdate(Locality locality);
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public Guest findByIdentifiant(String identifiant);
-    
-    @Secured({ AnnuaireSaisiePerm.GUEST_ADD })
-    public Guest saveOrUpdate(Guest guest);
-    
-    @Secured({ AnnuaireSaisiePerm.GUEST_DEL })
+    @Secured({ AnnuaireSaisiePerm.LOCALITY_DEL })
     public void deleteById(Long id);
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public List<Guest> findByNomEtService(String nom, String service);
-    
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
-    public List<GuestInfo> findGuestInfoByNomEtService(String nom, String service);
+    @Secured({ AnnuaireSaisiePerm.LOCALITY_CONSULT })
+    public List<Locality> findByNomEtService(String nom, String service);
 
 
 }

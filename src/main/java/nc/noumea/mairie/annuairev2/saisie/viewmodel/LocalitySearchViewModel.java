@@ -2,7 +2,7 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
 
 /*
  * #%L
- * Gestion des Guest et Locality
+ * Gestion des Locality et Locality
  * %%
  * Copyright (C) 2015 Mairie de Nouméa
  * %%
@@ -37,8 +37,10 @@ import java.util.List;
 import java.util.Map;
 import nc.noumea.mairie.annuairev2.saisie.core.security.SecurityUtil;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
+import nc.noumea.mairie.annuairev2.saisie.service.ILocalityService;
 import nc.noumea.mairie.annuairev2.saisie.service.ISectorisationService;
 import nc.noumea.mairie.annuairev2.saisie.service.IUtilisateurService;
 import org.zkoss.bind.BindUtils;
@@ -54,14 +56,14 @@ import org.zkoss.zk.ui.event.EventListener;
  */
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class SearchViewModel extends AbstractViewModel {
+public class LocalitySearchViewModel extends AbstractViewModel {
 
-    private Logger logger = LoggerFactory.getLogger(SearchViewModel.class);
+    private Logger logger = LoggerFactory.getLogger(LocalitySearchViewModel.class);
 
     private String nom = null;
     private String service = null;
-    private List<GuestInfo> searchResults = null;
-    private GuestInfo selectedEntity = null;
+    private List<Locality> searchResults = null;
+    private Locality selectedEntity = null;
     private boolean readOnly;
     private List<Sectorisation> services;
     private Utilisateur user;
@@ -71,7 +73,7 @@ public class SearchViewModel extends AbstractViewModel {
 
 
     @WireVariable
-    private IGuestService guestService;
+    private ILocalityService localityService;
     @WireVariable
     private ISectorisationService sectorisationService;
      @WireVariable
@@ -81,7 +83,7 @@ public class SearchViewModel extends AbstractViewModel {
     @NotifyChange("*")
     public void initView() {
         readOnly = true;
-        searchResults = guestService.findAllGuestInfo();
+        searchResults = localityService.findAll();
         services = sectorisationService.findAll();
         serviceNameList = new ArrayList<>();
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
@@ -92,11 +94,11 @@ public class SearchViewModel extends AbstractViewModel {
             selectedEntity = searchResults.get(0);
     }
 
-    public List<GuestInfo> getSearchResults() {
+    public List<Locality> getSearchResults() {
         return searchResults;
     }
 
-    public void setSearchResults(List<GuestInfo> searchResults) {
+    public void setSearchResults(List<Locality> searchResults) {
         this.searchResults = searchResults;
     }
 
@@ -116,11 +118,11 @@ public class SearchViewModel extends AbstractViewModel {
         this.service = service;
     }
 
-    public GuestInfo getSelectedEntity() {
+    public Locality getSelectedEntity() {
         return selectedEntity;
     }
 
-    public void setSelectedEntity(GuestInfo selectedEntity) {
+    public void setSelectedEntity(Locality selectedEntity) {
         this.selectedEntity = selectedEntity;
     }
     
@@ -169,37 +171,37 @@ public class SearchViewModel extends AbstractViewModel {
     
     
     @Command
-    public void editGuest(@BindingParam("idGuest") Long idGuest){
+    public void editLocality(@BindingParam("idLocality") Long idLocality){
         
         Map<String, Object> args = new HashMap<>();
-        args.put("idGuest", idGuest);
-        BindUtils.postGlobalCommand(null, null, "openAdminGuestTab", args);
+        args.put("idLocality", idLocality);
+        BindUtils.postGlobalCommand(null, null, "openAdminLocalityTab", args);
 
     }
     
     @Command
-    public void newGuest(){
+    public void newLocality(){
         
-        BindUtils.postGlobalCommand(null, null, "openAdminGuestTab", null);
+        BindUtils.postGlobalCommand(null, null, "openAdminLocalityTab", null);
 
     }
     
     @Command
     @NotifyChange({"searchResults"})
     public void confirmDelete(){
-        Messagebox.show("Vous allez supprimer le guest \"" + selectedEntity.getFullName()
+        Messagebox.show("Vous allez supprimer la locality \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
-                    "Supprimer un guest", Messagebox.OK |
+                    "Supprimer une locality", Messagebox.OK |
                             Messagebox.CANCEL, Messagebox.QUESTION,
                     new EventListener() {
                         public void onEvent(Event e) {
 
                             if (Messagebox.ON_OK.equals(e.getName())) {
-                                guestService.deleteById(selectedEntity.getId());
+                                localityService.deleteById(selectedEntity.getId());
                                 Map<String, Object> args = new HashMap<>();
-                                args.put("tabId", "adminGuestTab_"+selectedEntity.getId());
+                                args.put("tabId", "adminLocalityTab_"+selectedEntity.getId());
                                 BindUtils.postGlobalCommand(null, null, "closeTabById", args);
-                                showBottomRightNotification("Guest supprimé avec succès.");
+                                showBottomRightNotification("Locality supprimée avec succès.");
                             }
 
                         }
@@ -215,9 +217,9 @@ public class SearchViewModel extends AbstractViewModel {
             service = null;
         
         if(nom != null || service != null)
-            searchResults = guestService.findGuestInfoByNomEtService(nom, service);
+            searchResults = localityService.findByNomEtService(nom, service);
         else
-            searchResults = guestService.findAllGuestInfo();
+            searchResults = localityService.findAll();
         
     }
     
@@ -227,7 +229,7 @@ public class SearchViewModel extends AbstractViewModel {
         
         nom = null;
         service = null;
-        searchResults = guestService.findAllGuestInfo();
+        searchResults = localityService.findAll();
                 
     }
     

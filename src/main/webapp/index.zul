@@ -35,7 +35,7 @@
                                 <toolbarbutton label="Guest"
                                                onClick="@command('openViewGuestTab')"/>
                                 <toolbarbutton label="Locality"
-                                               onClick=""/>
+                                               onClick="@command('openViewLocalityTab')"/>
                             </vlayout>
                         </panelchildren>
                     </panel>

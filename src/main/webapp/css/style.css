@@ -127,25 +127,25 @@
  *      Administrattion Guest
  *****************************************************************************/
 
-.detailGuest {
+.detailContact {
     margin-left: 20px;
 }
 
-.detailGuest > table {
+.detailContact > table {
 /*	margin-top: 10px;
 	margin-bottom: 0px;*/
 	border-style: none;
 }
 
-.detailGuest > tr {
+.detailContact > tr {
 	background: white;
 }
 
-.detailGuest > tr.z-row-over > td.z-row-inner {
+.detailContact > tr.z-row-over > td.z-row-inner {
     border-bottom: 1px solid white;
     border-top: 1px solid white;
 }
-.detailGuest > tr.z-row-over > td.z-row-inner, tr.z-row-over > .z-cell {
+.detailContact > tr.z-row-over > td.z-row-inner, tr.z-row-over > .z-cell {
     background-image: none;
 }
 
