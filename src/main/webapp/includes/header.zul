@@ -7,9 +7,7 @@
     <div align="center" sclass="header-div">
         <image sclass="header-mairie-logo" src="/img/DSI-logo-blason-or.png"/>
         <div sclass="user-info-div">
-            <label id="user" style="margin-left: 5px" value="${sec:getUser()} ("/>
-            <h:a href="j_spring_security_logout">Déconnexion</h:a>
-            <label value=")"/>
+            <label id="user" style="margin-left: 5px" value="${sec:getUser()} ("/><h:a href="logout">Déconnexion</h:a><label value=")"/>
         </div>
         <div sclass="header-title-div">
             <label id="title" sclass="header-title1" value="Gestion des Guest et Locality"/>

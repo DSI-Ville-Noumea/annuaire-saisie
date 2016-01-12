@@ -4,16 +4,20 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
     
-	<hbox hflex="1" vflex="1" align="center" sclass="banner">
+    <vlayout width="100%" sclass="bannerLayout">
+	<hbox align="center" sclass="banner" width="100%">
 		<image src="/img/logo-mairie-transparent.png" width="70px" />
 		<div width="600px">
 			<label value="Gestion des Guest et Locality" sclass="banner-head" />
 		</div>
-		<hbox apply="nc.noumea.mairie.annuairev2.saisie.viewmodel.BannerViewModel"
-		hflex="1" vflex="1" pack="end" align="end" sclass="user-info" visible="${sec:getUser() ne null}">
-            <label id="user" style="margin-left: 5px" value=""/>
-            <h:a href="j_spring_security_logout">Déconnexion</h:a>
-            <label value=")"/>
-		</hbox>
+                <div>
+                    <label id="warning" value="" sclass="banner-head-warning" visible="false"/>
+                </div>
 	</hbox>
+        <hbox apply="nc.noumea.mairie.annuairev2.saisie.viewmodel.BannerViewModel" sclass="user-info" visible="${sec:getUser() ne null}">
+            <div>
+                 <label id="user" style="margin-left: 5px" value="${sec:getUser()} ("/><h:a href="logout">Déconnexion</h:a><label value=")"/>
+            </div>
+	</hbox>
+    </vlayout>
 </zk>

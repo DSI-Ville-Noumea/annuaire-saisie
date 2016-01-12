@@ -26,8 +26,10 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
  */
 
 import nc.noumea.mairie.annuairev2.saisie.core.security.SecurityUtil;
+import nc.noumea.mairie.annuairev2.saisie.core.utility.ApplicationContextUtils;
 import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
 import nc.noumea.mairie.annuairev2.saisie.service.IUtilisateurService;
+import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
@@ -47,14 +49,42 @@ public class BannerViewModel extends SelectorComposer<Component> {
 
     @Wire
     Label user;
+    @Wire
+    Label warning;
 
     @WireVariable
     IUtilisateurService utilisateurService;
+    
+    private String env;
 
     @Override
     public void doAfterCompose(Component comp) throws Exception {
 
 	super.doAfterCompose(comp);
+        
+        env = ApplicationContextUtils.getApplicationContext().getEnvironment().getProperty("ANN_DEP_ENV");
+        if(env == null || env.isEmpty()){
+            Messagebox.show("La variable d'environment ANN_DEP_ENV non définie. Merci de contacter l'administrateur de l'application.",
+                    "Erreur", Messagebox.OK, Messagebox.ERROR);
+        }
+        else{
+             if("PROD".equalsIgnoreCase(env)){
+                warning.setVisible(false);
+            }else{
+                 warning.setVisible(true);
+                 if("QUAL".equalsIgnoreCase(env)){
+                     warning.setValue("Attention vous etes en environnement de recette !");
+                 }
+                 else if ("DEV".equalsIgnoreCase(env)){
+                      warning.setValue("Attention vous etes en environnement de dev !");
+                 }
+                 else{
+                      Messagebox.show("La variable d'environment ANN_DEP_ENV non définie. Merci de contacter l'administrateur de l'application.",
+                    "Erreur", Messagebox.OK, Messagebox.ERROR);
+                 }
+            }
+        }
+        
 	if (SecurityUtil.getUser() != null) {
 	    Utilisateur currentUser = utilisateurService.findByLogin(SecurityUtil.getUser());
 	    if (currentUser != null) {

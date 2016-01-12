@@ -49,5 +49,9 @@
                  description="Password for the above defined ldap user"
                  value="planet"
                  override="false" />
+    
+    <!-- Valeurs possible DEV, QUAL, PROD -->
+    <Environment name="ANN_DEP_ENV" value="DEV" type="java.lang.String"/>
+    
 
 </Context>
