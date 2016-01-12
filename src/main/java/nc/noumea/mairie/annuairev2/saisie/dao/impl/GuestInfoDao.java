@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestInfoDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 import org.hibernate.Query;

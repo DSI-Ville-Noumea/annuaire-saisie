@@ -31,4 +31,6 @@ import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 public interface ISectorisationDao extends IGenericDao<Sectorisation> {
     
     public static final String BEAN_ID = "sectorisationDao";
+    
+    public Sectorisation findByLibelle(String libelle);
 }

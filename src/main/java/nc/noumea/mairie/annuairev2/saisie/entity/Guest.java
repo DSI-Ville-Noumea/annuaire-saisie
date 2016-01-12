@@ -34,6 +34,8 @@ import javax.persistence.*;
 public class Guest extends AbstractEntity implements IContact{
 
     public static final String TABLENAME = "guest";
+    public static final String IDENTIFIANT_FORMAT  = "%04d";
+
 
     private Long id;
     public static final String SEQUENCENAME_ID = "s_guest";
@@ -245,7 +247,7 @@ public class Guest extends AbstractEntity implements IContact{
     @Transient
     @Override
     public String getIdentifiant(){
-        return "G" + String.format("%04d", getId());
+        return "G" + String.format(IDENTIFIANT_FORMAT, getId());
     }
 
     @Transient
@@ -256,4 +258,17 @@ public class Guest extends AbstractEntity implements IContact{
         
         return "";
     }
+    
+    @Override
+    public int compareTo(IContact o) {
+	return getFullName().compareTo(o.getFullName());
+    }
+
+    @Override
+    @Transient
+    public String getType() {
+        return IContact.TYPE_GUEST;
+    }
+    
+    
 }

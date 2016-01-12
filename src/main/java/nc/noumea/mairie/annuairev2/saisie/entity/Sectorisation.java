@@ -31,7 +31,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Sectorisation.TABLENAME)
-public class Sectorisation extends AbstractEntity {
+public class Sectorisation extends AbstractEntity implements Comparable<Sectorisation>{
 
     public static final String TABLENAME = "service";
 
@@ -128,5 +128,10 @@ public class Sectorisation extends AbstractEntity {
 
     public void setCode4(String code4) {
         this.code4 = code4;
+    }
+
+    @Override
+    public int compareTo(Sectorisation t) {
+           return this.getLibelle().compareTo(t.getLibelle());
     }
 }

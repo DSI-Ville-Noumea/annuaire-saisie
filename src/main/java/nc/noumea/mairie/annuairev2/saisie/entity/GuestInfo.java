@@ -45,7 +45,7 @@ import org.zkoss.bind.annotation.Immutable;
 @Entity
 @Table(name = GuestInfo.TABLENAME)
 @Immutable
-public class GuestInfo extends AbstractEntity {
+public class GuestInfo extends AbstractEntity implements IContact {
     
     public static final String TABLENAME = Guest.TABLENAME;
     
@@ -65,6 +65,16 @@ public class GuestInfo extends AbstractEntity {
     private String fonction;
     public static final String COLUMNNAME_FONCTION = "fonction";
     public static final String PROPERTYNAME_FONCTION = "fonction";
+    
+    /** {@link #getLigneDirecte()}  */
+    private String ligneDirecte;
+    public static final String COLUMNNAME_LIGNEDIRECTE = "lignedirecte";
+    public static final String PROPERTYNAME_LIGNEDIRECTE = "ligneDirecte";
+
+    /** {@link #getFax()}   */
+    private String fax;
+    public static final String COLUMNNAME_FAX = "fax";
+    public static final String PROPERTYNAME_FAX = "fax";
 
     /** {@link #getService()} */
     private Sectorisation service;
@@ -82,6 +92,7 @@ public class GuestInfo extends AbstractEntity {
     
     @Id
     @Column(name = COLUMNNAME_ID)
+    @Override
     public Long getId() {
         return id;
     }
@@ -119,19 +130,23 @@ public class GuestInfo extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = JOIN_COLUMNNAME_SERVICE)
+    @Override
     public Sectorisation getService() {
         return service;
     }
 
+    @Override
     public void setService(Sectorisation service) {
         this.service = service;
     }
 
     @Column(name = COLUMNNAME_POSTE)
+    @Override
     public String getPoste() {
         return poste;
     }
 
+    @Override
     public void setPoste(String poste) {
         this.poste = poste;
     }
@@ -146,16 +161,49 @@ public class GuestInfo extends AbstractEntity {
         this.version = version;
     }
     
-        @Transient
+    @Transient
+    @Override
     public String getIdentifiant(){
-        return "G" + String.format("%04d", getId());
+        return "G" + String.format(Guest.IDENTIFIANT_FORMAT, getId());
     }
 
     @Transient
+    @Override
     public String getFullName(){
         if(nom != null && prenom != null)
             return nom + " " + prenom;
         
         return "";
+    }
+
+    @Override
+    public String getLigneDirecte() {
+        return ligneDirecte;
+    }
+
+    @Override
+    public void setLigneDirecte(String ligneDirecte) {
+        this.ligneDirecte = ligneDirecte;
+    }
+
+    @Override
+    public String getFax() {
+        return fax;
+    }
+
+    @Override
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
+    
+    @Override
+    public int compareTo(IContact o) {
+	return getFullName().compareTo(o.getFullName());
+    }
+    
+    @Override
+    @Transient
+    public String getType() {
+        return IContact.TYPE_GUEST;
     }
 }

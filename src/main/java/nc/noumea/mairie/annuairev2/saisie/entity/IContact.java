@@ -31,7 +31,10 @@ package nc.noumea.mairie.annuairev2.saisie.entity;
  *
  * @author barmi83
  */
-public interface IContact {
+public interface IContact extends Comparable<IContact>{
+    
+    public static final String TYPE_GUEST = "guest";
+    public static final String TYPE_LOCALITY = "locality";
     
     public String getNom();
 
@@ -55,7 +58,9 @@ public interface IContact {
     
     public String getFullName();
     
-     public String getIdentifiant();
+    public String getIdentifiant();
+    
+    public String getType();
 
     
 }

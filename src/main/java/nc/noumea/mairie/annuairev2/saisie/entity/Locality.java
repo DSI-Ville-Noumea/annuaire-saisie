@@ -45,6 +45,7 @@ import static nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity.COLU
 public class Locality extends AbstractEntity implements IContact {
     
     public static final String TABLENAME = "locality";
+    public static final String IDENTIFIANT_FORMAT = "%04d";
 
     public static final String SEQUENCENAME_ID = "s_locality";
 
@@ -162,7 +163,7 @@ public class Locality extends AbstractEntity implements IContact {
     @Transient
     @Override
     public String getIdentifiant(){
-        return "L" + String.format("%04d", getId());
+        return "L" + String.format(IDENTIFIANT_FORMAT, getId());
     }
 
     @Override
@@ -171,5 +172,14 @@ public class Locality extends AbstractEntity implements IContact {
         return nom;
     }
 
-   
+   @Override
+    public int compareTo(IContact o) {
+	return getFullName().compareTo(o.getFullName());
+    }
+    
+    @Override
+    @Transient
+    public String getType() {
+        return IContact.TYPE_LOCALITY;
+    }
 }

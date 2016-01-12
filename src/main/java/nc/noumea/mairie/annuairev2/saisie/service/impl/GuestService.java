@@ -39,7 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service(IGuestService.BEAN_ID)
 public class GuestService implements IGuestService {
-
+    
     @Autowired
     IGuestDao guestDao;
     @Autowired
@@ -95,6 +95,7 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GuestInfo> findAllGuestInfo() {
         List<GuestInfo> results = guestInfoDao.findAll();
 
@@ -105,7 +106,9 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<GuestInfo> findGuestInfoByNomEtService(String nom, String service) {
         return guestInfoDao.findByNomEtService(nom, service);
     }
+    
 }

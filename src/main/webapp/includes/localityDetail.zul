@@ -3,39 +3,43 @@
             <columns>
                 <column width="200px" />
                 <column width="400px" />
+                <column width="10px" />
             </columns>
             <rows>
                 <row hflex="1">
                     <label  value="Nom" sclass="" />
                     <textbox value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateLocality')" 
                              style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                     <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
                     <label  value="Service" sclass="" />
-<!--                    <textbox value="@load(vm.selectedEntity.service.libelle) @save(vm.selectedEntity.libelle, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/> -->
-                
-                <combobox id="servCbox" model="@load(vm.services)" hflex="1" 
-                          autocomplete="false" autodrop="true"	readonly="@load(vm.readOnly)"
-                          disabled="@load(vm.readOnly ? 'disabled' :  '')"
-                          selectedItem="@load(vm.selectedEntity.service) @save(vm.selectedEntity.service, before='saveOrUpdateLocality')"
-			  constraint="no empty">								
-                        <template name="model">
-                            <comboitem label="@load(each.libelle)" />
-                        </template>
-                </combobox>  
+                    <combobox id="servCbox" model="@load(vm.services)" hflex="1" 
+                              autocomplete="false" autodrop="true"	readonly="@load(vm.readOnly)"
+                              disabled="@load(vm.readOnly ? 'disabled' :  '')"
+                              selectedItem="@load(vm.selectedEntity.service) @save(vm.selectedEntity.service, before='saveOrUpdateLocality')"
+                              constraint="no empty">								
+                            <template name="model">
+                                <comboitem label="@load(each.libelle)" />
+                            </template>
+                    </combobox>  
+                    <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
                     <label  value="Poste" sclass="" />
                     <textbox value="@load(vm.selectedEntity.poste) @save(vm.selectedEntity.poste, before='saveOrUpdateLocality')" 
                              style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
                     <label  value="Ligne directe" sclass="" />
                     <textbox value="@load(vm.selectedEntity.ligneDirecte) @save(vm.selectedEntity.ligneDirecte, before='saveOrUpdateLocality')" style="width:100%" readonly="@load(vm.readOnly)"/>
+                    <label value=""/>
                 </row>
                 <row hflex="1">
                     <label  value="Fax" sclass="" />
                     <textbox value="@load(vm.selectedEntity.fax) @save(vm.selectedEntity.fax, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/>
+                    <label value=""/>
                 </row>
             </rows>
         </grid>

@@ -22,6 +22,7 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
  * #L%
  */
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,9 +69,10 @@ public class AdminLocalityViewModel extends AbstractViewModel {
     @NotifyChange("*")
     public void initView(@ExecutionArgParam("args") Map<String, Object> args) {
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
-        this.readOnly = (user.isGestionnaire() || user.isAdministrateur()) ? false : true ;
+        this.readOnly = !(user.isGestionnaire() || user.isAdministrateur()) ;
         this.canAdmin = user.isGestionnaire() || user.isAdministrateur();
         this.services = sectorisationService.findAll();
+        Collections.sort(services);
         
         if(args.get("idLocality") != null)
             this.selectedEntity = localityService.findById((Long)args.get("idLocality"));
@@ -127,6 +129,7 @@ public class AdminLocalityViewModel extends AbstractViewModel {
         selectedEntity = localityService.saveOrUpdate(selectedEntity);
         Map<String, Object> args = new HashMap<>();
         args.put("tmpTabId", "tmpLocalityTab");
+        args.put("idLocality", selectedEntity.getId());
         BindUtils.postGlobalCommand(null, null, "refreshNewLocalityTabId", args);
         this.showBottomRightNotification("Locality modifié avec succés.");
     }

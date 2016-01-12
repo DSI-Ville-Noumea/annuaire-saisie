@@ -61,5 +61,10 @@ public class SectorisationService implements ISectorisationService{
     public Sectorisation findById(Long id) {
         return sectorisationDao.findById(id);
     }
+
+    @Override
+    public Sectorisation findByLibelle(String libelle) {
+    return sectorisationDao.findByLibelle(libelle);    
+    }
     
 }

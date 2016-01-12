@@ -27,6 +27,8 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
  * #L%
  */
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,17 +40,20 @@ import nc.noumea.mairie.annuairev2.saisie.service.IGuestService;
 import nc.noumea.mairie.annuairev2.saisie.service.ISectorisationService;
 import nc.noumea.mairie.annuairev2.saisie.service.IUtilisateurService;
 import org.zkoss.bind.BindUtils;
-import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
 import org.zkoss.bind.annotation.ExecutionArgParam;
-import org.zkoss.bind.annotation.GlobalCommand;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Constraint;
+import org.zkoss.zul.Textbox;
 
 /**
  *
@@ -67,22 +72,39 @@ public class AdminGuestViewModel extends AbstractViewModel {
     private Guest selectedEntity;
     private boolean readOnly;
     private List<Sectorisation> services;
+    private List<String> serviceNameList;
+    private StringSimpleListModel servicesListModel;
+    
     private Utilisateur user;
     private boolean canAdmin;
+    
+     // controle
+    private CustomGuestConstraint guestConstraint;
        
     
     @Init
     @NotifyChange("*")
     public void initView(@ExecutionArgParam("args") Map<String, Object> args) {
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
-        this.readOnly = (user.isGestionnaire() || user.isAdministrateur()) ? false : true ;
+        this.readOnly = !(user.isGestionnaire() || user.isAdministrateur());
         this.canAdmin = user.isGestionnaire() || user.isAdministrateur();
         this.services = sectorisationService.findAll();
+        Collections.sort(services);
+        
+        serviceNameList = new ArrayList<>();
+        for (Sectorisation service : services) {
+            serviceNameList.add(service.getLibelle());
+        }
+        Collections.sort(serviceNameList);
+        servicesListModel = new StringSimpleListModel(serviceNameList);
         
         if(args.get("idGuest") != null)
             this.selectedEntity = guestService.findById((Long)args.get("idGuest"));
         else
             this.selectedEntity = new Guest();
+        
+        setGuestConstraint(new CustomGuestConstraint());
+
     }
 
     public Guest getSelectedEntity() {
@@ -124,6 +146,32 @@ public class AdminGuestViewModel extends AbstractViewModel {
     public void setCanAdmin(boolean canAdmin) {
         this.canAdmin = canAdmin;
     }
+
+    public List<String> getServiceNameList() {
+        return serviceNameList;
+    }
+
+    public void setServiceNameList(List<String> serviceNameList) {
+        this.serviceNameList = serviceNameList;
+    }
+
+    public StringSimpleListModel getServicesListModel() {
+        return servicesListModel;
+    }
+
+    public void setServicesListModel(StringSimpleListModel servicesListModel) {
+        this.servicesListModel = servicesListModel;
+    }
+
+    public CustomGuestConstraint getGuestConstraint() {
+        return guestConstraint;
+    }
+
+    public void setGuestConstraint(CustomGuestConstraint guestConstraint) {
+        this.guestConstraint = guestConstraint;
+    }
+    
+    
     
     
     
@@ -134,6 +182,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
         selectedEntity = guestService.saveOrUpdate(selectedEntity);
         Map<String, Object> args = new HashMap<>();
         args.put("tmpTabId", "tmpGuestTab");
+        args.put("idGuest", selectedEntity.getId());
         BindUtils.postGlobalCommand(null, null, "refreshNewGuestTabId", args);
         this.showBottomRightNotification("Guest modifié avec succés.");
     }
@@ -171,6 +220,36 @@ public class AdminGuestViewModel extends AbstractViewModel {
                         }
                     });
         }        
+    }
+    
+    
+    private class CustomGuestConstraint implements Constraint {
+
+	@Override
+	public void validate(Component comp, Object value) throws WrongValueException {
+            System.out.println("validate");
+	    if (comp instanceof Textbox) {
+                System.out.println("textbox");
+		if (("posteTxtBox".equals(comp.getId()))) {
+		    if (value != null && !((String) value).isEmpty()) {
+                        if (((String) value).length() != 4 ){
+			    throw new WrongValueException(comp,
+				    "Le numéro de poste doit etre composé de 4 chiffes.");
+			}
+		    }
+		    else {
+			throw new WrongValueException(comp,
+				"Champ vide non autorisé.\nVous devez spécifier une valeur.");
+		    }
+		}
+		else if ("mailTxtBox".equals(comp.getId())) {
+		   if (!((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
+			    throw new WrongValueException(comp,
+				    "Adresse email invalide.");
+			}
+		}
+	    }
+	}
     }
     
     

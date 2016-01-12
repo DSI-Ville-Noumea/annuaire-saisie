@@ -30,6 +30,7 @@ package nc.noumea.mairie.annuairev2.saisie.dao.impl;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
 import nc.noumea.mairie.annuairev2.saisie.dao.ISectorisationDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -41,5 +42,13 @@ public class SectorisationDao extends  AbstractHibernateDao<Sectorisation> imple
     
      public SectorisationDao() {
         setClazz(Sectorisation.class);
+    }
+
+    @Override
+    public Sectorisation findByLibelle(String libelle) {
+        Query query = getCurrentSession()
+		.createQuery("from Sectorisation where upper(" + Sectorisation.PROPERTYNAME_LIBELLE + ") = :libelle");
+	query.setParameter("libelle", libelle.toUpperCase());
+	return (Sectorisation) query.uniqueResult();
     }
 }

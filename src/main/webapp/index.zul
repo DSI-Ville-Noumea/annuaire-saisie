@@ -30,12 +30,9 @@
                     <panel width="100%" border="normal" title="Annuaire">
                         <panelchildren style="padding:5px;">
                             <vlayout>
-                                <toolbarbutton label="Mairie"
-                                               onClick=""/>
-                                <toolbarbutton label="Guest"
-                                               onClick="@command('openViewGuestTab')"/>
-                                <toolbarbutton label="Locality"
-                                               onClick="@command('openViewLocalityTab')"/>
+                                <toolbarbutton label="Mairie" href="http://localhost:8080/annuairev2-web"/>
+                                <toolbarbutton label="Guest &amp; Locality"
+                                               onClick="@command('openViewEntitytTab')"/>
                             </vlayout>
                         </panelchildren>
                     </panel>
