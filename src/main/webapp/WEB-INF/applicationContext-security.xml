@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:jee="http://www.springframework.org/schema/jee"
+             xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd">
+
+
+    <http auto-config="true" access-decision-manager-ref="accessDecisionManager">
+        <port-mappings>
+            <port-mapping http="8080" https="8443"/>
+        </port-mappings>
+        
+        <intercept-url pattern="/zkau/**" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any"/>
+        <intercept-url pattern="/login.zul" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/j_spring_security_check" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/version.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/img/DSI-logo-blason-or.png" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/css/style.css" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/style.css" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/img/bg-login.jpeg" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/img/logo-mairie-transparent.png" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/incident.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/maintenance.jsp" access="IS_AUTHENTICATED_ANONYMOUSLY" requires-channel="any" />
+        <intercept-url pattern="/**" access="USER" requires-channel="any" />
+
+        <session-management session-fixation-protection="none" />
+
+        <form-login login-page="/login.zul"
+                    authentication-failure-url="/login.zul?login_error=1"
+                    default-target-url="/index.zul"
+                    always-use-default-target="true"
+                    login-processing-url="/j_spring_security_check"/>
+
+        <logout logout-success-url="/login.zul" invalidate-session="true" />
+    </http>
+    
+    <authentication-manager>
+        <authentication-provider ref="customLdapAuthProvider"/>
+    </authentication-manager>
+
+    <!-- LDAP authentication provider -->
+    <beans:bean id="customLdapAuthProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+        <beans:constructor-arg name="authenticator">
+            <beans:bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+                <beans:constructor-arg name="contextSource" ref="ldapServer"/>
+                <beans:property name="userSearch" ref="userSearch" />
+            </beans:bean>
+        </beans:constructor-arg>
+        <beans:constructor-arg name="authoritiesPopulator">
+            <beans:bean class="nc.noumea.mairie.annuairev2.saisie.core.security.AnnuaireAuthoritiesPopulator"/>
+        </beans:constructor-arg>
+    </beans:bean>
+
+    <beans:bean id="userSearch"
+          class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+        <beans:constructor-arg index="0" value="ou=Z-Users,dc=site-mairie,dc=noumea,dc=nc"/>
+        <beans:constructor-arg index="1" value="(sAMAccountName={0})"/>
+        <beans:constructor-arg index="2" ref="ldapServer" />
+        <beans:property name="searchSubtree" value="true" />
+    </beans:bean>
+
+    <!-- Spring ldap conf-->
+    <jee:jndi-lookup id="adUrl" jndi-name="ad/connectionURL" resource-ref="true" />
+    <jee:jndi-lookup id="adUrl2" jndi-name="ad/connectionURL2" resource-ref="true" />
+    <jee:jndi-lookup id="adUrl3" jndi-name="ad/connectionURL3" resource-ref="true" />
+    <jee:jndi-lookup id="adUserBase" jndi-name="ad/userBase" resource-ref="true" />
+    <jee:jndi-lookup id="adUserPassword" jndi-name="ad/userPassword" resource-ref="true" />
+    <beans:bean id="ldapServer" class="org.springframework.ldap.core.support.LdapContextSource">
+        <beans:property name="urls">
+            <beans:list>
+                <beans:ref bean="adUrl" />
+                <beans:ref bean="adUrl2" />
+                <beans:ref bean="adUrl3" />
+            </beans:list>
+        </beans:property>
+        <beans:property name="userDn" ref="adUserBase" />
+        <beans:property name="password" ref="adUserPassword" />
+    </beans:bean> 
+    
+    <global-method-security secured-annotations="enabled"  access-decision-manager-ref="accessDecisionManager"/>
+    
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter">
+                    <beans:property name="rolePrefix" value=""/>
+                </beans:bean>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+    
+    
+
+</beans:beans>

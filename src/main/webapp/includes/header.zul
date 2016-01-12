@@ -1,0 +1,18 @@
+<?taglib uri="/WEB-INF/security.tld" prefix="sec"?>
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.zkoss.org/2005/zk/native"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+
+    <div align="center" sclass="header-div">
+        <image sclass="header-mairie-logo" src="/img/DSI-logo-blason-or.png"/>
+        <div sclass="user-info-div">
+            <label id="user" style="margin-left: 5px" value="${sec:getUser()} ("/>
+            <h:a href="j_spring_security_logout">Déconnexion</h:a>
+            <label value=")"/>
+        </div>
+        <div sclass="header-title-div">
+            <label id="title" sclass="header-title1" value="Gestion des Guest et Locality"/>
+        </div>
+    </div>
+</zk>

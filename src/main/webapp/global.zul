@@ -1,0 +1,20 @@
+<style>
+
+	<![CDATA[
+
+
+	.z-loading { top: 50% !important; left: 45% !important; align:
+	center; vertical-align: middle; }
+	
+	/*.z-loading-indicator, .z-apply-loading-indicator {
+	    background: none repeat scroll 0 0 #D9F1F8;
+	}*/
+	
+	.z-loading, .z-apply-loading {
+	    background: none repeat scroll 0 0 #16ADC6;
+	/* 	    border: 1px solid #007B9C; */
+	}
+
+	]]>
+
+</style>
