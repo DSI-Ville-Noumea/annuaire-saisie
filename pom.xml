@@ -19,7 +19,7 @@
         <findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
         <spring.version>4.2.4.RELEASE</spring.version>
         <spring.security.version>4.0.3.RELEASE</spring.security.version>
-        <cglib.version>3.1</cglib.version>
+        <cglib.version>3.2.0</cglib.version>
         <hibernate.version>5.0.6.Final</hibernate.version>
         <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
     </properties>
