@@ -7,11 +7,13 @@
             viewModel="@id('vmSearch') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.SearchViewModel')"
             contentStyle="overflow:auto;">
         
-        <menubar autodrop="true"  visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)">
+        <menubar autodrop="true"  visible ="@load(vmSearch.showToolbar)">
             <menu label="Nouveau" iconSclass="glyphicon glyphicon-plus">
                 <menupopup>
-                    <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user"/>
-                    <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="glyphicon glyphicon-home"/>
+                    <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user" 
+                            visible="@load(vmSearch.user.gestionnaireGuest)"/>
+                    <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="glyphicon glyphicon-home"
+                            visible="@load(vmSearch.user.gestionnaireLocality)"/>
                 </menupopup>
             </menu>
         </menubar>
@@ -76,7 +78,7 @@
                             <listheader label="fax" sort="auto(fax)" width="10%" />
                             <listheader label="Service" sort="auto(service.libelle)" width="30%" />
                             <listheader label="Fonction" width="20%" />
-                            <listheader label="" visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)" width="5%" /><!-- delete -->
+                            <listheader label="" visible ="@load(vmSearch.showToolbar)" width="5%" /><!-- delete -->
                         </listhead>
                         <template name="model" var="e" >
                             <listitem>
@@ -93,8 +95,9 @@
                                 <listcell label="@load(e.fax)" onClick="@command('editEntity', idEntity=e.id, type=e.type)" sclass="align-center"/>
                                 <listcell label="@load(e.service.libelle)" sclass="align-left" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
                                 <listcell label="@load(e.type eq 'guest' ? e.fonction : '')" sclass="align-left" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
-                                <listcell visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)" sclass="align-center">
-                                    <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', idEntity=e.id)" />
+                                <listcell visible ="@load(vmSearch.showToolbar)" sclass="align-center">
+                                    <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', idEntity=e.id)" 
+                                        visible="@load((vmSearch.user.gestionnaireGuest and e.type eq 'guest') or (vmSearch.user.gestionnaireLocality and e.type eq 'locality')) "/>
                                 </listcell>
                             </listitem>
                         </template>

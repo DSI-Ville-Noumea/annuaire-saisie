@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
 import nc.noumea.mairie.annuairev2.saisie.core.security.SecurityUtil;
 import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
@@ -86,8 +87,9 @@ public class AdminGuestViewModel extends AbstractViewModel {
     @NotifyChange("*")
     public void initView(@ExecutionArgParam("args") Map<String, Object> args) {
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
-        this.readOnly = !(user.isGestionnaire() || user.isAdministrateur());
-        this.canAdmin = user.isGestionnaire() || user.isAdministrateur();
+        this.readOnly = !(user.getProfil().getNom() == CodeProfil.ADMIN || 
+                user.getProfil().getNom() == CodeProfil.GESTIONNAIRE || 
+                user.getProfil().getNom()== CodeProfil.GESTIONNAIRE_GUEST);
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         

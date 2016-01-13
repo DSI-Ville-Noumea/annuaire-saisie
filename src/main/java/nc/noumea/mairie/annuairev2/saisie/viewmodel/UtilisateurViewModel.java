@@ -72,6 +72,7 @@ public class UtilisateurViewModel extends AbstractViewModel {
 
 	utilisateurList = generateUtilisateurStatusList(utilisateurService.findAll());
 	profilList = new ListModelList<>(profilService.findAll());
+        Collections.sort(profilList);
 	user = utilisateurService.findByLogin(SecurityUtil.getUser());
 
     }

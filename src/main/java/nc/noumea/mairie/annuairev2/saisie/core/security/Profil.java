@@ -30,7 +30,7 @@ import java.util.List;
 
 @Entity
 @Table(name = Profil.TABLENAME)
-public class Profil extends AbstractEntity {
+public class Profil extends AbstractEntity implements Comparable<Profil>{
 
     private static final long serialVersionUID = -7315296392316499948L;
 
@@ -112,6 +112,11 @@ public class Profil extends AbstractEntity {
 
     public void setVersion(Integer version) {
 	this.version = version;
+    }
+
+    @Override
+    public int compareTo(Profil t) {
+        return this.nom.toString().compareTo(t.getNom().toString());
     }
 
 }

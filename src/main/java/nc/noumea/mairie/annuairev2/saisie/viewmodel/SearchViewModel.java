@@ -71,6 +71,7 @@ public class SearchViewModel extends AbstractViewModel {
     private List<String> serviceNameList;
     private StringSimpleListModel servicesListModel;
     private String searchMode;
+    private boolean showToolbar;
 
 
 
@@ -93,6 +94,8 @@ public class SearchViewModel extends AbstractViewModel {
         services = sectorisationService.findAll();
         serviceNameList = new ArrayList<>();
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
+        
+        showToolbar = user.isAdministrateur() || user.isGestionnaire() || user.isGestionnaireLocality() || user.isGestionnaireGuest();
         
         initSearchFields();
         
@@ -176,6 +179,16 @@ public class SearchViewModel extends AbstractViewModel {
     public String getSearchMode() {
         return searchMode;
     }
+
+    public boolean isShowToolbar() {
+        return showToolbar;
+    }
+
+    public void setShowToolbar(boolean showToolbar) {
+        this.showToolbar = showToolbar;
+    }
+    
+    
 
     @NotifyChange("searchMode")
     public void setSearchMode(String searchMode) {
