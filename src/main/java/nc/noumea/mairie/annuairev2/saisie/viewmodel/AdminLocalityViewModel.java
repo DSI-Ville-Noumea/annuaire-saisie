@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nc.noumea.mairie.annuairev2.saisie.viewmodel;
 
 /*
  * #%L
- * Gestion des Guest et Locality
+ * Gestion des Locality et Locality
  * %%
  * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
@@ -27,17 +22,16 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
  * #L%
  */
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
 import nc.noumea.mairie.annuairev2.saisie.core.security.SecurityUtil;
-import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 import nc.noumea.mairie.annuairev2.saisie.entity.Utilisateur;
-import nc.noumea.mairie.annuairev2.saisie.service.IGuestService;
+import nc.noumea.mairie.annuairev2.saisie.service.ILocalityService;
 import nc.noumea.mairie.annuairev2.saisie.service.ISectorisationService;
 import nc.noumea.mairie.annuairev2.saisie.service.IUtilisateurService;
 import org.zkoss.bind.BindUtils;
@@ -46,41 +40,30 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
-import org.zkoss.zk.ui.Component;
-import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Combobox;
-import org.zkoss.zul.Constraint;
-import org.zkoss.zul.Textbox;
 
 /**
  *
  * @author barmi83
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
-public class AdminGuestViewModel extends AbstractViewModel {
+public class AdminLocalityViewModel extends AbstractViewModel {
     
     @WireVariable
-    private IGuestService guestService;
+    private ILocalityService localityService;
     @WireVariable
     private ISectorisationService sectorisationService;
     @WireVariable
     private IUtilisateurService utilisateurService;
      
-    private Guest selectedEntity;
+    private Locality selectedEntity;
     private boolean readOnly;
     private List<Sectorisation> services;
-    private List<String> serviceNameList;
-    private StringSimpleListModel servicesListModel;
-    
     private Utilisateur user;
     private boolean canAdmin;
-    
-     // controle
-    private CustomGuestConstraint guestConstraint;
        
     
     @Init
@@ -89,32 +72,22 @@ public class AdminGuestViewModel extends AbstractViewModel {
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
         this.readOnly = !(user.getProfil().getNom() == CodeProfil.ADMIN || 
                 user.getProfil().getNom() == CodeProfil.GESTIONNAIRE || 
-                user.getProfil().getNom()== CodeProfil.GESTIONNAIRE_GUEST);
+                user.getProfil().getNom()== CodeProfil.GESTIONNAIRE_LOCALITY);
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         
-        serviceNameList = new ArrayList<>();
-        for (Sectorisation service : services) {
-            serviceNameList.add(service.getLibelle());
-        }
-        Collections.sort(serviceNameList);
-        servicesListModel = new StringSimpleListModel(serviceNameList);
-        
-        if(args.get("idGuest") != null)
-            this.selectedEntity = guestService.findById((Long)args.get("idGuest"));
+        if(args.get("idLocality") != null)
+            this.selectedEntity = localityService.findById((Long)args.get("idLocality"));
         else
-            this.selectedEntity = new Guest();
-        
-        setGuestConstraint(new CustomGuestConstraint());
-
+            this.selectedEntity = new Locality();
     }
 
-    public Guest getSelectedEntity() {
+    public Locality getSelectedEntity() {
         return selectedEntity;
     }
 
-    public void setSelectedEntity(Guest guest) {
-        this.selectedEntity = guest;
+    public void setSelectedEntity(Locality locality) {
+        this.selectedEntity = locality;
     }
 
     public boolean isReadOnly() {
@@ -148,110 +121,54 @@ public class AdminGuestViewModel extends AbstractViewModel {
     public void setCanAdmin(boolean canAdmin) {
         this.canAdmin = canAdmin;
     }
-
-    public List<String> getServiceNameList() {
-        return serviceNameList;
-    }
-
-    public void setServiceNameList(List<String> serviceNameList) {
-        this.serviceNameList = serviceNameList;
-    }
-
-    public StringSimpleListModel getServicesListModel() {
-        return servicesListModel;
-    }
-
-    public void setServicesListModel(StringSimpleListModel servicesListModel) {
-        this.servicesListModel = servicesListModel;
-    }
-
-    public CustomGuestConstraint getGuestConstraint() {
-        return guestConstraint;
-    }
-
-    public void setGuestConstraint(CustomGuestConstraint guestConstraint) {
-        this.guestConstraint = guestConstraint;
-    }
-    
-    
     
     
     
     
     @Command
     @NotifyChange({"selectedEntity"})
-    public void  saveOrUpdateGuest(){
-        selectedEntity = guestService.saveOrUpdate(selectedEntity);
+    public void  saveOrUpdateLocality(){
+        selectedEntity = localityService.saveOrUpdate(selectedEntity);
         Map<String, Object> args = new HashMap<>();
-        args.put("tmpTabId", "tmpGuestTab");
-        args.put("idGuest", selectedEntity.getId());
-        BindUtils.postGlobalCommand(null, null, "refreshNewGuestTabId", args);
-        this.showBottomRightNotification("Guest modifié avec succés.");
+        args.put("tmpTabId", "tmpLocalityTab");
+        args.put("idLocality", selectedEntity.getId());
+        BindUtils.postGlobalCommand(null, null, "refreshNewLocalityTabId", args);
+        this.showBottomRightNotification("Locality modifié avec succés.");
     }
     
     @Command
     @NotifyChange({"selectedEntity"})
     public void  refresh(){
         if(selectedEntity.getId() != null)
-            selectedEntity = guestService.findById(selectedEntity.getId());
+            selectedEntity = localityService.findById(selectedEntity.getId());
         else
-            selectedEntity = new Guest();
+            selectedEntity = new Locality();
         
         this.showBottomRightNotification("Modifications annulées.");
     }
     
     @Command
-    public void  deleteGuest(){
+    public void  deleteLocality(){
         
         if(selectedEntity.getId() == null)
             BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
         else{
-            Messagebox.show("Vous allez supprimer le guest \"" + selectedEntity.getFullName()
+            Messagebox.show("Vous allez supprimer la locality \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
-                    "Supprimer un guest", Messagebox.OK |
+                    "Supprimer une locality", Messagebox.OK |
                             Messagebox.CANCEL, Messagebox.QUESTION,
                     new EventListener() {
                         public void onEvent(Event e) {
 
                             if (Messagebox.ON_OK.equals(e.getName())) {
-                                guestService.deleteById(selectedEntity.getId());
+                                localityService.deleteById(selectedEntity.getId());
                                 BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
-                                showBottomRightNotification("Guest supprimé avec succès.");
+                                showBottomRightNotification("Locality supprimé avec succès.");
                             }
 
                         }
                     });
         }        
-    }
-    
-    
-    private class CustomGuestConstraint implements Constraint {
-
-	@Override
-	public void validate(Component comp, Object value) throws WrongValueException {
-            System.out.println("validate");
-	    if (comp instanceof Textbox) {
-                System.out.println("textbox");
-		if (("posteTxtBox".equals(comp.getId()))) {
-		    if (value != null && !((String) value).isEmpty()) {
-                        if (((String) value).length() != 4 ){
-			    throw new WrongValueException(comp,
-				    "Le numéro de poste doit etre composé de 4 chiffes.");
-			}
-		    }
-		    else {
-			throw new WrongValueException(comp,
-				"Champ vide non autorisé.\nVous devez spécifier une valeur.");
-		    }
-		}
-		else if ("mailTxtBox".equals(comp.getId())) {
-		   if (!((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
-			    throw new WrongValueException(comp,
-				    "Adresse email invalide.");
-			}
-		}
-	    }
-	}
     }
     
     

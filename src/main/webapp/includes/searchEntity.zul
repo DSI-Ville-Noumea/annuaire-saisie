@@ -7,28 +7,36 @@
             viewModel="@id('vmSearch') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.SearchViewModel')"
             contentStyle="overflow:auto;">
         
-        <toolbar mold="default" visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)">
-            <toolbarbutton iconSclass="glyphicon glyphicon-plus" onClick="@command('newGuest')" label="Nouveau"/>
-	</toolbar>
+        <menubar autodrop="true"  visible ="@load(vmSearch.showToolbar)">
+            <menu label="Nouveau" iconSclass="glyphicon glyphicon-plus">
+                <menupopup>
+                    <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user" 
+                            visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireGuest)"/>
+                    <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="glyphicon glyphicon-home"
+                            visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireLocality)"/>
+                </menupopup>
+            </menu>
+        </menubar>
 				
 	<space height="10px" />
             
         <vlayout width="100%" style="float:left; margin-right:10px;margin-top:17px">
-                    <!--<groupbox closable="false" id="searchCriteria" height="100%"  >-->
-                        <grid  autopaging="true" mold="paging" vflex="1" >
+                        <grid  autopaging="true" mold="paging" height="100%">
                             <auxhead>
-                                <auxheader colspan="4" label="Recherche" />
+                                <auxheader colspan="6" label="Recherche" />
                             </auxhead>
                             <columns >
-                                <column width="10%" align="right" />
-                                <column width="40%" />
-                                <column width="10%" align="right"/>
-                                <column width="40%" />
+                                <column width="5%" align="right" />
+                                <column width="30%" />
+                                <column width="5%" align="right"/>
+                                <column width="30%" />
+                                <column width="5%" align="right" />
+                                <column width="30%" align="left"/>
                             </columns>
                             <rows>
                                 <row valign="top" align="left" >
                                     <label value="Nom : " sclass="blueColor"/>
-                                    <textbox value="@load(vmSearch.nom) @save(vmSearch.nom, before='search')" />
+                                    <textbox value="@load(vmSearch.nom) @save(vmSearch.nom, before='search')" width="100%"/>
                                     <label value="Service : " sclass="blueColor"/>
                                     <combobox id="serviceCbox" model="@load(vmSearch.servicesListModel)" buttonVisible="false"
 					selectedItem="@bind(vmSearch.service)" hflex="1"
@@ -39,10 +47,16 @@
                                             <comboitem label="@load(each)"/>
                             		</template>
                         	    </combobox>
+                                    <label value="Type : " sclass="blueColor"/>
+                                    <radiogroup selectedItem="@bind(vmSearch.searchMode)" width="100%" >
+                                        <radio label="Tous" value="all" selected="true" style="margin-right:10px"/>
+                                        <radio label="Guest" value="guest" style="margin-right:10px"/>
+                                        <radio label="Locality" value="locality" style="margin-right:10px"/>
+                                    </radiogroup>
                                 </row>
                                 <row>
-                                    <cell colspan="4" style="text-align:center" >
-                                        <div class="btn-group">
+                                    <cell colspan="6" style="text-align:center" >
+                                        <div class="btn-group btn-group-sm">
                                         <button type="button" label="Rechercher" class="btn btn-default" onClick="@command('search')"/>
                                         <button type="button" label="Effacer" class="btn btn-default" onClick="@command('resetSearch')"/>
                                         </div>
@@ -50,37 +64,44 @@
                                 </row>
                             </rows>
                         </grid>
-                    <!--</groupbox>-->
                     <listbox model="@bind(vmSearch.searchResults)" id="searchResult" width="auto%"
                              selectedItem="@bind(vmSearch.selectedEntity)"
                              mold="paging" pageSize="15" emptyMessage="Aucun guest" height="100%" >
                         <custom-attributes autoSort="true" />
 
                         <listhead sizable="true">
-                            <listheader label="Identifiant" sort="auto(identifiant)" width="10%"/>
-                            <listheader label="Nom" sort="auto(nom)" width="30%" />
-                            <listheader label="Poste" width="5%" />
-                            <listheader label="Service" width="30%" />
+                            <listheader label="Type" sort="auto(type)" width="3%"/>
+                            <listheader label="Identifiant" sort="auto(identifiant)" width="5%"/>
+                            <listheader label="Nom" sort="auto(fullName)" width="25%" />
+                            <listheader label="Poste" sort="auto(poste)" width="5%" />
+                            <listheader label="Ligne Directe" sort="auto(ligneDirecte)" width="10%" />
+                            <listheader label="fax" sort="auto(fax)" width="10%" />
+                            <listheader label="Service" sort="auto(service.libelle)" width="30%" />
                             <listheader label="Fonction" width="20%" />
-                            <!--<listheader width="5%" label="" align="center"/> edit -->
-                            <listheader width="5%" label="" align="center" visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)"/><!-- delete -->
+                            <listheader label="" visible ="@load(vmSearch.showToolbar)" width="5%" /><!-- delete -->
                         </listhead>
                         <template name="model" var="e" >
-                            <listitem  >
-                                <listcell label="@bind(e.identifiant)" sclass="align-center" onClick="@command('editGuest', idGuest=e.id)"/>
-                                <listcell label="@bind(e.fullName)" onClick="@command('editGuest', idGuest=e.id)"/>
-                                <listcell label="@bind(e.poste)" onClick="@command('editGuest', idGuest=e.id)"/>
-                                <listcell label="@bind(e.service.libelle)" sclass="align-left" onClick="@command('editGuest', idGuest=e.id)"/>
-                                <listcell label="@bind(e.fonction)" sclass="align-left" onClick="@command('editGuest', idGuest=e.id)"/>
-                                <listcell visible ="@load(vmSearch.user.administrateur || vmSearch.user.gestionnaire)">
-                                    <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', idGuest=e.id)" />
+                            <listitem>
+                                <listcell visible="@load(e.type eq 'locality')" sclass="align-center">
+                                    <span zclass="glyphicon glyphicon-home" tooltip="Locality" />
+                                </listcell>
+                                <listcell visible="@load(e.type eq 'guest')" sclass="align-center">                                
+                                    <span zclass="glyphicon glyphicon-user"  tooltip="Guest"/>
+                                </listcell>    
+                                <listcell label="@load(e.identifiant)" sclass="align-center" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
+                                <listcell label="@load(e.fullName)" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
+                                <listcell label="@load(e.poste)" onClick="@command('editEntity', idEntity=e.id, type=e.type)" sclass="align-center"/>
+                                <listcell label="@load(e.ligneDirecte)" onClick="@command('editEntity', idEntity=e.id, type=e.type)" sclass="align-center"/>
+                                <listcell label="@load(e.fax)" onClick="@command('editEntity', idEntity=e.id, type=e.type)" sclass="align-center"/>
+                                <listcell label="@load(e.service.libelle)" sclass="align-left" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
+                                <listcell label="@load(e.type eq 'guest' ? e.fonction : '')" sclass="align-left" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
+                                <listcell visible ="@load(vmSearch.showToolbar)" sclass="align-center">
+                                    <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', idEntity=e.id)" 
+                                        visible="@load((vmSearch.user.gestionnaireGuest and e.type eq 'guest') or (vmSearch.user.gestionnaireLocality and e.type eq 'locality')) "/>
                                 </listcell>
                             </listitem>
                         </template>
                     </listbox>
             </vlayout>
-<!--            <vlayout width="25%" style="margin-right:5px">
-                <include id="includeGuestDetail" src="includes/guestDetail.zul" view="${vmSearch}"/>
-            </vlayout>-->
     </window>
 </zk>

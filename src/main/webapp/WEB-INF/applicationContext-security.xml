@@ -4,12 +4,14 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:jee="http://www.springframework.org/schema/jee"
              xsi:schemaLocation="
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
-		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.1.xsd">
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd">
 
 
-    <http auto-config="true" access-decision-manager-ref="accessDecisionManager">
+
+     
+    <http auto-config="true" access-decision-manager-ref="accessDecisionManager" use-expressions="false" disable-url-rewriting="false">
         <port-mappings>
             <port-mapping http="8080" https="8443"/>
         </port-mappings>
@@ -33,9 +35,11 @@
                     authentication-failure-url="/login.zul?login_error=1"
                     default-target-url="/index.zul"
                     always-use-default-target="true"
-                    login-processing-url="/j_spring_security_check"/>
+                    />
 
         <logout logout-success-url="/login.zul" invalidate-session="true" />
+        <access-denied-handler error-page="/login.zul?denied=1"/>
+         <csrf disabled="true" />
     </http>
     
     <authentication-manager>
@@ -81,17 +85,19 @@
         <beans:property name="password" ref="adUserPassword" />
     </beans:bean> 
     
-    <global-method-security secured-annotations="enabled"  access-decision-manager-ref="accessDecisionManager"/>
+    <global-method-security secured-annotations="enabled"  access-decision-manager-ref="accessDecisionManager"/>   
     
     <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-        <beans:property name="decisionVoters">
+        <beans:constructor-arg>
+<!--        <beans:property name="decisionVoters">-->
             <beans:list>
                 <beans:bean class="org.springframework.security.access.vote.RoleVoter">
                     <beans:property name="rolePrefix" value=""/>
                 </beans:bean>
                 <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
             </beans:list>
-        </beans:property>
+        <!--</beans:property>-->
+        </beans:constructor-arg>
     </beans:bean>
     
     

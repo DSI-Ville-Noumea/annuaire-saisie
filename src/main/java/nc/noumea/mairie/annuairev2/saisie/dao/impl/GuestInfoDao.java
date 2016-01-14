@@ -28,6 +28,7 @@ import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestInfoDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
@@ -64,5 +65,13 @@ public class GuestInfoDao extends AbstractHibernateDao<GuestInfo> implements IGu
 	    results = new ArrayList<>();
 
 	return results;
+    }
+    
+    @Override
+    public GuestInfo findByIdentifiant(String identifiant) {
+       Query query = getCurrentSession()
+		.createQuery("from GuestInfo where ('G' || lpad("+GuestInfo.PROPERTYNAME_ID+",4,0)) = :identifiant");
+	query.setParameter("identifiant", identifiant);
+	return (GuestInfo) query.uniqueResult();
     }
 }

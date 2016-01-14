@@ -25,10 +25,9 @@ package nc.noumea.mairie.annuairev2.saisie.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
-import nc.noumea.mairie.annuairev2.saisie.dao.IGuestDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
+import nc.noumea.mairie.annuairev2.saisie.dao.ILocalityDao;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
@@ -36,42 +35,33 @@ import org.springframework.stereotype.Repository;
  * Created by barmi83 on 30/12/15.
  */
 @Repository
-public class GuestDao extends AbstractHibernateDao<Guest> implements IGuestDao {
+public class LocalityDao extends AbstractHibernateDao<Locality> implements ILocalityDao {
 
-    public GuestDao() {
-        setClazz(Guest.class);
+    public LocalityDao() {
+        setClazz(Locality.class);
     }
 
     @Override
-    public List<Guest> findByNomEtService(String nom, String service) {
+    public List<Locality> findByNomEtService(String nom, String service) {
         SQLQuery query = getCurrentSession().createSQLQuery(
-		"select g.* from " + Guest.TABLENAME + " g " +
-			" join " + Sectorisation.TABLENAME + " s on g." + Guest.JOIN_COLUMNNAME_SERVICE + " = s."
+		"select l.* from " + Locality.TABLENAME + " l " +
+			" join " + Sectorisation.TABLENAME + " s on l." + Locality.JOIN_COLUMNNAME_SERVICE + " = s."
 			+ Sectorisation.COLUMNNAME_ID 
                         + " where " 
-                        + (nom != null ? "(lower(g."+Guest.COLUMNNAME_NOM+") like :nom or lower(g."+Guest.COLUMNNAME_PRENOM+") like :nom)" : "")
+                        + (nom != null ? "lower(l."+Locality.COLUMNNAME_NOM+") like :nom " :"")
                         + ((service != null && nom != null) ? " and " : "")
 			+ (service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": ""));
-			
-        System.out.println("query:"+query);
-	query.addEntity(Guest.class);
+	       System.out.println("query:"+query);
+	query.addEntity(Locality.class);
 	if(nom != null)
-            query.setParameter("nom", nom.toLowerCase());
+            query.setParameter("nom", "%"+nom.toLowerCase()+"%");
         if(service != null)
             query.setParameter("serviceName", service);
 
-	List<Guest> results = (List<Guest>) query.list();
+	List<Locality> results = (List<Locality>) query.list();
 	if (results == null)
 	    results = new ArrayList<>();
 
 	return results;
-    }
-
-    @Override
-    public Guest findByIdentifiant(String identifiant) {
-       Query query = getCurrentSession()
-		.createQuery("from Guest where ('G' || lpad("+Guest.PROPERTYNAME_ID+",4,0)) = :identifiant");
-	query.setParameter("identifiant", identifiant);
-	return (Guest) query.uniqueResult();
     }
 }

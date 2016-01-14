@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package nc.noumea.mairie.annuairev2.saisie.service.impl;
 
@@ -27,44 +25,48 @@ package nc.noumea.mairie.annuairev2.saisie.service.impl;
  * #L%
  */
 
-import java.util.ArrayList;
+
+
 import java.util.List;
-import nc.noumea.mairie.annuairev2.saisie.dao.ISectorisationDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
-import nc.noumea.mairie.annuairev2.saisie.service.ISectorisationService;
+import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
+import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
+import nc.noumea.mairie.annuairev2.saisie.dao.IProfilDao;
+import nc.noumea.mairie.annuairev2.saisie.service.IProfilService;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author barmi83
+ * @since 0.2.0
  */
-@Service(ISectorisationService.BEAN_ID)
-public class SectorisationService implements ISectorisationService{
+@Service(IProfilService.BEAN_ID)
+public class ProfilService implements IProfilService {
+
+    private Logger logger = LoggerFactory.getLogger(ProfilService.class);
 
     @Autowired
-    private ISectorisationDao sectorisationDao;
-    
+    IProfilDao profilDao;
+
     @Override
     @Transactional(readOnly = true)
-    public List<Sectorisation> findAll() {
-        List<Sectorisation> results = sectorisationDao.findAll();
-        if(results == null)
-            results = new ArrayList<>();
-        
-        return results;
+    public Profil findByLogin(String login) {
+	return profilDao.findByLogin(login);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Sectorisation findById(Long id) {
-        return sectorisationDao.findById(id);
+    public Profil findByProfilName(CodeProfil code) {
+	return profilDao.findByProfilName(code);
     }
 
     @Override
-    public Sectorisation findByLibelle(String libelle) {
-    return sectorisationDao.findByLibelle(libelle);    
+    public List<Profil> findAll() {
+	return profilDao.findAll();
     }
-    
+
 }

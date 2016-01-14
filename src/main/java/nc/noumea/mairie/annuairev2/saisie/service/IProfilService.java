@@ -1,13 +1,13 @@
-package nc.noumea.mairie.annuairev2.saisie.dao;
-
-import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
+/**
+ * 
+ */
+package nc.noumea.mairie.annuairev2.saisie.service;
 
 /*
  * #%L
  * Gestion des Guest et Locality
  * %%
- * Copyright (C) 2015 Mairie de Nouméa
+ * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -25,12 +25,23 @@ import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
  * #L%
  */
 
+import java.util.List;
+import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
+import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
+
+
 /**
- * Created by barmi83 on 30/12/15.
+ * @author barmi83
+ * @since 0.2.0
  */
-public interface ISectorisationDao extends IGenericDao<Sectorisation> {
-    
-    public static final String BEAN_ID = "sectorisationDao";
-    
-    public Sectorisation findByLibelle(String libelle);
+public interface IProfilService {
+
+    public static final String BEAN_ID = "profilService";
+
+    public Profil findByLogin(String login);
+
+    public Profil findByProfilName(CodeProfil code);
+
+    public List<Profil> findAll();
+
 }

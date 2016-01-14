@@ -39,11 +39,14 @@ import org.springframework.security.access.annotation.Secured;
 public interface ISectorisationService {
     
     public static final String BEAN_ID = "sectorisationService";
+    
+    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT, AnnuaireSaisiePerm.LOCALITY_CONSULT })
+    public Sectorisation findByLibelle(String libelle);
 
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
+    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT, AnnuaireSaisiePerm.LOCALITY_CONSULT  })
     public List<Sectorisation> findAll();
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
+    @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT, AnnuaireSaisiePerm.LOCALITY_CONSULT  })
     public Sectorisation findById(Long id);
     
 }

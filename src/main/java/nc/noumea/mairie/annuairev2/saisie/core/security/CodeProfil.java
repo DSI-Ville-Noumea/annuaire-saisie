@@ -39,6 +39,8 @@ import java.util.List;
 public enum CodeProfil {
 	ADMIN("Administrateur"),
 	GESTIONNAIRE("Gestionnaire"),
+        GESTIONNAIRE_GUEST("Gestionnaire Guest"),
+        GESTIONNAIRE_LOCALITY("Gestionnaire Locality"),
 	CONSULTANT("Consultant");
 	
 	

@@ -24,6 +24,7 @@ package nc.noumea.mairie.annuairev2.saisie.dao;
 
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
+import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
 
 /**
@@ -34,5 +35,8 @@ public interface IGuestInfoDao extends IGenericDao<GuestInfo> {
     public static final String BEAN_ID = "guestInfoDao";
     
     public List<GuestInfo> findByNomEtService(String nom, String service);
+    
+    public GuestInfo findByIdentifiant(String identifiant);
+
 
 }

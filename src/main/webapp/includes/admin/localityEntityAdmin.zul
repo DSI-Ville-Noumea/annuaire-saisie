@@ -4,18 +4,18 @@
     xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
     <window vflex="1" hflex="1" border="none"
             apply="org.zkoss.bind.BindComposer"
-            viewModel="@id('vm') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.AdminGuestViewModel')"
+            viewModel="@id('vm') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.AdminLocalityViewModel')"
             contentStyle="overflow:auto;">
 
         <toolbar mold="default">
-            <toolbarbutton iconSclass="glyphicon glyphicon-floppy-disk" onClick="@command('saveOrUpdateGuest')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
+            <toolbarbutton iconSclass="glyphicon glyphicon-floppy-disk" onClick="@command('saveOrUpdateLocality')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
             <toolbarbutton iconSclass="glyphicon glyphicon-refresh" onClick="@command('refresh')" label="Recharger"/>
             <toolbarbutton iconSclass="glyphicon glyphicon-trash" onClick="@command('deleteGuest')" label="Supprimer" visible="@load(not(vm.readOnly))"/>
 	</toolbar>
         
         <space height="10px" />
         
-        <include src="/includes/guestDetail.zul" /> 
+        <include src="/includes/localityDetail.zul" /> 
 
     </window>
 </zk>

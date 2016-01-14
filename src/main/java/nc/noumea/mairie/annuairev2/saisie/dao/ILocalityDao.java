@@ -1,8 +1,5 @@
 package nc.noumea.mairie.annuairev2.saisie.dao;
 
-import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
-
 /*
  * #%L
  * Gestion des Guest et Locality
@@ -25,12 +22,17 @@ import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
  * #L%
  */
 
+import java.util.List;
+import nc.noumea.mairie.annuairev2.saisie.core.dao.IGenericDao;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
+
 /**
  * Created by barmi83 on 30/12/15.
  */
-public interface ISectorisationDao extends IGenericDao<Sectorisation> {
+public interface ILocalityDao extends IGenericDao<Locality> {
+
+    public static final String BEAN_ID = "localityDao";
     
-    public static final String BEAN_ID = "sectorisationDao";
-    
-    public Sectorisation findByLibelle(String libelle);
+    public List<Locality> findByNomEtService(String nom, String service);
+
 }

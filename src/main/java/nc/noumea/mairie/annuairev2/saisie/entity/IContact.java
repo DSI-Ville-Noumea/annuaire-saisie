@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nc.noumea.mairie.annuairev2.saisie.dao.impl;
+package nc.noumea.mairie.annuairev2.saisie.entity;
 
 /*
  * #%L
@@ -27,28 +27,40 @@ package nc.noumea.mairie.annuairev2.saisie.dao.impl;
  * #L%
  */
 
-import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
-import nc.noumea.mairie.annuairev2.saisie.dao.ISectorisationDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
-import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author barmi83
  */
-@Repository
-public class SectorisationDao extends  AbstractHibernateDao<Sectorisation> implements ISectorisationDao{
+public interface IContact extends Comparable<IContact>{
     
-     public SectorisationDao() {
-        setClazz(Sectorisation.class);
-    }
+    public static final String TYPE_GUEST = "guest";
+    public static final String TYPE_LOCALITY = "locality";
+    
+    public String getNom();
 
-    @Override
-    public Sectorisation findByLibelle(String libelle) {
-        Query query = getCurrentSession()
-		.createQuery("from Sectorisation where upper(" + Sectorisation.PROPERTYNAME_LIBELLE + ") = :libelle");
-	query.setParameter("libelle", libelle.toUpperCase());
-	return (Sectorisation) query.uniqueResult();
-    }
+    public void setNom(String nom);
+
+    public Sectorisation getService();
+
+    public void setService(Sectorisation service);
+   
+    public String getPoste();
+
+    public void setPoste(String poste);
+
+    public String getLigneDirecte();
+
+    public void setLigneDirecte(String ligneDirecte);
+
+    public String getFax();
+
+    public void setFax(String fax);
+    
+    public String getFullName();
+    
+    public String getIdentifiant();
+    
+    public String getType();
+
+    
 }

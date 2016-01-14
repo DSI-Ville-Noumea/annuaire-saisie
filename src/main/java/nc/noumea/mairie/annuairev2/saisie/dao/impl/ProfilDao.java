@@ -1,7 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
  */
 package nc.noumea.mairie.annuairev2.saisie.dao.impl;
 
@@ -28,27 +26,36 @@ package nc.noumea.mairie.annuairev2.saisie.dao.impl;
  */
 
 import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
-import nc.noumea.mairie.annuairev2.saisie.dao.ISectorisationDao;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
+import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
+import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
+import nc.noumea.mairie.annuairev2.saisie.dao.IProfilDao;
+
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 /**
- *
  * @author barmi83
+ * @since
  */
-@Repository
-public class SectorisationDao extends  AbstractHibernateDao<Sectorisation> implements ISectorisationDao{
-    
-     public SectorisationDao() {
-        setClazz(Sectorisation.class);
+@Repository(IProfilDao.BEAN_ID)
+public class ProfilDao extends AbstractHibernateDao<Profil> implements IProfilDao {
+
+    public ProfilDao() {
+	setClazz(Profil.class);
     }
 
     @Override
-    public Sectorisation findByLibelle(String libelle) {
-        Query query = getCurrentSession()
-		.createQuery("from Sectorisation where upper(" + Sectorisation.PROPERTYNAME_LIBELLE + ") = :libelle");
-	query.setParameter("libelle", libelle.toUpperCase());
-	return (Sectorisation) query.uniqueResult();
+    public Profil findByLogin(String login) {
+	Query query = getCurrentSession().createQuery("select profil from Utilisateur where identifiant = :username");
+	query.setParameter("username", login);
+	return (Profil) query.uniqueResult();
     }
+
+    @Override
+    public Profil findByProfilName(CodeProfil code) {
+	Query query = getCurrentSession().createQuery("from Profil where nom = :nom");
+	query.setParameter("nom", code);
+	return (Profil) query.uniqueResult();
+    }
+
 }

@@ -26,7 +26,7 @@ package nc.noumea.mairie.annuairev2.saisie.viewmodel;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.zkoss.zul.SimpleListModel;
 
 public class ContainsSimpleListModel<T> extends SimpleListModel<T> {

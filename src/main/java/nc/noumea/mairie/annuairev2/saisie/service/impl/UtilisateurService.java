@@ -45,7 +45,7 @@ import java.util.List;
 public class UtilisateurService implements IUtilisateurService {
 
     @Autowired
-	IUtilisateurDao utilisateurDao;
+    IUtilisateurDao utilisateurDao;
 
     @Override
     @Transactional(readOnly = true)

@@ -1,0 +1,93 @@
+<zk xmlns="http://www.zkoss.org/2005/zul"
+    xmlns:h="http://www.w3.org/1999/xhtml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.zkoss.org/2005/zul http://www.zkoss.org/2005/zul/zul.xsd">
+    <window vflex="1" hflex="1" border="none"
+    	apply="org.zkoss.bind.BindComposer"
+    	viewModel="@id('vmUser') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.UtilisateurViewModel')"
+    	contentStyle="overflow:auto;">
+    	
+    	<toolbar mold="default">
+			<toolbarbutton iconSclass="glyphicon glyphicon-plus" onClick="@command('createUtilisateur')" label="Nouveau"/>
+		</toolbar>
+		
+<!--		<div sclass="tabs-subtitle">-->
+        	<!--<label hflex="1" value="Gestion des utilisateurs" sclass="tabs-subtitle"/>-->
+<!--        </div>-->
+        
+        <space height="20px" />
+
+        <listbox id="userList" sclass="center" 
+            model="@load(vmUser.utilisateurList) @template(each.editingStatus ? 'editable' : 'noneditable')"
+            mold="paging" pageSize="15" width="80%">
+            <listhead sclass="normalFont" sizable="true">
+            	<listheader width="25%" label="Nom"  sort="auto(utilisateur.nom)"/>
+                <listheader width="25%" label="Prénom" sort="auto(utilisateur.prenom)"/>
+                <listheader width="15%" label="Identifiant"  sort="auto(utilisateur.identifiant)"/>
+                <listheader width="15%" label="Rôle" sort="auto(utilisateur.profil.nom)"/>
+                <listheader width="5%" label="Actif" align="center" sort="auto(utilisateur.actif)"/>
+                <listheader width="5%" label="" align="center"/> <!-- edit -->
+                <listheader width="5%" label="" align="center"/><!-- delete -->
+           </listhead>
+           <template name="editable" >
+                <listitem>
+                    <listcell >
+                    	<textbox  value="@load(each.utilisateur.nom) @save(each.utilisateur.nom, before='saveOrUpdateUser')" constraint="no empty, /^([^0-9]*)$/:Les caractères numériques ne sont pas autorisés."/>
+                    </listcell>
+                    <listcell>
+                    	<textbox value="@load(each.utilisateur.prenom) @save(each.utilisateur.prenom, before='saveOrUpdateUser')" constraint="no empty, /^([^0-9]*)$/:Les caractères numériques ne sont pas autorisés."/>
+                    </listcell>
+                    <listcell>
+                    	<textbox value="@load(each.utilisateur.identifiant) @save(each.utilisateur.identifiant, before='saveOrUpdateUser')" constraint="no empty, /^[a-z]{5}[0-9]{2}$/:L'identifiant doit être composé de 5 caractères et 2 chiffres."/>
+                    </listcell>
+                    <listcell> 
+                     	<combobox id="profilCombo" model="@load(vmUser.profilList)" 
+							hflex="1" autocomplete="true" autodrop="true"	
+							readonly="true" 	
+							disabled="@load(vmUser.user.identifiant eq each.utilisateur.identifiant)"
+							selectedItem="@load(each.utilisateur.profil) @save(each.utilisateur.profil, before='saveOrUpdateUser')"
+							constraint="no empty">								
+                            <template name="model" var="prof">
+                            	<comboitem label="@load(prof.nom)"/>
+                            </template>
+                     	</combobox>
+                     </listcell>
+                     <listcell>   
+                    	<checkbox checked="@load(each.utilisateur.actif) @save(each.utilisateur.actif, before='saveOrUpdateUser')"/>
+                    </listcell>  
+                    <listcell>
+                    	<span zclass="glyphicon glyphicon-ok green mediumIcon" onClick="@command('saveOrUpdateUser', item=each)"/>
+                    	<space width="5px"></space>
+                    	<span zclass="glyphicon glyphicon-remove red mediumIcon" onClick="@command('cancel', item=each)"/>
+                    </listcell>
+                    <listcell>
+                        <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', item=each)" visible="@load(each.utilisateur.id ne null)"/>
+                    </listcell>         
+                </listitem>
+            </template>
+            <template name="noneditable">
+                <listitem>
+                    <listcell label="@load(each.utilisateur.nom)" />
+                    <listcell label="@load(each.utilisateur.prenom)" />
+                    <listcell label="@load(each.utilisateur.identifiant)" />
+                    <listcell label="@load(each.utilisateur.profil.nom)" />
+                    <listcell>
+                    	<checkbox checked="@load(each.utilisateur.actif)" disabled="true"/>
+                    </listcell>
+                    <listcell onClick="@command('changeEditableStatus', item=each)" visible="@load(not(vmUser.user.identifiant eq each.utilisateur.identifiant))">
+                    	<span zclass="glyphicon glyphicon-pencil mediumIcon" />
+                    </listcell>
+                    <listcell visible ="@load(vmUser.user.identifiant eq each.utilisateur.identifiant)">
+                        <span />
+                    </listcell>
+                    <listcell visible ="@load(not(vmUser.user.identifiant eq each.utilisateur.identifiant))">
+                        <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', item=each)"/>
+                    </listcell>
+                    <listcell visible ="@load(vmUser.user.identifiant eq each.utilisateur.identifiant)">
+                        <span />
+                    </listcell>
+                </listitem>
+            </template>
+        </listbox>
+</window>
+</zk>

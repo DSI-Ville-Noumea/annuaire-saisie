@@ -33,6 +33,8 @@ public interface IGuestDao extends IGenericDao<Guest> {
 
     public static final String BEAN_ID = "guestDao";
     
+    public Guest findByIdentifiant(String identifiant);
+    
     public List<Guest> findByNomEtService(String nom, String service);
 
 }

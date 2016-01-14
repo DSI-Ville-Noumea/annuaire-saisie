@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
+import nc.noumea.mairie.annuairev2.saisie.entity.Locality;
 import org.zkoss.bind.annotation.GlobalCommand;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
@@ -65,7 +67,7 @@ public class IndexViewModel extends AbstractViewModel {
         tabsList = new ArrayList<>();
         setUser(utilisateurService.findByLogin(SecurityUtil.getUser()));
         
-        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+        openViewEntitytTab();
        
     }
 
@@ -136,13 +138,13 @@ public class IndexViewModel extends AbstractViewModel {
 
     @Command
     @NotifyChange("*")
-    public void openViewGuestTab(){
-        openTab("viewGuestTab", "Recherche Guest", "/includes/searchEntity.zul", true, "tab", null);
+    public void openViewEntitytTab(){
+        openTab("searchTab", "Recherche Guest & Locality", "/includes/searchEntity.zul", true, "tab", null);
     }
     
     @GlobalCommand
     @NotifyChange("*")
-    public void openAdminGuestTab(@BindingParam("idGuest") Long guestId){
+    public void openAdminGuestTab(@BindingParam("idEntity") Long guestId){
         Map<String, Object> args = new HashMap<>();
         args.put("idGuest", guestId);
         
@@ -152,8 +154,30 @@ public class IndexViewModel extends AbstractViewModel {
         else
             tabId = "adminGuestTab_"+guestId;
         
-        openTab(tabId, "Gestion Guest", "/includes/admin/guestEntityAdmin.zul", true, "tab", args);
+        openTab(tabId, guestId == null ? "Nouveau Guest" : "Gestion Guest G"+String.format(Guest.IDENTIFIANT_FORMAT, guestId), "/includes/admin/guestEntityAdmin.zul", true, "tab", args);
     }
+    
+    @GlobalCommand
+    @NotifyChange("*")
+    public void openAdminLocalityTab(@BindingParam("idEntity") Long localityId){
+        Map<String, Object> args = new HashMap<>();
+        args.put("idLocality", localityId);
+        
+        String tabId = "";
+        if(localityId == null)
+            tabId = "tmpLocalityTab";
+        else
+            tabId = "adminLocalityTab_"+localityId;
+        
+        openTab(tabId, localityId == null ? "Nouvelle Locality" : "Gestion Locality L"+String.format(Locality.IDENTIFIANT_FORMAT, localityId), "/includes/admin/localityEntityAdmin.zul", true, "tab", args);
+    }
+    
+    @Command
+    @NotifyChange({"tabsId","tabsList", "selectedTab"})
+    public void openAdminUserTab(){
+        openTab("adminUserTab", "Gestion utilisateurs", "/includes/admin/userAdmin.zul", true, "tab", null);
+    }
+    
 
     @NotifyChange("*")
     private void openTab(String id, String label,
@@ -223,7 +247,7 @@ public class IndexViewModel extends AbstractViewModel {
     
     @Command
     @GlobalCommand
-    @NotifyChange({ "tabsId" })
+    @NotifyChange({ "selectedTab, tabsId, tabsList" })
     public void refreshNewGuestTabId(@BindingParam("tmpTabId") String tmpTabId,
 	    @BindingParam("idGuest") Long id) {
 
@@ -232,7 +256,28 @@ public class IndexViewModel extends AbstractViewModel {
 		if (tabm.getId().equals(tmpTabId)) {
 		    tabsId.remove(tabm.getId());
 		    tabm.setId("adminGuestTab_" + id);
+                    tabm.setLabel("Gestion Guest G"+String.format(Guest.IDENTIFIANT_FORMAT, id));
 		    tabsId.add(tabm.getId());
+		    break;
+		}
+	    }
+	}
+    }
+    
+    @Command
+    @GlobalCommand
+    @NotifyChange({"selectedTab, tabsId, tabsList" })
+    public void refreshNewLocalityTabId(@BindingParam("tmpTabId") String tmpTabId,
+	    @BindingParam("idLocality") Long id) {
+
+	if (tabsId.contains(tmpTabId)) {
+	    for (TabModel tabm : tabsList) {
+		if (tabm.getId().equals(tmpTabId)) {
+		    tabsId.remove(tabm.getId());
+		    tabm.setId("adminLocalityTab_" + id);
+                    tabm.setLabel("Gestion Locality L"+String.format(Locality.IDENTIFIANT_FORMAT, id));
+		    tabsId.add(tabm.getId());
+                    selectedTab = tabm;
 		    break;
 		}
 	    }

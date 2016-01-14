@@ -34,7 +34,7 @@ import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
  */
 @Entity
 @Table(name = Utilisateur.TABLENAME)
-public class Utilisateur extends AbstractEntity {
+public class Utilisateur extends AbstractEntity implements Comparable<Utilisateur>{
 
     public static final String TABLENAME = "utilisateur";
 
@@ -158,7 +158,22 @@ public class Utilisateur extends AbstractEntity {
     }
     
     @Transient
+    public boolean isGestionnaireLocality(){
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_LOCALITY || profil.getNom() == CodeProfil.GESTIONNAIRE;
+    }
+    
+    @Transient
+    public boolean isGestionnaireGuest(){
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_GUEST || profil.getNom() == CodeProfil.GESTIONNAIRE;
+    }
+    
+    @Transient
     public boolean isConsultant(){
         return profil.getNom() == CodeProfil.CONSULTANT;
+    }
+    
+     @Override
+    public int compareTo(Utilisateur o) {
+	return getFullName().compareTo(o.getFullName());
     }
 }
