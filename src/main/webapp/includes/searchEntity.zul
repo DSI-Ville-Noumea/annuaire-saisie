@@ -11,9 +11,9 @@
             <menu label="Nouveau" iconSclass="glyphicon glyphicon-plus">
                 <menupopup>
                     <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user" 
-                            visible="@load(vmSearch.user.gestionnaireGuest)"/>
+                            visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireGuest)"/>
                     <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="glyphicon glyphicon-home"
-                            visible="@load(vmSearch.user.gestionnaireLocality)"/>
+                            visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireLocality)"/>
                 </menupopup>
             </menu>
         </menubar>
@@ -21,7 +21,7 @@
 	<space height="10px" />
             
         <vlayout width="100%" style="float:left; margin-right:10px;margin-top:17px">
-                        <grid  autopaging="true" mold="paging" vflex="1" >
+                        <grid  autopaging="true" mold="paging" height="100%">
                             <auxhead>
                                 <auxheader colspan="6" label="Recherche" />
                             </auxhead>
@@ -56,7 +56,7 @@
                                 </row>
                                 <row>
                                     <cell colspan="6" style="text-align:center" >
-                                        <div class="btn-group">
+                                        <div class="btn-group btn-group-sm">
                                         <button type="button" label="Rechercher" class="btn btn-default" onClick="@command('search')"/>
                                         <button type="button" label="Effacer" class="btn btn-default" onClick="@command('resetSearch')"/>
                                         </div>
