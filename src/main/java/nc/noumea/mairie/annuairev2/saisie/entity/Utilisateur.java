@@ -154,17 +154,17 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     
     @Transient
     public boolean isGestionnaire(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE || isAdministrateur();
     }
     
     @Transient
     public boolean isGestionnaireLocality(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE_LOCALITY || profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_LOCALITY || isGestionnaire();
     }
     
     @Transient
     public boolean isGestionnaireGuest(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE_GUEST || profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_GUEST || isGestionnaire();
     }
     
     @Transient
