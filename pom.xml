@@ -4,7 +4,7 @@
 
     <groupId>nc.noumea.mairie.annuairev2</groupId>
     <artifactId>saisie</artifactId>
-    <version>0.02</version>
+    <version>0.03-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>Gestion des Guest et Locality</name>
 
