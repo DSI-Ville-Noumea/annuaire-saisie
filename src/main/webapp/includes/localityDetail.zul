@@ -1,5 +1,5 @@
     <hbox>
-        <grid width="70%" zclass="detailContact" >
+        <grid width="70%" zclass="customThemeHiddenGrid detailEntity" >
             <columns>
                 <column width="200px" />
                 <column width="400px" />
@@ -7,13 +7,13 @@
             </columns>
             <rows>
                 <row hflex="1">
-                    <label  value="Nom" sclass="" />
+                    <label  value="Nom" />
                     <textbox value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateLocality')" 
                              style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
                      <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
-                    <label  value="Service" sclass="" />
+                    <label  value="Service" />
                     <combobox id="servCbox" model="@load(vm.services)" hflex="1" 
                               autocomplete="false" autodrop="true"	readonly="@load(vm.readOnly)"
                               disabled="@load(vm.readOnly ? 'disabled' :  '')"
@@ -25,23 +25,22 @@
                     </combobox>  
                     <label value="*" sclass="red"/>
                 </row>
-                <row hflex="1">
-                    <label  value="Poste" sclass="" />
-                    <textbox value="@load(vm.selectedEntity.poste) @save(vm.selectedEntity.poste, before='saveOrUpdateLocality')" 
-                             style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
-                    <label value="*" sclass="red"/>
+                <row hflex="1" visible="@load(not(vm.createMode))">
+                    <label  value="Poste" visible="@load(not(vm.createMode))"/>
+                    <textbox value="@load(vm.selectedEntity.poste)" 
+                             style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <label value="" />
                 </row>
-                <row hflex="1">
-                    <label  value="Ligne directe" sclass="" />
-                    <textbox value="@load(vm.selectedEntity.ligneDirecte) @save(vm.selectedEntity.ligneDirecte, before='saveOrUpdateLocality')" style="width:100%" readonly="@load(vm.readOnly)"/>
-                    <label value=""/>
+                <row hflex="1" visible="@load(not(vm.createMode))">
+                    <label  value="Ligne directe" visible="@load(not(vm.createMode))" />
+                    <textbox value="@load(vm.selectedEntity.ligneDirecte)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <label value="" visible="@load(not(vm.createMode))"/>
                 </row>
-                <row hflex="1">
-                    <label  value="Fax" sclass="" />
-                    <textbox value="@load(vm.selectedEntity.fax) @save(vm.selectedEntity.fax, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/>
-                    <label value=""/>
+                <row hflex="1" visible="@load(not(vm.createMode))">
+                    <label  value="Fax" visible="@load(not(vm.createMode))" />
+                    <textbox value="@load(vm.selectedEntity.fax)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <label value="" visible="@load(not(vm.createMode))"/>
                 </row>
             </rows>
         </grid>
     </hbox>
-<!--</groupbox>-->

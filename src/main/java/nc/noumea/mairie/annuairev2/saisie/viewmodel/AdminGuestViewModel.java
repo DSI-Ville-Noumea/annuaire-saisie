@@ -77,7 +77,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
     private StringSimpleListModel servicesListModel;
     
     private Utilisateur user;
-    private boolean canAdmin;
+    private boolean createMode;
     
      // controle
     private CustomGuestConstraint guestConstraint;
@@ -90,6 +90,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
         this.readOnly = !(user.getProfil().getNom() == CodeProfil.ADMIN || 
                 user.getProfil().getNom() == CodeProfil.GESTIONNAIRE || 
                 user.getProfil().getNom()== CodeProfil.GESTIONNAIRE_GUEST);
+        
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         
@@ -100,10 +101,14 @@ public class AdminGuestViewModel extends AbstractViewModel {
         Collections.sort(serviceNameList);
         servicesListModel = new StringSimpleListModel(serviceNameList);
         
-        if(args.get("idGuest") != null)
+        if(args.get("idGuest") != null){
             this.selectedEntity = guestService.findById((Long)args.get("idGuest"));
-        else
+            this.createMode = false;
+        }
+        else{
             this.selectedEntity = new Guest();
+            this.createMode = true;
+        }
         
         setGuestConstraint(new CustomGuestConstraint());
 
@@ -141,12 +146,12 @@ public class AdminGuestViewModel extends AbstractViewModel {
         this.user = user;
     }
 
-    public boolean isCanAdmin() {
-        return canAdmin;
+    public boolean isCreateMode() {
+        return createMode;
     }
 
-    public void setCanAdmin(boolean canAdmin) {
-        this.canAdmin = canAdmin;
+    public void setCreateMode(boolean createMode) {
+        this.createMode = createMode;
     }
 
     public List<String> getServiceNameList() {

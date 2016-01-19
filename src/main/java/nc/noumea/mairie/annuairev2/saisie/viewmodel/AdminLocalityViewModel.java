@@ -63,7 +63,7 @@ public class AdminLocalityViewModel extends AbstractViewModel {
     private boolean readOnly;
     private List<Sectorisation> services;
     private Utilisateur user;
-    private boolean canAdmin;
+    private boolean createMode;
        
     
     @Init
@@ -76,10 +76,14 @@ public class AdminLocalityViewModel extends AbstractViewModel {
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         
-        if(args.get("idLocality") != null)
+        if(args.get("idLocality") != null){
             this.selectedEntity = localityService.findById((Long)args.get("idLocality"));
-        else
+            this.createMode = false;
+        }
+        else{
             this.selectedEntity = new Locality();
+            this.createMode = true;
+        }
     }
 
     public Locality getSelectedEntity() {
@@ -114,12 +118,12 @@ public class AdminLocalityViewModel extends AbstractViewModel {
         this.user = user;
     }
 
-    public boolean isCanAdmin() {
-        return canAdmin;
+    public boolean isCreateMode() {
+        return createMode;
     }
 
-    public void setCanAdmin(boolean canAdmin) {
-        this.canAdmin = canAdmin;
+    public void setCreateMode(boolean createMode) {
+        this.createMode = createMode;
     }
     
     
