@@ -7,7 +7,7 @@
             viewModel="@id('vmSearch') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.SearchViewModel')"
             contentStyle="overflow:auto;">
         
-        <menubar autodrop="true"  visible ="@load(vmSearch.showToolbar)">
+        <menubar autodrop="true"  sclass="customThemeMenuBar" visible ="@load(vmSearch.showToolbar)">
             <menu label="Nouveau" iconSclass="glyphicon glyphicon-plus">
                 <menupopup>
                     <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user" 
@@ -17,11 +17,9 @@
                 </menupopup>
             </menu>
         </menubar>
-				
-	<space height="10px" />
-            
+				            
         <vlayout width="100%" style="float:left; margin-right:10px;margin-top:17px">
-                        <grid  autopaging="true" mold="paging" height="100%">
+                        <grid  autopaging="true" mold="paging" height="100%" sclass="customThemeHiddenGrid">
                             <auxhead>
                                 <auxheader colspan="6" label="Recherche" />
                             </auxhead>
@@ -33,11 +31,11 @@
                                 <column width="5%" align="right" />
                                 <column width="30%" align="left"/>
                             </columns>
-                            <rows>
+                            <rows height="20px">
                                 <row valign="top" align="left" >
-                                    <label value="Nom : " sclass="blueColor"/>
+                                    <label value="Nom : "/>
                                     <textbox value="@load(vmSearch.nom) @save(vmSearch.nom, before='search')" width="100%"/>
-                                    <label value="Service : " sclass="blueColor"/>
+                                    <label value="Service : " />
                                     <combobox id="serviceCbox" model="@load(vmSearch.servicesListModel)" buttonVisible="false"
 					selectedItem="@bind(vmSearch.service)" hflex="1"
 					autocomplete="true" autodrop="true"											
@@ -47,37 +45,40 @@
                                             <comboitem label="@load(each)"/>
                             		</template>
                         	    </combobox>
-                                    <label value="Type : " sclass="blueColor"/>
-                                    <radiogroup selectedItem="@bind(vmSearch.searchMode)" width="100%" >
+                                    <label value="Type : " />
+                                    <radiogroup selectedItem="@bind(vmSearch.searchMode)" width="100%" sclass="customThemeRadioButton">
                                         <radio label="Tous" value="all" selected="true" style="margin-right:10px"/>
                                         <radio label="Guest" value="guest" style="margin-right:10px"/>
                                         <radio label="Locality" value="locality" style="margin-right:10px"/>
                                     </radiogroup>
                                 </row>
                                 <row>
-                                    <cell colspan="6" style="text-align:center" >
-                                        <div class="btn-group btn-group-sm">
+                                    <cell colspan="6"   style="text-align:center; height:90%" >
+                                        <!-- style="text-align:center" <div class="btn-group btn-group-sm" >
                                         <button type="button" label="Rechercher" class="btn btn-default" onClick="@command('search')"/>
                                         <button type="button" label="Effacer" class="btn btn-default" onClick="@command('resetSearch')"/>
-                                        </div>
+                                        </div>-->
+                                        <button type="button" label="Rechercher"  onClick="@command('search')" style="height:90%"/>
+                                        <button type="button" label="Effacer" onClick="@command('resetSearch')" style="height:90%"/>
                                     </cell>
                                 </row>
                             </rows>
                         </grid>
+                        
                     <listbox model="@bind(vmSearch.searchResults)" id="searchResult" width="auto%"
                              selectedItem="@bind(vmSearch.selectedEntity)"
-                             mold="paging" pageSize="15" emptyMessage="Aucun guest" height="100%" >
+                             mold="paging" pageSize="15" emptyMessage="Aucun guest" height="100%" sclass="customThemeListBox">
                         <custom-attributes autoSort="true" />
 
                         <listhead sizable="true">
-                            <listheader label="Type" sort="auto(type)" width="3%"/>
-                            <listheader label="Identifiant" sort="auto(identifiant)" width="5%"/>
-                            <listheader label="Nom" sort="auto(fullName)" width="25%" />
+                            <listheader label="Type" sort="auto(type)" width="4%"/>
+                            <listheader label="Identifiant" sort="auto(identifiant)" width="8%"/>
+                            <listheader label="Nom" sort="auto(fullName)" width="30%" />
                             <listheader label="Poste" sort="auto(poste)" width="5%" />
                             <listheader label="Ligne Directe" sort="auto(ligneDirecte)" width="10%" />
                             <listheader label="fax" sort="auto(fax)" width="10%" />
-                            <listheader label="Service" sort="auto(service.libelle)" width="30%" />
-                            <listheader label="Fonction" width="20%" />
+                            <listheader label="Service" sort="auto(service.libelle)" width="35%" />
+                            <listheader label="Fonction" width="15%" />
                             <listheader label="" visible ="@load(vmSearch.showToolbar)" width="5%" /><!-- delete -->
                         </listhead>
                         <template name="model" var="e" >
