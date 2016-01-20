@@ -35,6 +35,7 @@ import java.util.List;
 
 /**
  * @author barmi83
+ * @param <T>
  */
 public abstract class AbstractHibernateDao<T extends AbstractEntity> implements IGenericDao<T> {
 
@@ -47,18 +48,21 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
 	this.clazz = clazzToSet;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public T findById(long id) {
 	    return (T) getCurrentSession().get(clazz, id);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = true)
     public List<T> findAll() {
 	return getCurrentSession().createQuery("from " + clazz.getName()).list();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     @Transactional(readOnly = false)
     public Long save(T entity) {
@@ -77,32 +81,17 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
 	    return (T) getCurrentSession().merge(entity);
     }
 
-
-    @SuppressWarnings("unchecked")
-    @Transactional(readOnly = false)
-    public void trueUpdate(T entity) {
-	    getCurrentSession().update(entity);
-    }
-
+    @Override
     @Transactional(readOnly = false)
     public void delete(T entity) {
         getCurrentSession().delete(entity);
     }
 
+    @Override
     @Transactional(readOnly = false)
     public void deleteById(long entityId) {
 	    T entity = findById(entityId);
 	    delete(entity);
-    }
-
-    @Transactional(readOnly = false)
-    public void evict(T entity) {
-	    getCurrentSession().evict(entity);
-    }
-
-    @Transactional (readOnly = false)
-    public void flush() {
-	    getCurrentSession().flush();
     }
 
     protected final Session getCurrentSession() {

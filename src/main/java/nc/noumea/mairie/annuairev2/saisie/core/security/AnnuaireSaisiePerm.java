@@ -46,4 +46,10 @@ public class AnnuaireSaisiePerm {
 
     /** Suppression du LOCALITY */
     public static final String LOCALITY_DEL = "LOCALITY_DEL";
+
+    
+    public AnnuaireSaisiePerm() {
+    }
+    
+    
 }

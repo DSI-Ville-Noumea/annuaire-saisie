@@ -75,6 +75,7 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
      */
     @Version
     @Column(name = COLUMNNAME_VERSION)
+    @Override
     public Integer getVersion() {
         return version;
     }

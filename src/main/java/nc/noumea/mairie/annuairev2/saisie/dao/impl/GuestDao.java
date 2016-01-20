@@ -53,7 +53,6 @@ public class GuestDao extends AbstractHibernateDao<Guest> implements IGuestDao {
                         + ((service != null && nom != null) ? " and " : "")
 			+ (service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": ""));
 			
-        System.out.println("query:"+query);
 	query.addEntity(Guest.class);
 	if(nom != null)
             query.setParameter("nom", nom.toLowerCase());

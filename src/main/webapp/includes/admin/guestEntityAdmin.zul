@@ -7,10 +7,10 @@
             viewModel="@id('vm') @init('nc.noumea.mairie.annuairev2.saisie.viewmodel.AdminGuestViewModel')"
             contentStyle="overflow:auto;">
 
-        <toolbar mold="default">
-            <toolbarbutton iconSclass="glyphicon glyphicon-floppy-disk" onClick="@command('saveOrUpdateGuest')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
-            <toolbarbutton iconSclass="glyphicon glyphicon-refresh" onClick="@command('refresh')" label="Recharger"/>
-            <toolbarbutton iconSclass="glyphicon glyphicon-trash" onClick="@command('deleteGuest')" label="Supprimer" visible="@load(not(vm.readOnly))"/>
+        <toolbar mold="default" sclass="customThemeToolbar">
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-floppy-disk" onClick="@command('saveOrUpdateGuest')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-refresh" onClick="@command('refresh')" label="Recharger"/>
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-trash" onClick="@command('deleteGuest')" label="Supprimer" visible="@load(not(vm.readOnly))"/>
 	</toolbar>
         
         <space height="10px" />

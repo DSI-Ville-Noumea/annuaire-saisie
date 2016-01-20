@@ -65,7 +65,7 @@ public class UtilisateurService implements IUtilisateurService {
 	List<Utilisateur> results = utilisateurDao.findAll();
 
 	if (results == null)
-	    results = new ArrayList<Utilisateur>();
+	    results = new ArrayList<>();
 
 	return results;
     }

@@ -73,6 +73,7 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     @Column(name = COLUMNNAME_ID)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCENAME_ID)
     @SequenceGenerator(name = SEQUENCENAME_ID, sequenceName = SEQUENCENAME_ID, allocationSize = 1)
+    @Override
     public Long getId() {
         return id;
     }

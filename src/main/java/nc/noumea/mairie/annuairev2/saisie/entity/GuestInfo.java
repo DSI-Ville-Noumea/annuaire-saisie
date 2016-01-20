@@ -120,10 +120,12 @@ public class GuestInfo extends AbstractEntity implements IContact {
     }
     
     @Column(name = COLUMNNAME_NOM)
+    @Override
     public String getNom() {
         return nom;
     }
 
+    @Override
     public void setNom(String nom) {
         this.nom = nom;
     }

@@ -46,10 +46,8 @@ import nc.noumea.mairie.annuairev2.saisie.service.IUtilisateurService;
 import org.zkoss.bind.BindUtils;
 import org.zkoss.bind.annotation.BindingParam;
 import org.zkoss.bind.annotation.Command;
-import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 
 
 /**
@@ -86,7 +84,7 @@ public class SearchViewModel extends AbstractViewModel {
 
     @Init
     @NotifyChange("*")
-     public void initView(@ExecutionArgParam("args") Map<String, Object> args) {
+     public void initView() {
         readOnly = true;
                
         resetSearch();
@@ -198,7 +196,6 @@ public class SearchViewModel extends AbstractViewModel {
     
     @Command
     public void editEntity(@BindingParam("idEntity") Long idEntity, @BindingParam("type") String type){
-        System.out.println("idEntity="+idEntity+", type="+type);
         Map<String, Object> args = new HashMap<>();
         args.put("idEntity", idEntity);
         if(IContact.TYPE_GUEST.equals(type))
@@ -225,29 +222,24 @@ public class SearchViewModel extends AbstractViewModel {
                     + " \"" + ((IContact)selectedEntity).getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
                     (IContact.TYPE_GUEST.equals(selectedEntity.getType()) ? "Supprimer un guest" : "Supprimer une locality"), 
-                    Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
-                    new EventListener() {
-                        public void onEvent(Event e) {
-
-                            if (Messagebox.ON_OK.equals(e.getName())) {
-                                if(IContact.TYPE_GUEST.equals(selectedEntity.getType())){
-                                    guestService.deleteById(((AbstractEntity)selectedEntity).getId());
-                                    Map<String, Object> args = new HashMap<>();
-                                    args.put("tabId", "adminGuestTab_"+((AbstractEntity)selectedEntity).getId());
-                                    BindUtils.postGlobalCommand(null, null, "closeTabById", args);
-                                    showBottomRightNotification("Guest supprimé avec succès.");
-                                }
-                                else{
-                                    localityService.deleteById(((AbstractEntity)selectedEntity).getId());
-                                    Map<String, Object> args = new HashMap<>();
-                                    args.put("tabId", "adminLocalityTab_"+((AbstractEntity)selectedEntity).getId());
-                                    BindUtils.postGlobalCommand(null, null, "closeTabById", args);
-                                    showBottomRightNotification("Locality supprimée avec succès.");
-                                }
+                    Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                        if (Messagebox.ON_OK.equals(e.getName())) {
+                            if(IContact.TYPE_GUEST.equals(selectedEntity.getType())){
+                                guestService.deleteById(((AbstractEntity)selectedEntity).getId());
+                                Map<String, Object> args = new HashMap<>();
+                                args.put("tabId", "adminGuestTab_"+((AbstractEntity)selectedEntity).getId());
+                                BindUtils.postGlobalCommand(null, null, "closeTabById", args);
+                                showBottomRightNotification("Guest supprimé avec succès.");
                             }
-
+                            else{
+                                localityService.deleteById(((AbstractEntity)selectedEntity).getId());
+                                Map<String, Object> args = new HashMap<>();
+                                args.put("tabId", "adminLocalityTab_"+((AbstractEntity)selectedEntity).getId());
+                                BindUtils.postGlobalCommand(null, null, "closeTabById", args);
+                                showBottomRightNotification("Locality supprimée avec succès.");
+                            }
                         }
-                    });
+        });
         }        
     
     @Command
@@ -259,27 +251,29 @@ public class SearchViewModel extends AbstractViewModel {
         if(service != null && service.isEmpty())
             service = null;
         
-        if(IContact.TYPE_GUEST.equals(searchMode)){        
-            if(nom != null || service != null)
-                searchResults = (List<IContact>) (Object) guestService.findGuestInfoByNomEtService(nom, service);
-            else
-                searchResults = (List<IContact>) (Object) guestService.findAllGuestInfo();
-        }
-        else if(IContact.TYPE_LOCALITY.equals(searchMode)){   
-            if(nom != null || service != null)
-                searchResults = (List<IContact>) (Object) localityService.findByNomEtService(nom, service);
-            else
-                searchResults = (List<IContact>) (Object) localityService.findAll();
-        }
-        else{
-            if(nom != null || service != null){
-                searchResults = (List<IContact>) (Object) guestService.findGuestInfoByNomEtService(nom, service);
-                searchResults.addAll((List<IContact>) (Object) localityService.findByNomEtService(nom, service));
-            }
-            else{
-                searchResults = (List<IContact>) (Object) guestService.findAllGuestInfo();
-                searchResults.addAll((List<IContact>) (Object) localityService.findAll());
-            }
+        if(null != searchMode)
+            switch (searchMode) {
+            case IContact.TYPE_GUEST:
+                if(nom != null || service != null)
+                    searchResults = (List<IContact>) (Object) guestService.findGuestInfoByNomEtService(nom, service);
+                else
+                    searchResults = (List<IContact>) (Object) guestService.findAllGuestInfo();
+                break;
+            case IContact.TYPE_LOCALITY:
+                if(nom != null || service != null)
+                    searchResults = (List<IContact>) (Object) localityService.findByNomEtService(nom, service);
+                else
+                    searchResults = (List<IContact>) (Object) localityService.findAll();
+                break;
+            default:
+                if(nom != null || service != null){
+                    searchResults = (List<IContact>) (Object) guestService.findGuestInfoByNomEtService(nom, service);
+                    searchResults.addAll((List<IContact>) (Object) localityService.findByNomEtService(nom, service));
+                }
+                else{
+                    searchResults = (List<IContact>) (Object) guestService.findAllGuestInfo();
+                    searchResults.addAll((List<IContact>) (Object) localityService.findAll());
+                }   break;
         }
         
         Collections.sort(searchResults);
@@ -304,9 +298,9 @@ public class SearchViewModel extends AbstractViewModel {
         serviceNameList.clear();
         searchMode = "all";
         
-        for (Sectorisation service : services) {
-            serviceNameList.add(service.getLibelle());
-        }
+        services.stream().forEach((serviceItem) -> {
+            serviceNameList.add(serviceItem.getLibelle());
+        });
         Collections.sort(serviceNameList);
         servicesListModel = new StringSimpleListModel(serviceNameList);
     }

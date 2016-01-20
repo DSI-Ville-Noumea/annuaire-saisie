@@ -86,7 +86,6 @@ public class UtilisateurViewModel extends AbstractViewModel {
     @Command
     @NotifyChange("utilisateurList")
     public void saveOrUpdateUser(@BindingParam("item") UtilisateurEditStatus utilEditStatus) {
-        System.out.println("save user");
 	try {
 	    if (utilEditStatus.getUtilisateur().getId() == null) {
 		utilisateurService.createUtilisateur(utilEditStatus.getUtilisateur());
@@ -123,17 +122,12 @@ public class UtilisateurViewModel extends AbstractViewModel {
 	Messagebox.show("Vous allez supprimer l'utilisateur \"" + utilEditStatus.getUtilisateur().getFullName()
 		+ "\".\n Cliquez sur OK pour confirmer.",
 		"Supprimer un utilisateur", Messagebox.OK |
-			Messagebox.CANCEL, Messagebox.QUESTION,
-		new EventListener() {
-		    public void onEvent(Event e) {
-
-			if (Messagebox.ON_OK.equals(e.getName())) {
-			    deleteUtilisateur(utilEditStatus);
-                            showBottomRightNotification("Utilisateur supprimé avec succès.");
-			}
-
-		    }
-		});
+			Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                            if (Messagebox.ON_OK.equals(e.getName())) {
+                                deleteUtilisateur(utilEditStatus);
+                                showBottomRightNotification("Utilisateur supprimé avec succès.");
+                            }
+        });
 
     }
 
@@ -180,9 +174,9 @@ public class UtilisateurViewModel extends AbstractViewModel {
     private ListModelList<UtilisateurEditStatus> generateUtilisateurStatusList(List<Utilisateur> utilisateurs) {
 	ListModelList<UtilisateurEditStatus> utilList = new ListModelList<>();
 	Collections.sort(utilisateurs);
-	for (Utilisateur aUser : utilisateurs) {
-	    utilList.add(new UtilisateurEditStatus(aUser, false));
-	}
+        utilisateurs.stream().forEach((aUser) -> {
+            utilList.add(new UtilisateurEditStatus(aUser, false));
+        });
 	return utilList;
     }
 

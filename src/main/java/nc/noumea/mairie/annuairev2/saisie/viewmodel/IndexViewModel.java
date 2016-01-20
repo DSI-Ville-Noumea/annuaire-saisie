@@ -148,7 +148,7 @@ public class IndexViewModel extends AbstractViewModel {
         Map<String, Object> args = new HashMap<>();
         args.put("idGuest", guestId);
         
-        String tabId = "";
+        String tabId;
         if(guestId == null)
             tabId = "tmpGuestTab";
         else
@@ -163,7 +163,7 @@ public class IndexViewModel extends AbstractViewModel {
         Map<String, Object> args = new HashMap<>();
         args.put("idLocality", localityId);
         
-        String tabId = "";
+        String tabId;
         if(localityId == null)
             tabId = "tmpLocalityTab";
         else
@@ -211,7 +211,7 @@ public class IndexViewModel extends AbstractViewModel {
 
     @Command
     @NotifyChange({ "tabsList", "selectedTab" })
-    public void closeTab(@BindingParam("tabModel") TabModel tabModel, @BindingParam("tab") Tab tab) {
+    public void closeTab(@BindingParam("tabModel") TabModel tabModel) {
         tabsList.remove(tabModel);
         if (selectedTab != null && selectedTab.equals(tabModel)) {
             selectedTab = tabsList.get(tabsList.size() - 1);

@@ -52,7 +52,6 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Textbox;
 
@@ -95,9 +94,9 @@ public class AdminGuestViewModel extends AbstractViewModel {
         Collections.sort(services);
         
         serviceNameList = new ArrayList<>();
-        for (Sectorisation service : services) {
+        services.stream().forEach((service) -> {
             serviceNameList.add(service.getLibelle());
-        }
+        });
         Collections.sort(serviceNameList);
         servicesListModel = new StringSimpleListModel(serviceNameList);
         
@@ -214,18 +213,13 @@ public class AdminGuestViewModel extends AbstractViewModel {
             Messagebox.show("Vous allez supprimer le guest \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
                     "Supprimer un guest", Messagebox.OK |
-                            Messagebox.CANCEL, Messagebox.QUESTION,
-                    new EventListener() {
-                        public void onEvent(Event e) {
-
-                            if (Messagebox.ON_OK.equals(e.getName())) {
-                                guestService.deleteById(selectedEntity.getId());
-                                BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
-                                showBottomRightNotification("Guest supprimé avec succès.");
-                            }
-
-                        }
-                    });
+                            Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                                if (Messagebox.ON_OK.equals(e.getName())) {
+                                    guestService.deleteById(selectedEntity.getId());
+                                    BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
+                                    showBottomRightNotification("Guest supprimé avec succès.");
+                                }
+            });
         }        
     }
     
@@ -234,19 +228,13 @@ public class AdminGuestViewModel extends AbstractViewModel {
 
 	@Override
 	public void validate(Component comp, Object value) throws WrongValueException {
-            System.out.println("validate");
 	    if (comp instanceof Textbox) {
-                System.out.println("textbox");
 		if (("posteTxtBox".equals(comp.getId()))) {
 		    if (value != null && !((String) value).isEmpty()) {
                         if (((String) value).length() != 4 ){
 			    throw new WrongValueException(comp,
 				    "Le numéro de poste doit etre composé de 4 chiffes.");
 			}
-		    }
-		    else {
-			throw new WrongValueException(comp,
-				"Champ vide non autorisé.\nVous devez spécifier une valeur.");
 		    }
 		}
 		else if ("mailTxtBox".equals(comp.getId())) {

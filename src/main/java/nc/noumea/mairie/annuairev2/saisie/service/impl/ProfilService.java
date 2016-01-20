@@ -47,8 +47,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service(IProfilService.BEAN_ID)
 public class ProfilService implements IProfilService {
 
-    private Logger logger = LoggerFactory.getLogger(ProfilService.class);
-
     @Autowired
     IProfilDao profilDao;
 

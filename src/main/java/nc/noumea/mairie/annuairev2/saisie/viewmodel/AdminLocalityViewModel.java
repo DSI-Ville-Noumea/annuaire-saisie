@@ -160,18 +160,13 @@ public class AdminLocalityViewModel extends AbstractViewModel {
             Messagebox.show("Vous allez supprimer la locality \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
                     "Supprimer une locality", Messagebox.OK |
-                            Messagebox.CANCEL, Messagebox.QUESTION,
-                    new EventListener() {
-                        public void onEvent(Event e) {
-
-                            if (Messagebox.ON_OK.equals(e.getName())) {
-                                localityService.deleteById(selectedEntity.getId());
-                                BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
-                                showBottomRightNotification("Locality supprimé avec succès.");
-                            }
-
-                        }
-                    });
+                            Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                                if (Messagebox.ON_OK.equals(e.getName())) {
+                                    localityService.deleteById(selectedEntity.getId());
+                                    BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
+                                    showBottomRightNotification("Locality supprimé avec succès.");
+                                }
+            });
         }        
     }
     

@@ -40,8 +40,6 @@ public class Profil extends AbstractEntity implements Comparable<Profil>{
      * {@link #getId()}
      */
     private long id;
-    public static final String COLUMNNAME_ID = "id";
-    public static final String PROPERTYNAME_ID = "id";
     public static final String SEQUENCENAME_ID = "s_profil";
 
     /** {@link #getVersion()} */
@@ -64,6 +62,7 @@ public class Profil extends AbstractEntity implements Comparable<Profil>{
     @Column(name = COLUMNNAME_ID)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCENAME_ID)
     @SequenceGenerator(name = SEQUENCENAME_ID, sequenceName = SEQUENCENAME_ID, allocationSize = 1)
+    @Override
     public Long getId() {
 	return id;
     }
@@ -106,6 +105,7 @@ public class Profil extends AbstractEntity implements Comparable<Profil>{
      */
     @Version
     @Column(name = COLUMNNAME_VERSION)
+    @Override
     public Integer getVersion() {
 	return version;
     }

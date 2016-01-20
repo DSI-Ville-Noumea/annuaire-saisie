@@ -71,7 +71,7 @@ public class GuestService implements IGuestService {
     @Override
     @Transactional(readOnly = false)
     public Guest saveOrUpdate(Guest guest) {
-        Guest newGuest = null;
+        Guest newGuest;
         if(guest.getId() == null){
             Long newGuestId = guestDao.save(guest);
             newGuest = guestDao.findById(newGuestId);

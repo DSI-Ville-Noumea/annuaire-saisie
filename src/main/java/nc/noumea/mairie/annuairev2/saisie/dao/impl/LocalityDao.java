@@ -51,8 +51,8 @@ public class LocalityDao extends AbstractHibernateDao<Locality> implements ILoca
                         + (nom != null ? "lower(l."+Locality.COLUMNNAME_NOM+") like :nom " :"")
                         + ((service != null && nom != null) ? " and " : "")
 			+ (service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": ""));
-	       System.out.println("query:"+query);
-	query.addEntity(Locality.class);
+
+        query.addEntity(Locality.class);
 	if(nom != null)
             query.setParameter("nom", "%"+nom.toLowerCase()+"%");
         if(service != null)
