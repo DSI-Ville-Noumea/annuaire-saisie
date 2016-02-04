@@ -22,6 +22,7 @@ package nc.noumea.mairie.annuairev2.saisie.entity;
  * #L%
  */
 
+import java.util.Objects;
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 
 import javax.persistence.*;
@@ -32,6 +33,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = Guest.TABLENAME)
 public class Guest extends AbstractEntity implements IContact{
+
+    private static final long serialVersionUID = -3648329055894806197L;
 
     public static final String TABLENAME = "guest";
     public static final String IDENTIFIANT_FORMAT  = "%04d";
@@ -269,6 +272,83 @@ public class Guest extends AbstractEntity implements IContact{
     public String getType() {
         return IContact.TYPE_GUEST;
     }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (! (obj instanceof Guest)) {
+            return false;
+        }
+        
+        final Guest other = (Guest) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.fonction, other.fonction)) {
+            return false;
+        }
+        if (!Objects.equals(this.poste, other.poste)) {
+            return false;
+        }
+        if (!Objects.equals(this.ligneDirecte, other.ligneDirecte)) {
+            return false;
+        }
+        if (!Objects.equals(this.fax, other.fax)) {
+            return false;
+        }
+        if (!Objects.equals(this.mobile, other.mobile)) {
+            return false;
+        }
+        if (!Objects.equals(this.mail, other.mail)) {
+            return false;
+        }
+        if (!Objects.equals(this.mobilePrive, other.mobilePrive)) {
+            return false;
+        }
+        if (!Objects.equals(this.telephoneDomicile, other.telephoneDomicile)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.service, other.service)) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    @Override
+    public final int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.nom);
+        hash = 53 * hash + Objects.hashCode(this.prenom);
+        hash = 53 * hash + Objects.hashCode(this.fonction);
+        hash = 53 * hash + Objects.hashCode(this.service);
+        hash = 53 * hash + Objects.hashCode(this.poste);
+        hash = 53 * hash + Objects.hashCode(this.ligneDirecte);
+        hash = 53 * hash + Objects.hashCode(this.fax);
+        hash = 53 * hash + Objects.hashCode(this.mobile);
+        hash = 53 * hash + Objects.hashCode(this.mail);
+        hash = 53 * hash + Objects.hashCode(this.mobilePrive);
+        hash = 53 * hash + Objects.hashCode(this.telephoneDomicile);
+        hash = 53 * hash + Objects.hashCode(this.version);
+        return hash;
+    }
+
+    
     
     
 }

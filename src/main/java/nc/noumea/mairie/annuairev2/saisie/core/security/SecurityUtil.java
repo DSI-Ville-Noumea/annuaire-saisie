@@ -93,6 +93,7 @@ public class SecurityUtil {
 
     /**
      * Return the current Authentication object.
+     * @return 
      */
     public static String getUser() {
 	final Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -108,7 +109,6 @@ public class SecurityUtil {
 		    }
 		}
 	    } catch (RuntimeException e) {
-		e.printStackTrace();
 		throw e;
 	    }
 	}
@@ -186,13 +186,13 @@ public class SecurityUtil {
     }
 
     private static Collection<GrantedAuthority> parseAuthorities(String authorizationsString) {
-	final ArrayList<GrantedAuthority> required = new ArrayList<GrantedAuthority>();
+	final ArrayList<GrantedAuthority> required = new ArrayList<>();
 	final String[] roles = authorizationsString.split(",");
 
-	for (int i = 0; i < roles.length; i++) {
-	    String role = roles[i].trim();
-	    required.add(new SimpleGrantedAuthority(role));
-	}
+        for (String role1 : roles) {
+            String role = role1.trim();
+            required.add(new SimpleGrantedAuthority(role));
+        }
 	return required;
     }
 
@@ -243,7 +243,7 @@ public class SecurityUtil {
      * @return
      */
     private static Set<String> toRoles(Collection<? extends GrantedAuthority> authorities) {
-	final Set<String> target = new HashSet<String>();
+	final Set<String> target = new HashSet<>();
 	for (GrantedAuthority au : authorities) {
 
 	    if (null == au.getAuthority()) {
@@ -265,7 +265,7 @@ public class SecurityUtil {
      */
     private static Set<GrantedAuthority> toAuthorities(Set<String> grantedRoles,
 	    Collection<? extends GrantedAuthority> granted) {
-	Set<GrantedAuthority> target = new HashSet<GrantedAuthority>();
+	Set<GrantedAuthority> target = new HashSet<>();
 
 	for (String role : grantedRoles) {
 	    for (GrantedAuthority authority : granted) {
@@ -291,7 +291,7 @@ public class SecurityUtil {
 	    return;
 	}
 
-	final ArrayList<GrantedAuthority> required = new ArrayList<GrantedAuthority>();
+	final ArrayList<GrantedAuthority> required = new ArrayList<>();
 	for (String auth : authorities) {
 	    required.add(new SimpleGrantedAuthority(auth));
 	}

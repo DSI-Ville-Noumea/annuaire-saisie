@@ -23,6 +23,7 @@ package nc.noumea.mairie.annuairev2.saisie.entity;
  */
 
 
+import java.util.Objects;
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
 
@@ -36,7 +37,12 @@ import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
 @Table(name = Utilisateur.TABLENAME)
 public class Utilisateur extends AbstractEntity implements Comparable<Utilisateur>{
 
+    private static final long serialVersionUID = 3577916508493868043L;
+
     public static final String TABLENAME = "utilisateur";
+    
+    public static final String IDENTIFIANT_REGEX = "^[a-z]{5}[0-9]{2}$";
+    public static final String NOM_REGEX = "\\D*";
 
     /** {@link #getId()} */
     private Long id;
@@ -73,6 +79,7 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     @Column(name = COLUMNNAME_ID)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCENAME_ID)
     @SequenceGenerator(name = SEQUENCENAME_ID, sequenceName = SEQUENCENAME_ID, allocationSize = 1)
+    @Override
     public Long getId() {
         return id;
     }
@@ -134,6 +141,7 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
      */
     @Version
     @Column(name = COLUMNNAME_VERSION)
+    @Override
     public Integer getVersion() {
         return version;
     }
@@ -154,17 +162,17 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     
     @Transient
     public boolean isGestionnaire(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE || isAdministrateur();
     }
     
     @Transient
     public boolean isGestionnaireLocality(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE_LOCALITY || profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_LOCALITY || isGestionnaire();
     }
     
     @Transient
     public boolean isGestionnaireGuest(){
-        return profil.getNom() == CodeProfil.GESTIONNAIRE_GUEST || profil.getNom() == CodeProfil.GESTIONNAIRE;
+        return profil.getNom() == CodeProfil.GESTIONNAIRE_GUEST || isGestionnaire();
     }
     
     @Transient
@@ -176,4 +184,57 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     public int compareTo(Utilisateur o) {
 	return getFullName().compareTo(o.getFullName());
     }
+
+    @Override
+    public final int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.id);
+        hash = 97 * hash + Objects.hashCode(this.identifiant);
+        hash = 97 * hash + Objects.hashCode(this.nom);
+        hash = 97 * hash + Objects.hashCode(this.prenom);
+        hash = 97 * hash + (this.isActif ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.profil);
+        hash = 97 * hash + Objects.hashCode(this.version);
+        return hash;
+    }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Utilisateur)) {
+            return false;
+        }
+        final Utilisateur other = (Utilisateur) obj;
+        if (this.isActif != other.isActif) {
+            return false;
+        }
+        if (!Objects.equals(this.identifiant, other.identifiant)) {
+            return false;
+        }
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.prenom, other.prenom)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.profil, other.profil)) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    
 }

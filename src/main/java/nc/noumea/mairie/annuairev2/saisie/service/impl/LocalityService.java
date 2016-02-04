@@ -44,12 +44,7 @@ public class LocalityService implements ILocalityService {
     @Override
     @Transactional(readOnly = true)
     public List<Locality> findAll() {
-        List<Locality> results = localityDao.findAll();
-
-        if(results == null)
-            results = new ArrayList<>();
-
-        return results;
+        return localityDao.findAll();
     }
     
     @Override
@@ -61,7 +56,7 @@ public class LocalityService implements ILocalityService {
     @Override
     @Transactional(readOnly = false)
     public Locality saveOrUpdate(Locality locality) {
-        Locality newLocality = null;
+        Locality newLocality;
         if(locality.getId() == null){
             Long newLocalityId = localityDao.save(locality);
             newLocality = localityDao.findById(newLocalityId);

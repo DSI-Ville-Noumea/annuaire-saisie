@@ -48,7 +48,7 @@ public interface IGuestService {
     @Secured({ AnnuaireSaisiePerm.GUEST_CONSULT })
     public Guest findByIdentifiant(String identifiant);
     
-    @Secured({ AnnuaireSaisiePerm.GUEST_ADD })
+    @Secured(AnnuaireSaisiePerm.GUEST_ADD)
     public Guest saveOrUpdate(Guest guest);
     
     @Secured({ AnnuaireSaisiePerm.GUEST_DEL })

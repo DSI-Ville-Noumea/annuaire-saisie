@@ -35,4 +35,8 @@ public class Format {
     public static final String FORMAT_CFP = "#,##0.## FCFP";
     public static final String FORMAT_F = "#,##0.## F";
 
+    private Format() {
+        throw new UnsupportedOperationException();
+    }
+
 }

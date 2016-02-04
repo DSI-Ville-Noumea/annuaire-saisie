@@ -41,22 +41,22 @@ public class TabModel {
     private Map<String, Object> args;
 
     public TabModel(String id, String label, String zulTemplate, boolean closable, String sclass) {
-	this.setId(id);
-	this.setLabel(label);
-	this.setClosable(closable);
-	this.setSclass(sclass);
-	this.setZulTemplate(zulTemplate);
-	this.setArgs(new HashMap<>());
+	this.id = id;
+	this.label = label;
+	this.closable = closable;
+	this.sclass = sclass;
+	this.zulTemplate = zulTemplate;
+	this.args = new HashMap<>();
     }
 
     public TabModel(String id, String label, String zulTemplate, boolean closable, String sclass,
                     Map<String, Object> args) {
-	this.setId(id);
-	this.setLabel(label);
-	this.setClosable(closable);
-	this.setSclass(sclass);
-	this.setZulTemplate(zulTemplate);
-        this.setArgs(args == null ? new HashMap<>() : args);
+	this.id = id;
+	this.label = label;
+	this.closable = closable;
+	this.sclass = sclass;
+	this.zulTemplate = zulTemplate;
+	this.args = (args == null ? new HashMap<>() : args);
 
     }
 

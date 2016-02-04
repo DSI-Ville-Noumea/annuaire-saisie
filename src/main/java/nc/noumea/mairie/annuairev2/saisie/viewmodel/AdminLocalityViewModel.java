@@ -41,7 +41,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
@@ -51,6 +50,8 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class AdminLocalityViewModel extends AbstractViewModel {
+
+    private static final long serialVersionUID = -3995320004606183183L;
     
     @WireVariable
     private ILocalityService localityService;
@@ -63,7 +64,7 @@ public class AdminLocalityViewModel extends AbstractViewModel {
     private boolean readOnly;
     private List<Sectorisation> services;
     private Utilisateur user;
-    private boolean canAdmin;
+    private boolean createMode;
        
     
     @Init
@@ -76,10 +77,14 @@ public class AdminLocalityViewModel extends AbstractViewModel {
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         
-        if(args.get("idLocality") != null)
+        if(args.get("idLocality") != null){
             this.selectedEntity = localityService.findById((Long)args.get("idLocality"));
-        else
+            this.createMode = false;
+        }
+        else{
             this.selectedEntity = new Locality();
+            this.createMode = true;
+        }
     }
 
     public Locality getSelectedEntity() {
@@ -114,12 +119,12 @@ public class AdminLocalityViewModel extends AbstractViewModel {
         this.user = user;
     }
 
-    public boolean isCanAdmin() {
-        return canAdmin;
+    public boolean isCreateMode() {
+        return createMode;
     }
 
-    public void setCanAdmin(boolean canAdmin) {
-        this.canAdmin = canAdmin;
+    public void setCreateMode(boolean createMode) {
+        this.createMode = createMode;
     }
     
     
@@ -156,18 +161,13 @@ public class AdminLocalityViewModel extends AbstractViewModel {
             Messagebox.show("Vous allez supprimer la locality \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
                     "Supprimer une locality", Messagebox.OK |
-                            Messagebox.CANCEL, Messagebox.QUESTION,
-                    new EventListener() {
-                        public void onEvent(Event e) {
-
-                            if (Messagebox.ON_OK.equals(e.getName())) {
-                                localityService.deleteById(selectedEntity.getId());
-                                BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
-                                showBottomRightNotification("Locality supprimé avec succès.");
-                            }
-
-                        }
-                    });
+                            Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                                if (Messagebox.ON_OK.equals(e.getName())) {
+                                    localityService.deleteById(selectedEntity.getId());
+                                    BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
+                                    showBottomRightNotification("Locality supprimé avec succès.");
+                                }
+            });
         }        
     }
     

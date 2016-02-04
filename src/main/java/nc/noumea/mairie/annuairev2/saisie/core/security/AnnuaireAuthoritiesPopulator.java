@@ -52,7 +52,7 @@ public class AnnuaireAuthoritiesPopulator implements LdapAuthoritiesPopulator {
     @Override
     public Collection<? extends GrantedAuthority> getGrantedAuthorities(DirContextOperations dirContextOperations,
 	    String s) {
-
+        System.out.println("nc.noumea.mairie.annuairev2.saisie.core.security.AnnuaireAuthoritiesPopulator.getGrantedAuthorities()");
 	List<GrantedAuthority> roles = new ArrayList<>();
 
 	Utilisateur user = utilisateurService.findByLogin(s);

@@ -15,8 +15,13 @@
 	</error-page>-->
 
 	<library-property>
-		<name>org.zkoss.web.preferred.locale</name>
-		<value>fr</value>
+            <name>org.zkoss.web.preferred.locale</name>
+            <value>fr</value>
 	</library-property>
+        
+        <library-property>
+            <name>org.zkoss.theme.preferred</name>
+            <value>atlantic</value>
+        </library-property>
 	
 </zk>

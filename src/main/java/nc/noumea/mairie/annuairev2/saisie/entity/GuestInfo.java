@@ -46,6 +46,8 @@ import org.zkoss.bind.annotation.Immutable;
 @Table(name = GuestInfo.TABLENAME)
 @Immutable
 public class GuestInfo extends AbstractEntity implements IContact {
+
+    private static final long serialVersionUID = 7860670681487904754L;
     
     public static final String TABLENAME = Guest.TABLENAME;
     
@@ -120,10 +122,12 @@ public class GuestInfo extends AbstractEntity implements IContact {
     }
     
     @Column(name = COLUMNNAME_NOM)
+    @Override
     public String getNom() {
         return nom;
     }
 
+    @Override
     public void setNom(String nom) {
         this.nom = nom;
     }

@@ -54,14 +54,6 @@ body{
  	padding-top: 5px;	
 }
 
-/*.user-info span{
-	font-family:  Helvetica,Arial,sans-serif;
-	padding-bottom: 30px; 
-	font-size: small;
-	color: white;
-        background-color:#3D81A7;
-}*/
-
 .user-info {
     background-color:#3D81A7;
     width: 100%;
@@ -129,70 +121,10 @@ body{
 
 }
 
-/*******************************************
- *		Onglets
- *******************************************/
-
-.z-tab hover{
-    text-decoration: none;
-}
-
-.z-tab-selected .z-tab-text {
-	color:#c99e64 !important;
-	text-decoration: underline !important;
-	font-weight: bold !important;
-	text-transform:uppercase !important;
-}
-
-.alertStyle {
-    cursor: pointer;
-    background-color: lightpink;
-}
-
-.alertStyle -selected {
-    background-color: mediumspringgreen;
-}
-
-.utilisateur-profil-tab {
-    padding: 0px 0px 0px 0px;
-}
-
-.z-loading {
-    top: 50% !important;
-    left: 45% !important;
-    align: center;
-    vertical-align: middle;
-}
-
-/*****************************************************************************
- *      Administrattion Guest
- *****************************************************************************/
-
-.detailContact {
-    margin-left: 20px;
-}
-
-.detailContact > table {
-/*	margin-top: 10px;
-	margin-bottom: 0px;*/
-	border-style: none;
-}
-
-.detailContact > tr {
-	background: white;
-}
-
-.detailContact > tr.z-row-over > td.z-row-inner {
-    border-bottom: 1px solid white;
-    border-top: 1px solid white;
-}
-.detailContact > tr.z-row-over > td.z-row-inner, tr.z-row-over > .z-cell {
-    background-image: none;
-}
-
 /******************************************************************************
  *   Commun
- ******************************************************************************/
+ ***************************************************************************** */
+
 .green {
 	color:#59A259;
 }
@@ -226,110 +158,74 @@ div.center{
     margin-left:auto; 
     margin-right:auto;
 }
-.z-toolbar {
-	background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%);
-	color: white;
-	height: 25px;
-	padding-top: 0px;
-        font-size: 12px;
-}
 
-.z-toolbar a{
+.customThemeToolbar > .z-toolbar{
 	text-decoration:none; 
 	cursor:pointer;
-/* 	color: #007b9c; */
-/* 	margin-left: 5px; */
-/* 	font-size: 15px; */
+        height: 25px;
+        padding-top: 0px;
  }
- 
-/* .z-toolbar a[disabled="disabled"]{ */
-/* 	cursor:default; */
-/* 	color: gray; */
-/* } */
 
-
-.z-toolbar span {
-    padding-bottom: 5px;
-    margin-left: 5px;
-    font-family:  Helvetica,Arial,sans-serif;
-} 
-
-.z-toolbarbutton-content:hover{
-	font-weight: bold;
-}
-
-.z-toolbarbutton-content {
+.customThemeToolbar .z-toolbar a{
 	text-decoration:none; 
 	cursor:pointer;
-	color: #007b9c;
-	margin-left: 5px;
-/* 	font-size: 20px; */
-/* 	margin-bottom: 5px; */
-}
+ }
 
-.z-toolbarbutton:hover {
+.customThemeToolbar > .z-toolbarbutton:hover {
 	text-decoration:none; 
 	cursor:pointer;
-	color: #007b9c;
-	margin-left: 4px;
-/* 	font-size: 20px; */
-	border: 0;
-	background: none;
 }
 
-/* .z-toolbarbutton-content:hover { */
-/* 	text-decoration:none;  */
-/* 	cursor:pointer; */
-/* 	color: #007b9c; */
-/* 	margin-left: 5px; */
-/* 	font-size: 18px; */
-/* } */
-
-.z-listheader-content {
-	text-align: center;
-        background: linear-gradient(to top, #fefefe 0%, #eeeeee 100%);
-
+.customThemeToolbar .z-toolbarbutton-content {
+	text-decoration:none; 
+	cursor:pointer;
 }
 
-
-.z-groupbox-3d > .z-groupbox-header {
-    background: linear-gradient(to bottom, #5D3870 0%, #CB76D4 100%) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5D3870', endColorstr='#CB76D4',GradientType=0 );
-    color: #FFFFFF !important;
+.customThemeToolbar .z-toolbarbutton-content:hover { 
+	text-decoration:none; 
+	cursor:pointer;
 }
 
-.z-menu a:hover {
-    text-decoration: none;
+.customThemeMenuBar > .z-menubar {
+    height: 40px;
+    padding-top: 0px;
+    border: 1px solid #E3E3E3;
+    line-height: 32px;
 }
 
-.z-menu-text {
-    padding-top: 1px;
-    padding-right: 5px;
-}
-
-.z-menu-content a:hover{
-    text-decoration: none;
-}
-
-.z-menu-content i {
-    padding-bottom: 4px;
-}
-
-.z-menuitem a:hover {
-    text-decoration: none;
-}
-
-.z-menuitem-content i {
-    padding-bottom: 4px;
-}
-
-.z-menuitem-text {
-    padding-top: 1px;
-    padding-right: 5px;
-    padding-left: 10px;
-}
-
-.z-radio input[type="radio"] {
+.customThemeRadioButton > .z-radio input[type="radio"] {
     margin-bottom: 5px;
     margin-right: 3px;
+}
+
+.customThemeHiddenGrid .z-grid-header {
+    height: 40px;
+}
+
+.customThemeHiddenGrid .z-auxheader-content {
+    padding: 0px 8px;
+}
+
+.customThemeHiddenGrid .z-row .z-row-inner, .customThemeHiddenGrid .z-row .z-cell {
+    border-top: 0px;
+}
+
+.customThemeHiddenGrid .z-row:hover > .z-row-inner, .customThemeHiddenGrid .z-row:hover > .z-cell {
+    background: white;
+}
+
+.customThemeHiddenGrid .z-row:hover > .z-row-inner > .z-row-content {
+    color: #555;
+}
+
+.customThemeListBox .z-listbox-header{
+      height: 40px;
+}
+
+.customThemeListBox .z-listheader-content {
+    padding: 0px 8px;
+}
+
+.customThemePanel > .z-panel-head > .z-panel-header {
+    font-size: 20px;
 }

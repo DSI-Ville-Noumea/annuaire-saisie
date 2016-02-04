@@ -22,6 +22,8 @@
         <cglib.version>3.2.0</cglib.version>
         <hibernate.version>5.0.6.Final</hibernate.version>
         <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
+        <jacoco.version>0.7.5.201505241946</jacoco.version>
+        <coveralls-maven-plugin.version>4.1.0</coveralls-maven-plugin.version>
     </properties>
 
     <description>Outil en JEE, ZK permettant de saisir manuellement les Guests et Locality</description>
@@ -189,7 +191,43 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
         </dependency>
+        
+        <!-- Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.0.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.191</version>
+             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>javax.el-api</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
+         </dependency>
+         <dependency>
+            <groupId>nl.jqno.equalsverifier</groupId>
+            <artifactId>equalsverifier</artifactId>
+            <version>1.7.7</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
+
+
+        
 
     <build>
         <finalName>ROOT##${project.artifactId}-${project.version}</finalName>
@@ -215,6 +253,45 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
+             <plugin>
+                 <groupId>org.jacoco</groupId>
+                 <artifactId>jacoco-maven-plugin</artifactId>
+                 <version>${jacoco.version}</version>
+                 <configuration>
+                     <destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+                     <dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+                     <excludes>
+                          <exclude>nc/noumea/mairie/annuairev2/saisie/viewmodel/*</exclude>
+                          <exclude>nc/noumea/mairie/annuairev2/saisie/core/utility/Format.class</exclude>
+                          <exclude>nc/noumea/mairie/annuairev2/saisie/core/security/AnnuaireSaisiePerm.class</exclude>
+                     </excludes>
+                 </configuration>
+                 <executions>
+                     <execution>
+                         <id>jacoco-initialize</id>
+                         <goals>
+                             <goal>prepare-agent</goal>
+                         </goals>
+                     </execution>
+                     <execution>
+                         <id>jacoco-site</id>
+                         <phase>package</phase>
+                         <goals>
+                             <goal>report</goal>
+                         </goals>
+                     </execution>
+                 </executions>
+             </plugin>
+            <plugin>
+		<groupId>org.eluder.coveralls</groupId>
+		<artifactId>coveralls-maven-plugin</artifactId>
+		<version>${coveralls-maven-plugin.version}</version>
+		<configuration>
+                    <repoToken>9zkaaXpWmFr9xImiGz7CHU48YgMMgTfOx</repoToken>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+		</configuration>
+            </plugin>
+
             <!-- Build war -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -283,6 +360,11 @@
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-surefire-report-plugin</artifactId>
                             <version>2.19</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.jacoco</groupId>
+                            <artifactId>jacoco-maven-plugin</artifactId>
+                            <version>${jacoco.version}</version>
                         </plugin>
                         <plugin>
                             <groupId>org.codehaus.mojo</groupId>

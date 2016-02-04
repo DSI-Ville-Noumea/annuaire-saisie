@@ -42,18 +42,10 @@ public interface IGenericDao<T extends AbstractEntity> {
 
     public Long save(final T entity);
 
-    public void persist(T entity);
-
     public T update(final T entity);
 
     public void delete(final T entity);
 
     public void deleteById(final long entityId);
-
-    //public void evict(final T entity);
-
-    //public void refresh(T entity);
-
-    //public void flush();
 
 }

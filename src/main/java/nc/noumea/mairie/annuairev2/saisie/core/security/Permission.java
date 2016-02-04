@@ -42,8 +42,6 @@ public class Permission extends AbstractEntity {
 
     /** {@link #getId()} */
     private long id;
-    public static final String COLUMNNAME_ID = "id";
-    public static final String PROPERTYNAME_ID = "id";
     public static final String SEQUENCENAME_ID = "s_permission";
 
     /** {@link #getVersion()} */
@@ -91,6 +89,7 @@ public class Permission extends AbstractEntity {
      */
     @Version
     @Column(name = COLUMNNAME_VERSION)
+    @Override
     public Integer getVersion() {
 	return version;
     }

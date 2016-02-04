@@ -8,7 +8,7 @@
 
         <borderlayout  hflex="1" height="100%">
 
-            <north height="90px" border="none" >
+            <north height="80px" border="none" >
                 <include src="/includes/banner.zul"/>
             </north>
 
@@ -18,16 +18,16 @@
                 <!--<include src="/includes/leftMenu.zul"/> -->
 
                 <div>
-                    <space height="5px"/>
-                    <panel width="100%" border="normal" title="Administration" visible="@load(vmIndex.user.administrateur)">
-                        <panelchildren style="padding:5px;">
+                    
+                    <panel width="100%" border="normal" title="Administration" visible="@load(vmIndex.user.administrateur)" sclass="customThemePanel">
+                        <panelchildren style="padding:5px;" >
                             <vlayout>
                                 <toolbarbutton label="Utilisateurs" onClick="@command('openAdminUserTab')"/>
                             </vlayout>
                         </panelchildren>
                     </panel>
                     <space height="5px"/>
-                    <panel width="100%" border="normal" title="Annuaire">
+                    <panel width="100%" border="normal" title="Annuaire"  sclass="customThemePanel">
                         <panelchildren style="padding:5px;">
                             <vlayout>
                                 <toolbarbutton label="Mairie" href="http://localhost:8080/annuairev2-web"/>

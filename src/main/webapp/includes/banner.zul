@@ -6,7 +6,7 @@
     
     <vlayout width="100%" sclass="bannerLayout" apply="nc.noumea.mairie.annuairev2.saisie.viewmodel.BannerViewModel">
 	<hbox align="center" sclass="banner" width="100%">
-		<image src="/img/logo-mairie-transparent.png" width="70px" />
+		<image src="/img/logo-mairie-transparent.png" width="60px" />
 		<div width="600px">
 			<label value="Gestion des Guest et Locality" sclass="banner-head" />
 		</div>

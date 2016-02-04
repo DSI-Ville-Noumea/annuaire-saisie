@@ -50,7 +50,7 @@ public class StringSimpleListModel extends SimpleListModel<String> {
 	if (StringUtils.isEmpty(searchString))
 	    return true;
 
-	return StringUtils.startsWithIgnoreCase(((String) value), searchString);
+	return StringUtils.startsWithIgnoreCase((String) value, searchString);
     }
 
 }

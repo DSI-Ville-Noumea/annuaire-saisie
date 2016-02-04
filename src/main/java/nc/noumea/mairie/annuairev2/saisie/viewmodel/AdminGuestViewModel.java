@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nc.noumea.mairie.annuairev2.saisie.viewmodel;
 
 /*
@@ -49,10 +44,8 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Constraint;
 import org.zkoss.zul.Textbox;
 
@@ -62,6 +55,8 @@ import org.zkoss.zul.Textbox;
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class AdminGuestViewModel extends AbstractViewModel {
+
+    private static final long serialVersionUID = 2640683989228795852L;
     
     @WireVariable
     private IGuestService guestService;
@@ -77,7 +72,7 @@ public class AdminGuestViewModel extends AbstractViewModel {
     private StringSimpleListModel servicesListModel;
     
     private Utilisateur user;
-    private boolean canAdmin;
+    private boolean createMode;
     
      // controle
     private CustomGuestConstraint guestConstraint;
@@ -90,20 +85,25 @@ public class AdminGuestViewModel extends AbstractViewModel {
         this.readOnly = !(user.getProfil().getNom() == CodeProfil.ADMIN || 
                 user.getProfil().getNom() == CodeProfil.GESTIONNAIRE || 
                 user.getProfil().getNom()== CodeProfil.GESTIONNAIRE_GUEST);
+        
         this.services = sectorisationService.findAll();
         Collections.sort(services);
         
         serviceNameList = new ArrayList<>();
-        for (Sectorisation service : services) {
-            serviceNameList.add(service.getLibelle());
-        }
+        for(Sectorisation serviceItem : services){
+            serviceNameList.add(serviceItem.getLibelle());
+        };
         Collections.sort(serviceNameList);
         servicesListModel = new StringSimpleListModel(serviceNameList);
         
-        if(args.get("idGuest") != null)
+        if(args.get("idGuest") != null){
             this.selectedEntity = guestService.findById((Long)args.get("idGuest"));
-        else
+            this.createMode = false;
+        }
+        else{
             this.selectedEntity = new Guest();
+            this.createMode = true;
+        }
         
         setGuestConstraint(new CustomGuestConstraint());
 
@@ -141,12 +141,12 @@ public class AdminGuestViewModel extends AbstractViewModel {
         this.user = user;
     }
 
-    public boolean isCanAdmin() {
-        return canAdmin;
+    public boolean isCreateMode() {
+        return createMode;
     }
 
-    public void setCanAdmin(boolean canAdmin) {
-        this.canAdmin = canAdmin;
+    public void setCreateMode(boolean createMode) {
+        this.createMode = createMode;
     }
 
     public List<String> getServiceNameList() {
@@ -209,18 +209,13 @@ public class AdminGuestViewModel extends AbstractViewModel {
             Messagebox.show("Vous allez supprimer le guest \"" + selectedEntity.getFullName()
                     + "\".\n Cliquez sur OK pour confirmer.",
                     "Supprimer un guest", Messagebox.OK |
-                            Messagebox.CANCEL, Messagebox.QUESTION,
-                    new EventListener() {
-                        public void onEvent(Event e) {
-
-                            if (Messagebox.ON_OK.equals(e.getName())) {
-                                guestService.deleteById(selectedEntity.getId());
-                                BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
-                                showBottomRightNotification("Guest supprimé avec succès.");
-                            }
-
-                        }
-                    });
+                            Messagebox.CANCEL, Messagebox.QUESTION, (Event e) -> {
+                                if (Messagebox.ON_OK.equals(e.getName())) {
+                                    guestService.deleteById(selectedEntity.getId());
+                                    BindUtils.postGlobalCommand(null, null, "closeSelectedTab", null);
+                                    showBottomRightNotification("Guest supprimé avec succès.");
+                                }
+            });
         }        
     }
     
@@ -229,23 +224,13 @@ public class AdminGuestViewModel extends AbstractViewModel {
 
 	@Override
 	public void validate(Component comp, Object value) throws WrongValueException {
-            System.out.println("validate");
 	    if (comp instanceof Textbox) {
-                System.out.println("textbox");
-		if (("posteTxtBox".equals(comp.getId()))) {
-		    if (value != null && !((String) value).isEmpty()) {
-                        if (((String) value).length() != 4 ){
+		if ("posteTxtBox".equals(comp.getId()) && value != null && !((String) value).isEmpty() && ((String) value).length() != 4 ){
 			    throw new WrongValueException(comp,
 				    "Le numéro de poste doit etre composé de 4 chiffes.");
-			}
-		    }
-		    else {
-			throw new WrongValueException(comp,
-				"Champ vide non autorisé.\nVous devez spécifier une valeur.");
-		    }
 		}
 		else if ("mailTxtBox".equals(comp.getId())) {
-		   if (!((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
+		   if (value != null && !((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
 			    throw new WrongValueException(comp,
 				    "Adresse email invalide.");
 			}
