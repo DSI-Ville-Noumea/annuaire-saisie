@@ -170,9 +170,7 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
         if (!Objects.equals(this.version, other.version)) {
             return false;
         }
-        if (!Objects.equals(this.parent, other.parent)) {
-            return false;
-        }
+        
         return true;
     }
 
@@ -184,7 +182,7 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
         hash = 89 * hash + Objects.hashCode(this.code4);
         hash = 89 * hash + Objects.hashCode(this.sigle);
         hash = 89 * hash + Objects.hashCode(this.libelle);
-        hash = 89 * hash + Objects.hashCode(this.parent);
+        //hash = 89 * hash + Objects.hashCode(this.parent);
         return hash;
     }
     
