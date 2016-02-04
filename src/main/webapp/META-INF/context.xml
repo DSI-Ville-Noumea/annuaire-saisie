@@ -8,13 +8,45 @@
   <!-- Uncomment this to enable Comet connection tacking (provides events 
 		on session expiration as well as webapp lifecycle) -->
   <!-- <Valve className="org.apache.catalina.valves.CometConnectionManagerValve" /> -->
-  <Resource auth="Container" description="Base de données de gestion des Guest et Locality" driverClassName="org.postgresql.Driver" initialSize="1" maxActive="100" maxIdle="30" maxWait="10000" minIdle="0" name="jdbc/annuairesaisie" password="changeme" poolPreparedStatements="true" type="javax.sql.DataSource" url="jdbc:postgresql://localhost:5432/annuairesaisie" username="annuairesaisie_usr" validationQuery="select 1"/>
+  <Resource auth="Container" 
+            description="Base de données de gestion des Guest et Locality" 
+            driverClassName="org.postgresql.Driver" initialSize="1" 
+            maxActive="100" maxIdle="30" maxWait="10000" minIdle="0" 
+            name="jdbc/annuairesaisie" 
+            password="changeme" 
+            poolPreparedStatements="true" 
+            type="javax.sql.DataSource" 
+            url="jdbc:postgresql://localhost:5432/annuairesaisie" 
+            username="annuairesaisie_usr" 
+            validationQuery="select 1"/>
+  
   <!-- AD connection information -->
-  <Environment description="Url of the LDAP server" name="ad/connectionURL" override="false" type="java.lang.String" value="ldap://hurle.site-mairie.noumea.nc:389"/>
-  <Environment description="Url of the LDAP server" name="ad/connectionURL2" override="false" type="java.lang.String" value="ldap://gberge.site-mairie.noumea.nc:389"/>
-  <Environment description="Url of the LDAP server" name="ad/connectionURL3" override="false" type="java.lang.String" value="ldap://netone.site-mairie.noumea.nc:389"/>
-  <Environment description="Read-only user Dn for gestion guest/locality application" name="ad/userBase" override="false" type="java.lang.String" value="cn=adminwas,ou=was,ou=appli,ou=z-users,dc=site-mairie,dc=noumea,dc=nc"/>
-  <Environment description="Password for the above defined ldap user" name="ad/userPassword" override="false" type="java.lang.String" value="planet"/>
+  <Environment description="Url of the LDAP server" 
+               name="ad/connectionURL" 
+               override="false" 
+               type="java.lang.String" 
+               value="ldap://hurle.site-mairie.noumea.nc:389"/>
+  <Environment description="Url of the LDAP server" 
+               name="ad/connectionURL2" 
+               override="false" 
+               type="java.lang.String" 
+               value="ldap://gberge.site-mairie.noumea.nc:389"/>
+  <Environment description="Url of the LDAP server" 
+               name="ad/connectionURL3" 
+               override="false" 
+               type="java.lang.String" 
+               value="ldap://netone.site-mairie.noumea.nc:389"/>
+  <Environment description="Read-only user Dn for gestion guest/locality application" 
+               name="ad/userBase" 
+               override="false" 
+               type="java.lang.String" 
+               value="cn=adminwas,ou=was,ou=appli,ou=z-users,dc=site-mairie,dc=noumea,dc=nc"/>
+  <Environment description="Password for the above defined ldap user" 
+               name="ad/userPassword" 
+               override="false" 
+               type="java.lang.String" 
+               value="LDAP_USER_PWD"/>
+  
   <!-- Valeurs possible DEV, QUAL, PROD -->
   <Environment name="ANN_DEP_ENV" type="java.lang.String" value="DEV"/>
 </Context>
