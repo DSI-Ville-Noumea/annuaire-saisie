@@ -8,11 +8,11 @@
             contentStyle="overflow:auto;">
         
         <menubar autodrop="true"  sclass="customThemeMenuBar" visible ="@load(vmSearch.showToolbar)">
-            <menu label="Nouveau" iconSclass="glyphicon glyphicon-plus">
+            <menu label="Nouveau" iconSclass="z-icon-plus">
                 <menupopup>
-                    <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="glyphicon glyphicon-user" 
+                    <menuitem label="Guest" onClick="@command('newGuest')" iconSclass="z-icon-user" 
                             visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireGuest)"/>
-                    <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="glyphicon glyphicon-home"
+                    <menuitem label="Locality" onClick="@command('newLocality')" iconSclass="z-icon-building"
                             visible="@load(vmSearch.user.administrateur or vmSearch.user.gestionnaireLocality)"/>
                 </menupopup>
             </menu>
@@ -84,10 +84,10 @@
                         <template name="model" var="e" >
                             <listitem>
                                 <listcell visible="@load(e.type eq 'locality')" sclass="align-center">
-                                    <span zclass="glyphicon glyphicon-home" tooltip="Locality" />
+                                    <span zclass="z-icon-building" tooltip="Locality" />
                                 </listcell>
                                 <listcell visible="@load(e.type eq 'guest')" sclass="align-center">                                
-                                    <span zclass="glyphicon glyphicon-user"  tooltip="Guest"/>
+                                    <span zclass="z-icon-user"  tooltip="Guest"/>
                                 </listcell>    
                                 <listcell label="@load(e.identifiant)" sclass="align-center" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>
                                 <listcell label="@load(e.fullName)" onClick="@command('editEntity', idEntity=e.id, type=e.type)"/>

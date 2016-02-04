@@ -8,8 +8,8 @@
     	contentStyle="overflow:auto;">
     	
     	<toolbar mold="default">
-			<toolbarbutton iconSclass="glyphicon glyphicon-plus" onClick="@command('createUtilisateur')" label="Nouveau"/>
-		</toolbar>
+            <toolbarbutton iconSclass="z-icon-plus" onClick="@command('createUtilisateur')" label="Nouveau"/>
+	</toolbar>
 		
 <!--		<div sclass="tabs-subtitle">-->
         	<!--<label hflex="1" value="Gestion des utilisateurs" sclass="tabs-subtitle"/>-->
@@ -56,12 +56,12 @@
                     	<checkbox checked="@load(each.utilisateur.actif) @save(each.utilisateur.actif, before='saveOrUpdateUser')"/>
                     </listcell>  
                     <listcell>
-                    	<span zclass="glyphicon glyphicon-ok green mediumIcon" onClick="@command('saveOrUpdateUser', item=each)"/>
+                    	<span zclass="z-icon-check green mediumIcon" onClick="@command('saveOrUpdateUser', item=each)"/>
                     	<space width="5px"></space>
-                    	<span zclass="glyphicon glyphicon-remove red mediumIcon" onClick="@command('cancel', item=each)"/>
+                    	<span zclass="z-icon-times red mediumIcon" onClick="@command('cancel', item=each)"/>
                     </listcell>
                     <listcell>
-                        <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', item=each)" visible="@load(each.utilisateur.id ne null)"/>
+                        <span zclass="z-icon-trash-o red" onClick="@command('confirmDelete', item=each)" visible="@load(each.utilisateur.id ne null)"/>
                     </listcell>         
                 </listitem>
             </template>
@@ -75,13 +75,13 @@
                     	<checkbox checked="@load(each.utilisateur.actif)" disabled="true"/>
                     </listcell>
                     <listcell onClick="@command('changeEditableStatus', item=each)" visible="@load(not(vmUser.user.identifiant eq each.utilisateur.identifiant))">
-                    	<span zclass="glyphicon glyphicon-pencil mediumIcon" />
+                    	<span zclass="z-icon-pencil mediumIcon" />
                     </listcell>
                     <listcell visible ="@load(vmUser.user.identifiant eq each.utilisateur.identifiant)">
                         <span />
                     </listcell>
                     <listcell visible ="@load(not(vmUser.user.identifiant eq each.utilisateur.identifiant))">
-                        <span zclass="glyphicon glyphicon-trash red" onClick="@command('confirmDelete', item=each)"/>
+                        <span zclass="z-icon-trash-o red medium" onClick="@command('confirmDelete', item=each)"/>
                     </listcell>
                     <listcell visible ="@load(vmUser.user.identifiant eq each.utilisateur.identifiant)">
                         <span />

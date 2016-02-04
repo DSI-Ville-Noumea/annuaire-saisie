@@ -8,9 +8,9 @@
             contentStyle="overflow:auto;">
 
         <toolbar mold="default" sclass="customThemeToolbar">
-            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-floppy-disk" onClick="@command('saveOrUpdateGuest')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
-            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-refresh" onClick="@command('refresh')" label="Recharger"/>
-            <toolbarbutton sclass="customThemeToolbar" iconSclass="glyphicon glyphicon-trash" onClick="@command('deleteGuest')" label="Supprimer" visible="@load(not(vm.readOnly))"/>
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="z-icon-floppy-o" onClick="@command('saveOrUpdateGuest')" label="Enregistrer" visible="@load(not(vm.readOnly))"/>
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="z-icon-refresh" onClick="@command('refresh')" label="Recharger"/>
+            <toolbarbutton sclass="customThemeToolbar" iconSclass="z-icon-trash-o" onClick="@command('deleteGuest')" label="Supprimer" visible="@load(not(vm.readOnly))"/>
 	</toolbar>
         
         <space height="10px" />
