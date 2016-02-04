@@ -23,6 +23,7 @@
         <hibernate.version>5.0.6.Final</hibernate.version>
         <hibernate.validator.version>5.2.2.Final</hibernate.validator.version>
         <jacoco.version>0.7.5.201505241946</jacoco.version>
+        <coveralls-maven-plugin.version>4.1.0</coveralls-maven-plugin.version>
     </properties>
 
     <description>Outil en JEE, ZK permettant de saisir manuellement les Guests et Locality</description>
@@ -281,6 +282,15 @@
                      </execution>
                  </executions>
              </plugin>
+            <plugin>
+		<groupId>org.eluder.coveralls</groupId>
+		<artifactId>coveralls-maven-plugin</artifactId>
+		<version>${coveralls-maven-plugin.version}</version>
+		<configuration>
+                    <repoToken>9zkaaXpWmFr9xImiGz7CHU48YgMMgTfOx</repoToken>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+		</configuration>
+            </plugin>
 
             <!-- Build war -->
             <plugin>
