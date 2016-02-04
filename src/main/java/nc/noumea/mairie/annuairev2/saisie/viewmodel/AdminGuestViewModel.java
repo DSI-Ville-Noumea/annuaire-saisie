@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nc.noumea.mairie.annuairev2.saisie.viewmodel;
 
 /*
@@ -49,7 +44,6 @@ import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 import org.zkoss.zul.Constraint;
@@ -61,6 +55,8 @@ import org.zkoss.zul.Textbox;
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class AdminGuestViewModel extends AbstractViewModel {
+
+    private static final long serialVersionUID = 2640683989228795852L;
     
     @WireVariable
     private IGuestService guestService;
@@ -94,9 +90,9 @@ public class AdminGuestViewModel extends AbstractViewModel {
         Collections.sort(services);
         
         serviceNameList = new ArrayList<>();
-        services.stream().forEach((service) -> {
-            serviceNameList.add(service.getLibelle());
-        });
+        for(Sectorisation serviceItem : services){
+            serviceNameList.add(serviceItem.getLibelle());
+        };
         Collections.sort(serviceNameList);
         servicesListModel = new StringSimpleListModel(serviceNameList);
         
@@ -229,16 +225,12 @@ public class AdminGuestViewModel extends AbstractViewModel {
 	@Override
 	public void validate(Component comp, Object value) throws WrongValueException {
 	    if (comp instanceof Textbox) {
-		if (("posteTxtBox".equals(comp.getId()))) {
-		    if (value != null && !((String) value).isEmpty()) {
-                        if (((String) value).length() != 4 ){
+		if ("posteTxtBox".equals(comp.getId()) && value != null && !((String) value).isEmpty() && ((String) value).length() != 4 ){
 			    throw new WrongValueException(comp,
 				    "Le numéro de poste doit etre composé de 4 chiffes.");
-			}
-		    }
 		}
 		else if ("mailTxtBox".equals(comp.getId())) {
-		   if (!((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
+		   if (value != null && !((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
 			    throw new WrongValueException(comp,
 				    "Adresse email invalide.");
 			}

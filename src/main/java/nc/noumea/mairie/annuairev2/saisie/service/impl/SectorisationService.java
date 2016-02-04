@@ -49,11 +49,7 @@ public class SectorisationService implements ISectorisationService{
     @Override
     @Transactional(readOnly = true)
     public List<Sectorisation> findAll() {
-        List<Sectorisation> results = sectorisationDao.findAll();
-        if(results == null)
-            results = new ArrayList<>();
-        
-        return results;
+        return sectorisationDao.findAll();
     }
 
     @Override

@@ -71,12 +71,6 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
 
     @Override
     @Transactional(readOnly = false)
-    public void persist(T entity) {
-	    getCurrentSession().persist(entity);
-    }
-
-    @Override
-    @Transactional(readOnly = false)
     public T update(T entity) {
 	    return (T) getCurrentSession().merge(entity);
     }
@@ -96,11 +90,6 @@ public abstract class AbstractHibernateDao<T extends AbstractEntity> implements 
 
     protected final Session getCurrentSession() {
 	    return sessionFactory.getCurrentSession();
-    }
-
-    @Transactional(readOnly = false)
-    public void refresh(T entity) {
-	getCurrentSession().refresh(entity);
     }
 
 }

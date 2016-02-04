@@ -32,6 +32,6 @@
     </bean>
     
 	<bean id="applicationContextUtils" class="nc.noumea.mairie.annuairev2.saisie.core.utility.ApplicationContextUtils"></bean>
-	
+
  	<tx:annotation-driven />
 </beans>

@@ -22,9 +22,11 @@ package nc.noumea.mairie.annuairev2.saisie.entity;
  * #L%
  */
 
+import java.util.Objects;
 import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 
 import javax.persistence.*;
+import static nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity.COLUMNNAME_ID;
 
 /**
  * Created by barmi83 on 09/12/15.
@@ -32,6 +34,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = Sectorisation.TABLENAME)
 public class Sectorisation extends AbstractEntity implements Comparable<Sectorisation>{
+
+    private static final long serialVersionUID = -2415003340280412978L;
 
     public static final String TABLENAME = "service";
 
@@ -64,8 +68,15 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
 
     @Id
     @Override
+    @Column(name = COLUMNNAME_ID)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQUENCENAME_ID)
+    @SequenceGenerator(name = SEQUENCENAME_ID, sequenceName = SEQUENCENAME_ID, allocationSize = 1)
     public Long getId() {
         return id;
+    }
+    
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
@@ -82,10 +93,6 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
 
     public void setVersion(Integer version) {
         this.version = version;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     /**
@@ -135,4 +142,53 @@ public class Sectorisation extends AbstractEntity implements Comparable<Sectoris
     public int compareTo(Sectorisation t) {
            return this.getLibelle().compareTo(t.getLibelle());
     }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Sectorisation)) {
+            return false;
+        }
+        final Sectorisation other = (Sectorisation) obj;
+        if (!Objects.equals(this.code4, other.code4)) {
+            return false;
+        }
+        if (!Objects.equals(this.sigle, other.sigle)) {
+            return false;
+        }
+        if (!Objects.equals(this.libelle, other.libelle)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
+        if (!Objects.equals(this.parent, other.parent)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public final int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        hash = 89 * hash + Objects.hashCode(this.version);
+        hash = 89 * hash + Objects.hashCode(this.code4);
+        hash = 89 * hash + Objects.hashCode(this.sigle);
+        hash = 89 * hash + Objects.hashCode(this.libelle);
+        hash = 89 * hash + Objects.hashCode(this.parent);
+        return hash;
+    }
+    
+   
+
+    
 }

@@ -22,14 +22,11 @@ package nc.noumea.mairie.annuairev2.saisie.dao.impl;
  * #L%
  */
 
-import java.util.ArrayList;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestInfoDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
-import nc.noumea.mairie.annuairev2.saisie.entity.Sectorisation;
 import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -44,32 +41,35 @@ public class GuestInfoDao extends AbstractHibernateDao<GuestInfo> implements IGu
 
     @Override
     public List<GuestInfo> findByNomEtService(String nom, String service) {
-        SQLQuery query = getCurrentSession().createSQLQuery(
-		"select g.* from " + GuestInfo.TABLENAME + " g " +
-			" join " + Sectorisation.TABLENAME + " s on g." + GuestInfo.JOIN_COLUMNNAME_SERVICE + " = s."
-			+ Sectorisation.COLUMNNAME_ID 
-                        + " where " 
-                        + (nom != null ? "(lower(g."+GuestInfo.COLUMNNAME_NOM+") like :nom or lower(g."+GuestInfo.COLUMNNAME_PRENOM+") like :nom)" : "")
-                        + ((service != null && nom != null) ? " and " : "")
-			+ (service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": ""));
-			
-	query.addEntity(GuestInfo.class);
+        
+        String queryString;
+        if(nom != null){
+            if(service == null)
+                queryString = "from GuestInfo as g where lower(g.nom) like :nom";
+            else
+                queryString = "from GuestInfo as g "
+                    + " where lower(g.service.libelle) = :serviceName "
+                    + " and (lower(g.nom) like :nom or lower(g.prenom) like :nom) ";
+        }
+        else{
+            queryString = "from GuestInfo as g "
+                    + " where lower(g.service.libelle) = :serviceName ";
+        }
+        Query query = getCurrentSession().createQuery(queryString);
+        
+
 	if(nom != null)
-            query.setParameter("nom", nom.toLowerCase());
+            query.setParameter("nom", "%"+nom.toLowerCase()+"%");
         if(service != null)
-            query.setParameter("serviceName", service);
+            query.setParameter("serviceName", service.toLowerCase());
 
-	List<GuestInfo> results = (List<GuestInfo>) query.list();
-	if (results == null)
-	    results = new ArrayList<>();
-
-	return results;
+	return (List<GuestInfo>) query.list();
     }
     
     @Override
     public GuestInfo findByIdentifiant(String identifiant) {
        Query query = getCurrentSession()
-		.createQuery("from GuestInfo where ('G' || lpad("+GuestInfo.PROPERTYNAME_ID+",4,0)) = :identifiant");
+		.createQuery("from GuestInfo where ('G' || lpad(id,4,0)) = :identifiant");
 	query.setParameter("identifiant", identifiant);
 	return (GuestInfo) query.uniqueResult();
     }

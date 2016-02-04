@@ -1,13 +1,15 @@
-/**
- * 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package nc.noumea.mairie.annuairev2.saisie.core.dao;
+package nc.noumea.mairie.annuairev2.saisie.config.security;
 
 /*
  * #%L
  * Gestion des Guest et Locality
  * %%
- * Copyright (C) 2015 Mairie de Nouméa
+ * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -25,27 +27,16 @@ package nc.noumea.mairie.annuairev2.saisie.core.dao;
  * #L%
  */
 
-
-import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
-
-import java.util.List;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 /**
+ *
  * @author barmi83
- * @since
  */
-public interface IGenericDao<T extends AbstractEntity> {
-
-    public T findById(final long id);
-
-    public List<T> findAll();
-
-    public Long save(final T entity);
-
-    public T update(final T entity);
-
-    public void delete(final T entity);
-
-    public void deleteById(final long entityId);
-
+@Configuration
+@ImportResource("classpath*:applicationContext-test.xml")
+//@EnableGlobalMethodSecurity(securedEnabled=true)
+public class TestConfig {
+    
 }

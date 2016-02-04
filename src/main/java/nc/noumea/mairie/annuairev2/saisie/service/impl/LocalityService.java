@@ -44,12 +44,7 @@ public class LocalityService implements ILocalityService {
     @Override
     @Transactional(readOnly = true)
     public List<Locality> findAll() {
-        List<Locality> results = localityDao.findAll();
-
-        if(results == null)
-            results = new ArrayList<>();
-
-        return results;
+        return localityDao.findAll();
     }
     
     @Override

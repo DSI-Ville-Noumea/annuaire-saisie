@@ -48,7 +48,8 @@ public class AnnuaireSaisiePerm {
     public static final String LOCALITY_DEL = "LOCALITY_DEL";
 
     
-    public AnnuaireSaisiePerm() {
+    private AnnuaireSaisiePerm() {
+        throw new UnsupportedOperationException();
     }
     
     

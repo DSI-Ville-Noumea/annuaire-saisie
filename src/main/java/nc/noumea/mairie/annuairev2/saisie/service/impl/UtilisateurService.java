@@ -34,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,12 +61,7 @@ public class UtilisateurService implements IUtilisateurService {
     @Override
     @Transactional(readOnly = true)
     public List<Utilisateur> findAll() {
-	List<Utilisateur> results = utilisateurDao.findAll();
-
-	if (results == null)
-	    results = new ArrayList<>();
-
-	return results;
+	return utilisateurDao.findAll();
     }
 
     @Override
@@ -75,6 +69,8 @@ public class UtilisateurService implements IUtilisateurService {
     public Utilisateur createUtilisateur(Utilisateur newUtilisateur) throws BusinessException {
 	newUtilisateur.setNom(newUtilisateur.getNom().toUpperCase());
 
+        checkUtilisateur(newUtilisateur);
+        
 	Long id = utilisateurDao.save(newUtilisateur);
 	Utilisateur result = findById(id);
 	if (result == null) {
@@ -91,7 +87,7 @@ public class UtilisateurService implements IUtilisateurService {
     @Transactional(readOnly = false)
     public Utilisateur updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
 	utilisateur.setNom(utilisateur.getNom().toUpperCase());
-
+        checkUtilisateur(utilisateur);
 	return utilisateurDao.update(utilisateur);
     }
 
@@ -101,5 +97,22 @@ public class UtilisateurService implements IUtilisateurService {
 	utilisateurDao.delete(utilisateur);
     }
 
+    private void checkUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	if (!utilisateur.getNom().matches(Utilisateur.NOM_REGEX)) {
+	    throw new BusinessException("Le nom ne doit pas comporter de chiffre.");
+	}
 
+	if (!utilisateur.getPrenom().matches(Utilisateur.NOM_REGEX)) {
+	    throw new BusinessException("Le prénom ne doit pas comporter de chiffre.");
+	}
+
+	if (!utilisateur.getIdentifiant().matches(Utilisateur.IDENTIFIANT_REGEX)) {
+	    throw new BusinessException("L'identifiant doit être composé de 5 lettres et suivi de 2 chiffres.");
+	}
+
+	if (utilisateur.getId() == null && findByLogin(utilisateur.getIdentifiant()) != null) {
+	    throw new BusinessException("Un utilisateur existe déjà avec l'identifiant \""
+		    + utilisateur.getIdentifiant() + "\"");
+	}
+    }
 }

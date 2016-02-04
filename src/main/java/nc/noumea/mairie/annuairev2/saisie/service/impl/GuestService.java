@@ -28,7 +28,6 @@ import nc.noumea.mairie.annuairev2.saisie.service.IGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestInfoDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
@@ -48,12 +47,7 @@ public class GuestService implements IGuestService {
     @Override
     @Transactional(readOnly = true)
     public List<Guest> findAll() {
-        List<Guest> results = guestDao.findAll();
-
-        if(results == null)
-            results = new ArrayList<>();
-
-        return results;
+        return guestDao.findAll();
     }
     
     @Override
@@ -97,12 +91,7 @@ public class GuestService implements IGuestService {
     @Override
     @Transactional(readOnly = true)
     public List<GuestInfo> findAllGuestInfo() {
-        List<GuestInfo> results = guestInfoDao.findAll();
-
-        if(results == null)
-            results = new ArrayList<>();
-
-        return results;
+        return guestInfoDao.findAll();
     }
 
     @Override

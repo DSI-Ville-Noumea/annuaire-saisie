@@ -27,9 +27,13 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.zkoss.zul.SimpleListModel;
 
 public class ContainsSimpleListModel<T> extends SimpleListModel<T> {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainsSimpleListModel.class);
 
     private static final long serialVersionUID = -3726852960052576655L;
 
@@ -45,10 +49,11 @@ public class ContainsSimpleListModel<T> extends SimpleListModel<T> {
 	try {
 	    this.field = clazz.getDeclaredField(property);
 	} catch (NoSuchFieldException e) {
+            LOGGER.error(e.toString(),e);
 	    try {
 		this.field = clazz.getSuperclass().getDeclaredField(property);
 	    } catch (NoSuchFieldException e1) {
-		e1.printStackTrace();
+                LOGGER.error(e1.toString(),e1);
 	    }
 	}
 
@@ -63,7 +68,7 @@ public class ContainsSimpleListModel<T> extends SimpleListModel<T> {
 	try {
 	    return StringUtils.containsIgnoreCase(field.get(value).toString(), searchString);
 	} catch (IllegalAccessException e) {
-	    e.printStackTrace();
+	    LOGGER.error(e.toString(),e);
 	    return false;
 	}
     }

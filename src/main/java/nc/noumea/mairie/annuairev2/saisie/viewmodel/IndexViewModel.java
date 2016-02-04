@@ -34,7 +34,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
-import org.zkoss.zul.Tab;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,8 +47,6 @@ import org.zkoss.bind.annotation.GlobalCommand;
 public class IndexViewModel extends AbstractViewModel {
 
     private static final long serialVersionUID = 6154607885296755703L;
-
-    private Logger logger = LoggerFactory.getLogger(IndexViewModel.class);
 
     @WireVariable
     private IUtilisateurService utilisateurService;
@@ -222,11 +219,12 @@ public class IndexViewModel extends AbstractViewModel {
     @GlobalCommand
     @NotifyChange({ "tabsList", "selectedTab","tabsId" })
     public void closeSelectedTab() {
+        if(selectedTab == null)
+            return;
+        
         TabModel oldSelectedTab = selectedTab;
         tabsList.remove(oldSelectedTab);
-        if (selectedTab != null) {
-            selectedTab = tabsList.get(tabsList.size() - 1);
-        }
+        selectedTab = tabsList.get(tabsList.size() - 1);
         tabsId.remove(oldSelectedTab.getId());
     }
     

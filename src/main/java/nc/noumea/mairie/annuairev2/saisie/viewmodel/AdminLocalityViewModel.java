@@ -41,7 +41,6 @@ import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.event.Event;
-import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
 
@@ -51,6 +50,8 @@ import org.zkoss.zk.ui.select.annotation.WireVariable;
  */
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class AdminLocalityViewModel extends AbstractViewModel {
+
+    private static final long serialVersionUID = -3995320004606183183L;
     
     @WireVariable
     private ILocalityService localityService;

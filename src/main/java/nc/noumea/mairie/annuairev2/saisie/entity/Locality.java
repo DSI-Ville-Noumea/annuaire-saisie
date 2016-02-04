@@ -1,5 +1,6 @@
 package nc.noumea.mairie.annuairev2.saisie.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,8 @@ import static nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity.COLU
 @Entity
 @Table(name=Locality.TABLENAME)
 public class Locality extends AbstractEntity implements IContact {
+
+    private static final long serialVersionUID = -1675121678088424328L;
     
     public static final String TABLENAME = "locality";
     public static final String IDENTIFIANT_FORMAT = "%04d";
@@ -182,4 +185,56 @@ public class Locality extends AbstractEntity implements IContact {
     public String getType() {
         return IContact.TYPE_LOCALITY;
     }
+
+    @Override
+    public final boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Locality)) {
+            return false;
+        }
+        final Locality other = (Locality) obj;
+        if (!Objects.equals(this.nom, other.nom)) {
+            return false;
+        }
+        if (!Objects.equals(this.poste, other.poste)) {
+            return false;
+        }
+        if (!Objects.equals(this.ligneDirecte, other.ligneDirecte)) {
+            return false;
+        }
+        if (!Objects.equals(this.fax, other.fax)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.service, other.service)) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public final int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.nom);
+        hash = 59 * hash + Objects.hashCode(this.service);
+        hash = 59 * hash + Objects.hashCode(this.poste);
+        hash = 59 * hash + Objects.hashCode(this.ligneDirecte);
+        hash = 59 * hash + Objects.hashCode(this.fax);
+        hash = 59 * hash + Objects.hashCode(this.version);
+        return hash;
+    }
+    
+    
+    
 }

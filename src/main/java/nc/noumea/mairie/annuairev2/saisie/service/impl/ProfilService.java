@@ -34,8 +34,6 @@ import nc.noumea.mairie.annuairev2.saisie.dao.IProfilDao;
 import nc.noumea.mairie.annuairev2.saisie.service.IProfilService;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

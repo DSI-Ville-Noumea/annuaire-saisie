@@ -1,13 +1,15 @@
-/**
- * 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
-package nc.noumea.mairie.annuairev2.saisie.core.dao;
+package nc.noumea.mairie.annuairev2.saisie.dao.impl;
 
 /*
  * #%L
  * Gestion des Guest et Locality
  * %%
- * Copyright (C) 2015 Mairie de Nouméa
+ * Copyright (C) 2015 - 2016 Mairie de Nouméa
  * %%
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as
@@ -25,27 +27,20 @@ package nc.noumea.mairie.annuairev2.saisie.core.dao;
  * #L%
  */
 
-
-import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
-
-import java.util.List;
+import nc.noumea.mairie.annuairev2.saisie.core.dao.AbstractHibernateDao;
+import nc.noumea.mairie.annuairev2.saisie.core.security.Permission;
+import nc.noumea.mairie.annuairev2.saisie.dao.IPermissionDao;
+import org.springframework.stereotype.Repository;
 
 /**
+ *
  * @author barmi83
- * @since
  */
-public interface IGenericDao<T extends AbstractEntity> {
-
-    public T findById(final long id);
-
-    public List<T> findAll();
-
-    public Long save(final T entity);
-
-    public T update(final T entity);
-
-    public void delete(final T entity);
-
-    public void deleteById(final long entityId);
-
+@Repository(IPermissionDao.BEAN_ID)
+public class PermissionDao extends  AbstractHibernateDao<Permission> implements IPermissionDao{
+    
+     public PermissionDao() {
+        setClazz(Permission.class);
+    }
+    
 }

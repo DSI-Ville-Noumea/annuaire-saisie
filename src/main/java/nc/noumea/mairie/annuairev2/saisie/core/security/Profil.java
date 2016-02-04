@@ -27,6 +27,7 @@ import nc.noumea.mairie.annuairev2.saisie.core.entity.AbstractEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = Profil.TABLENAME)
@@ -118,5 +119,47 @@ public class Profil extends AbstractEntity implements Comparable<Profil>{
     public int compareTo(Profil t) {
         return this.nom.toString().compareTo(t.getNom().toString());
     }
+
+    
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 17 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 17 * hash + Objects.hashCode(this.version);
+        hash = 17 * hash + Objects.hashCode(this.nom);
+        hash = 17 * hash + Objects.hashCode(this.permissions);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Profil)) {
+            return false;
+        }
+        final Profil other = (Profil) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.version, other.version)) {
+            return false;
+        }
+        if (this.nom != other.nom) {
+            return false;
+        }
+        if (!Objects.equals(this.permissions, other.permissions)) {
+            return false;
+        }
+        return true;
+    }
+
+   
+    
+    
 
 }

@@ -43,15 +43,16 @@ public class LocalityDao extends AbstractHibernateDao<Locality> implements ILoca
 
     @Override
     public List<Locality> findByNomEtService(String nom, String service) {
-        SQLQuery query = getCurrentSession().createSQLQuery(
-		"select l.* from " + Locality.TABLENAME + " l " +
-			" join " + Sectorisation.TABLENAME + " s on l." + Locality.JOIN_COLUMNNAME_SERVICE + " = s."
-			+ Sectorisation.COLUMNNAME_ID 
-                        + " where " 
-                        + (nom != null ? "lower(l."+Locality.COLUMNNAME_NOM+") like :nom " :"")
-                        + ((service != null && nom != null) ? " and " : "")
-			+ (service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": ""));
+        StringBuilder sqlQuery = new StringBuilder();
+        sqlQuery.append("select l.* from " + Locality.TABLENAME + " l ");
+        sqlQuery.append(" left join " + Sectorisation.TABLENAME + " s on l." + Locality.JOIN_COLUMNNAME_SERVICE + " = s."+Sectorisation.COLUMNNAME_ID );
+        sqlQuery.append(" where ");
+        sqlQuery.append(nom != null ? "lower(l."+Locality.COLUMNNAME_NOM+") like :nom " :"");
+        sqlQuery.append((service != null && nom != null) ? " and " : "");
+	sqlQuery.append(service != null ? " s." + Sectorisation.COLUMNNAME_LIBELLE + " = :serviceName ": "");
+        
 
+        SQLQuery query = getCurrentSession().createSQLQuery(sqlQuery.toString());
         query.addEntity(Locality.class);
 	if(nom != null)
             query.setParameter("nom", "%"+nom.toLowerCase()+"%");
