@@ -76,7 +76,7 @@ public class Guest extends AbstractEntity implements IContact{
     private String ligneDirecte;
     public static final String COLUMNNAME_LIGNEDIRECTE = "lignedirecte";
     public static final String PROPERTYNAME_LIGNEDIRECTE = "ligneDirecte";
-    public static final int LIGNE_DIRECTE_MAX_LENGTH = 20;
+    public static final int LIGNE_DIRECTE_MAX_LENGTH = 13;
 
     /** {@link #getFax()}   */
     private String fax;
@@ -88,7 +88,7 @@ public class Guest extends AbstractEntity implements IContact{
     private String mobile;
     public static final String COLUMNNAME_MOBILE = "mobile";
     public static final String PROPERTYNAME_MOBILE = "mobile";
-    public static final int MOBILE_MAX_LENGTH = 20;
+    public static final int MOBILE_MAX_LENGTH = 13;
 
     /** {@link #getMail()}    */
     private String mail;
@@ -100,13 +100,13 @@ public class Guest extends AbstractEntity implements IContact{
     private String mobilePrive;
     public static final String COLUMNNAME_MOBILEPRIVE = "mobileprive";
     public static final String PROPERTYNAME_MOBILEPRIVE = "mobilePrive";
-    public static final int MOBILEPRIVE_MAX_LENGTH = 20;
+    public static final int MOBILEPRIVE_MAX_LENGTH = 13;
 
     /** {@link #getTelephoneDomicile()}    */
     private String telephoneDomicile;
     public static final String COLUMNNAME_TELDOMICILE= "telephonedomicile";
     public static final String PROPERTYNAME_TELDOMICILE = "telephoneDomicile";
-    public static final int TELDOMICILE_MAX_LENGTH = 20;
+    public static final int TELDOMICILE_MAX_LENGTH = 13;
 
     /** {@link #getVersion()} */
     private Integer version;
