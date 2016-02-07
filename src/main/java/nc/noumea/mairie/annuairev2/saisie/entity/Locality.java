@@ -59,6 +59,7 @@ public class Locality extends AbstractEntity implements IContact {
     private String nom;
     public static final String COLUMNNAME_NOM = "nom";
     public static final String PROPERTYNAME_NOM = "nom";
+    public static final int NOM_MAX_LENGTH = 200;
     
     /** {@link #getService()} */
     private Sectorisation service;
@@ -69,16 +70,19 @@ public class Locality extends AbstractEntity implements IContact {
     private String poste;
     public static final String COLUMNNAME_POSTE = "poste";
     public static final String PROPERTYNAME_POSTE = "poste";
+    public static final int POSTE_MAX_LENGTH = 20;
 
     /** {@link #getLigneDirecte()}  */
     private String ligneDirecte;
     public static final String COLUMNNAME_LIGNEDIRECTE = "lignedirecte";
     public static final String PROPERTYNAME_LIGNEDIRECTE = "ligneDirecte";
+    public static final int LIGNEDIRECTE_MAX_LENGTH = 20;
     
      /** {@link #getFax()}   */
     private String fax;
     public static final String COLUMNNAME_FAX = "fax";
     public static final String PROPERTYNAME_FAX = "fax";
+    public static final int FAX_MAX_LENGTH = 20;
     
     /** {@link #getVersion()} */
     private Integer version;

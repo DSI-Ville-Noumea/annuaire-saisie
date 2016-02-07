@@ -154,7 +154,7 @@ body{
 	text-align: left;
 }
 
-div.center{
+center{
     margin-left:auto; 
     margin-right:auto;
 }
@@ -163,7 +163,7 @@ div.center{
 	text-decoration:none; 
 	cursor:pointer;
         height: 25px;
-        padding-top: 0px;
+        padding-top: 0;
  }
 
 .customThemeToolbar .z-toolbar a{
@@ -188,7 +188,7 @@ div.center{
 
 .customThemeMenuBar > .z-menubar {
     height: 40px;
-    padding-top: 0px;
+    padding-top: 0;
     border: 1px solid #E3E3E3;
     line-height: 32px;
 }
@@ -203,11 +203,11 @@ div.center{
 }
 
 .customThemeHiddenGrid .z-auxheader-content {
-    padding: 0px 8px;
+    padding: 0 8px;
 }
 
 .customThemeHiddenGrid .z-row .z-row-inner, .customThemeHiddenGrid .z-row .z-cell {
-    border-top: 0px;
+    border-top: 0;
 }
 
 .customThemeHiddenGrid .z-row:hover > .z-row-inner, .customThemeHiddenGrid .z-row:hover > .z-cell {
@@ -223,7 +223,7 @@ div.center{
 }
 
 .customThemeListBox .z-listheader-content {
-    padding: 0px 8px;
+    padding: 0 8px;
 }
 
 .customThemePanel > .z-panel-head > .z-panel-header {

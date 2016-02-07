@@ -22,6 +22,8 @@ package nc.noumea.mairie.annuairev2.saisie.service.impl;
  * #L%
  */
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.Guest;
 import nc.noumea.mairie.annuairev2.saisie.service.IGuestService;
@@ -29,6 +31,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import nc.noumea.mairie.annuairev2.saisie.core.exception.BusinessException;
 import nc.noumea.mairie.annuairev2.saisie.dao.IGuestInfoDao;
 import nc.noumea.mairie.annuairev2.saisie.entity.GuestInfo;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,6 +69,11 @@ public class GuestService implements IGuestService {
     @Transactional(readOnly = false)
     public Guest saveOrUpdate(Guest guest) {
         Guest newGuest;
+        
+        guest.setMobile(getFormattedPhoneNumber(guest.getMobile()));
+        guest.setMobilePrive(getFormattedPhoneNumber(guest.getMobilePrive()));
+        guest.setTelephoneDomicile(getFormattedPhoneNumber(guest.getTelephoneDomicile()));
+        
         if(guest.getId() == null){
             Long newGuestId = guestDao.save(guest);
             newGuest = guestDao.findById(newGuestId);
@@ -75,6 +83,20 @@ public class GuestService implements IGuestService {
         
         return newGuest;
     }
+    
+    private String getFormattedPhoneNumber(String phone){
+         if(phone == null || phone.isEmpty()){
+            return "";
+        }
+         
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        try{
+            return phoneUtil.format(phoneUtil.parse(phone, "NC"), PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);
+        }catch(NumberParseException e){
+            return "";
+        }
+    }
+           
 
     @Override
     @Transactional(readOnly = false)

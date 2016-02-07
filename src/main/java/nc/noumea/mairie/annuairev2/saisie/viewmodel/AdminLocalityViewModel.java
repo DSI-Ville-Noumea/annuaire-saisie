@@ -40,9 +40,13 @@ import org.zkoss.bind.annotation.ExecutionArgParam;
 import org.zkoss.bind.annotation.Init;
 import org.zkoss.bind.annotation.NotifyChange;
 import org.zkoss.zhtml.Messagebox;
+import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.annotation.VariableResolver;
 import org.zkoss.zk.ui.select.annotation.WireVariable;
+import org.zkoss.zul.Constraint;
+import org.zkoss.zul.Textbox;
 
 /**
  *
@@ -65,6 +69,9 @@ public class AdminLocalityViewModel extends AbstractViewModel {
     private List<Sectorisation> services;
     private Utilisateur user;
     private boolean createMode;
+    
+    // controle
+    private CustomLocalityConstraint localityConstraint;
        
     
     @Init
@@ -85,6 +92,8 @@ public class AdminLocalityViewModel extends AbstractViewModel {
             this.selectedEntity = new Locality();
             this.createMode = true;
         }
+        
+         setLocalityConstraint(new CustomLocalityConstraint());
     }
 
     public Locality getSelectedEntity() {
@@ -125,6 +134,14 @@ public class AdminLocalityViewModel extends AbstractViewModel {
 
     public void setCreateMode(boolean createMode) {
         this.createMode = createMode;
+    }
+
+    public CustomLocalityConstraint getLocalityConstraint() {
+        return localityConstraint;
+    }
+
+    public void setLocalityConstraint(CustomLocalityConstraint localityConstraint) {
+        this.localityConstraint = localityConstraint;
     }
     
     
@@ -169,6 +186,33 @@ public class AdminLocalityViewModel extends AbstractViewModel {
                                 }
             });
         }        
+    }
+    
+    
+    private class CustomLocalityConstraint implements Constraint {
+
+	@Override
+	public void validate(Component comp, Object value) throws WrongValueException {
+	    if (comp instanceof Textbox) {
+		if ("posteTxtBox".equals(comp.getId()) && value != null && !((String) value).isEmpty() && ((String) value).length() != 4 ){
+			    throw new WrongValueException(comp,
+				    "Le numéro de poste doit etre composé de 4 chiffes.");
+		}
+                else if("nomLocalityTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                        throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Locality.NOM_MAX_LENGTH) {
+                         throw new WrongValueException(comp,"Le champ doit contenir " + Locality.NOM_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("servCbox".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                }
+	    }
+	}
     }
     
     

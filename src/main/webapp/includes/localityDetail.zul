@@ -8,8 +8,8 @@
             <rows>
                 <row hflex="1">
                     <label  value="Nom" />
-                    <textbox value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateLocality')" 
-                             style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <textbox id="nomLocalityTxt" value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateLocality')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.localityConstraint}"/>
                      <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
@@ -18,7 +18,7 @@
                               autocomplete="false" autodrop="true"	readonly="@load(vm.readOnly)"
                               disabled="@load(vm.readOnly ? 'disabled' :  '')"
                               selectedItem="@load(vm.selectedEntity.service) @save(vm.selectedEntity.service, before='saveOrUpdateLocality')"
-                              constraint="no empty">								
+                               constraint="${vm.localityConstraint}">								
                             <template name="model">
                                 <comboitem label="@load(each.libelle)" />
                             </template>
@@ -27,19 +27,19 @@
                 </row>
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Poste" visible="@load(not(vm.createMode))"/>
-                    <textbox value="@load(vm.selectedEntity.poste)" 
-                             style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <textbox id="posteLocalityTxt" value="@load(vm.selectedEntity.poste)" 
+                             style="width:100%" readonly="true" visible="@load(not(vm.createMode))" constraint="${vm.localityConstraint}"/>
                     <label value="" />
                 </row>
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Ligne directe" visible="@load(not(vm.createMode))" />
-                    <textbox value="@load(vm.selectedEntity.ligneDirecte)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
-                    <label value="" visible="@load(not(vm.createMode))"/>
+                    <textbox id="ligneDirecteLocalityTxt" value="@load(vm.selectedEntity.ligneDirecte)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <label value="" visible="@load(not(vm.createMode))" />
                 </row>
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Fax" visible="@load(not(vm.createMode))" />
-                    <textbox value="@load(vm.selectedEntity.fax)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
-                    <label value="" visible="@load(not(vm.createMode))"/>
+                    <textbox id="faxLocalityTxt" value="@load(vm.selectedEntity.fax)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <label value="" visible="@load(not(vm.createMode))" />
                 </row>
             </rows>
         </grid>

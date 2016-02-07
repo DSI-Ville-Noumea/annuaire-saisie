@@ -47,16 +47,19 @@ public class Guest extends AbstractEntity implements IContact{
     private String nom;
     public static final String COLUMNNAME_NOM = "nom";
     public static final String PROPERTYNAME_NOM = "nom";
+    public static final int NOM_MAX_LENGTH = 200;
 
     /** {@link #getPrenom()} */
     private String prenom;
     public static final String COLUMNNAME_PRENOM = "prenom";
     public static final String PROPERTYNAME_PRENOM = "prenom";
+    public static final int PRENOM_MAX_LENGTH = 50;
 
     /** {@link #getFonction()} */
     private String fonction;
     public static final String COLUMNNAME_FONCTION = "fonction";
     public static final String PROPERTYNAME_FONCTION = "fonction";
+    public static final int FONCTION_MAX_LENGTH = 255;
 
     /** {@link #getService()} */
     private Sectorisation service;
@@ -67,36 +70,43 @@ public class Guest extends AbstractEntity implements IContact{
     private String poste;
     public static final String COLUMNNAME_POSTE = "poste";
     public static final String PROPERTYNAME_POSTE = "poste";
+    public static final int POSTE_MAX_LENGTH = 20;
 
     /** {@link #getLigneDirecte()}  */
     private String ligneDirecte;
     public static final String COLUMNNAME_LIGNEDIRECTE = "lignedirecte";
     public static final String PROPERTYNAME_LIGNEDIRECTE = "ligneDirecte";
+    public static final int LIGNE_DIRECTE_MAX_LENGTH = 13;
 
     /** {@link #getFax()}   */
     private String fax;
     public static final String COLUMNNAME_FAX = "fax";
     public static final String PROPERTYNAME_FAX = "fax";
-
+    public static final int FAX_MAX_LENGTH = 20;
+    
     /** {@link #getMobile()}    */
     private String mobile;
     public static final String COLUMNNAME_MOBILE = "mobile";
     public static final String PROPERTYNAME_MOBILE = "mobile";
+    public static final int MOBILE_MAX_LENGTH = 13;
 
     /** {@link #getMail()}    */
     private String mail;
     public static final String COLUMNNAME_MAIL = "mail";
     public static final String PROPERTYNAME_MAIL = "mail";
+    public static final int MAIL_MAX_LENGTH = 255;
 
     /** {@link #getMobilePrive()}    */
     private String mobilePrive;
     public static final String COLUMNNAME_MOBILEPRIVE = "mobileprive";
     public static final String PROPERTYNAME_MOBILEPRIVE = "mobilePrive";
+    public static final int MOBILEPRIVE_MAX_LENGTH = 13;
 
     /** {@link #getTelephoneDomicile()}    */
     private String telephoneDomicile;
     public static final String COLUMNNAME_TELDOMICILE= "telephonedomicile";
     public static final String PROPERTYNAME_TELDOMICILE = "telephoneDomicile";
+    public static final int TELDOMICILE_MAX_LENGTH = 13;
 
     /** {@link #getVersion()} */
     private Integer version;
