@@ -17,20 +17,20 @@
                 </row>
                 <row hflex="1">
                     <label  value="Nom de famille"  />
-                    <textbox value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateGuest')" 
-                             style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <textbox id="nomGuestTxt" value="@load(vm.selectedEntity.nom) @save(vm.selectedEntity.nom, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
                     <label  value="Prénom"  />
-                    <textbox value="@load(vm.selectedEntity.prenom) @save(vm.selectedEntity.prenom, before='saveOrUpdateGuest')" 
-                             style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <textbox id="prenomGuestTxt" value="@load(vm.selectedEntity.prenom) @save(vm.selectedEntity.prenom, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
                     <label  value="Fonction"  />
-                    <textbox value="@load(vm.selectedEntity.fonction) @save(vm.selectedEntity.fonction, before='saveOrUpdateGuest')" 
-                             style="width:100%" readonly="@load(vm.readOnly)" constraint="no empty"/>
+                    <textbox id="fonctionGuestText" value="@load(vm.selectedEntity.fonction) @save(vm.selectedEntity.fonction, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="*" sclass="red"/>
                 </row>
                 <row hflex="1">
@@ -47,7 +47,7 @@
                               autocomplete="true" autodrop="true"	readonly="@load(vm.readOnly)"
                               disabled="@load(vm.readOnly ? 'disabled' :  '')"
                               selectedItem="@load(vm.selectedEntity.service) @save(vm.selectedEntity.service, before='saveOrUpdateGuest')"
-                              constraint="no empty">								
+                              constraint="${vm.guestConstraint}">								
                             <template name="model">
                                 <comboitem label="@load(each.libelle)" />
                             </template>
@@ -57,21 +57,25 @@
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Poste" visible="@load(not(vm.createMode))"/>
                     <textbox id="posteTxtBox" value="@load(vm.selectedEntity.poste) @save(vm.selectedEntity.poste, before='saveOrUpdateGuest')" 
-                             style="width:100%" readonly="true" maxlength="4" visible="@load(not(vm.createMode))"/>
+                             style="width:100%" readonly="true" maxlength="4" visible="@load(not(vm.createMode))"
+                                constraint="${vm.guestConstraint}"/>
                 </row>
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Ligne directe" visible="@load(not(vm.createMode))" />
-                    <textbox value="@load(vm.selectedEntity.ligneDirecte)" style="width:100%" readonly="@load(true)" visible="@load(not(vm.createMode))"/>
+                    <textbox value="@load(vm.selectedEntity.ligneDirecte)" style="width:100%" readonly="@load(true)" visible="@load(not(vm.createMode))"
+                    constraint="${vm.guestConstraint}"/>
                     <label value="" />
                 </row>
                 <row hflex="1" visible="@load(not(vm.createMode))">
                     <label  value="Fax" visible="@load(not(vm.createMode))"/>
-                    <textbox value="@load(vm.selectedEntity.fax)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"/>
+                    <textbox value="@load(vm.selectedEntity.fax)" style="width:100%" readonly="true" visible="@load(not(vm.createMode))"
+                        constraint="${vm.guestConstraint}"/>
                     <label value="" visible="@load(not(vm.createMode))"/>
                 </row>
                 <row hflex="1">
                     <label  value="Mobile"/>
-                    <textbox value="@load(vm.selectedEntity.mobile) @save(vm.selectedEntity.mobile, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/>
+                    <textbox id="mobileGuestTxt" value="@load(vm.selectedEntity.mobile) @save(vm.selectedEntity.mobile, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="" />
                 </row>
                 <row hflex="1" >
@@ -82,12 +86,14 @@
                 </row>
                 <row hflex="1">
                     <label  value="Mobile privé" sclass="" />
-                    <textbox value="@load(vm.selectedEntity.mobilePrive) @save(vm.selectedEntity.mobilePrive, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/>
+                    <textbox id="mobilePrixTxt" value="@load(vm.selectedEntity.mobilePrive) @save(vm.selectedEntity.mobilePrive, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="" />
                 </row>
                 <row hflex="1">
                     <label  value="Téléphone domicile" sclass="" />
-                    <textbox value="@load(vm.selectedEntity.telephoneDomicile) @save(vm.selectedEntity.telephoneDomicile, before='saveOrUpdateGuest')" style="width:100%" readonly="@load(vm.readOnly)"/>
+                    <textbox id="telDomGuestTxt" value="@load(vm.selectedEntity.telephoneDomicile) @save(vm.selectedEntity.telephoneDomicile, before='saveOrUpdateGuest')" 
+                             style="width:100%" readonly="@load(vm.readOnly)" constraint="${vm.guestConstraint}"/>
                     <label value="" />
                 </row>
             </rows>

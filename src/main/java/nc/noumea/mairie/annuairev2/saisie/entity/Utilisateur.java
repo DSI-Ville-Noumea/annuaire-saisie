@@ -52,16 +52,19 @@ public class Utilisateur extends AbstractEntity implements Comparable<Utilisateu
     private String identifiant;
     public static final String COLUMNNAME_IDENTIFIANT = "identifiant";
     public static final String PROPERTYNAME_IDENTIFIANT = "identifiant";
+    public static final int IDENTIFIANT_MAX_LENGTH = 7;
 
     /** {@link #getNom()} */
     private String nom;
     public static final String COLUMNNAME_NOM = "nom";
     public static final String PROPERTYNAME_NOM = "nom";
+    public static final int NOM_MAX_LENGTH = 200;
 
     /** {@link #getPrenom()} */
     private String prenom;
     public static final String COLUMNNAME_PRENOM = "prenom";
     public static final String PROPERTYNAME_PRENOM = "prenom";
+    public static final int PRENOM_MAX_LENGTH = 20;
 
     /** {@link #isActif()} */
     private boolean isActif;

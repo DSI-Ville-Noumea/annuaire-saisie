@@ -230,11 +230,64 @@ public class AdminGuestViewModel extends AbstractViewModel {
 				    "Le numéro de poste doit etre composé de 4 chiffes.");
 		}
 		else if ("mailTxtBox".equals(comp.getId())) {
-		   if (value != null && !((String) value).isEmpty() && !((String) value).matches("/.+@.+\\.[a-z]+/")) {
+		   if (value == null || ((String) value).isEmpty() || !((String) value).matches(".+@.+\\.[a-z]+")) {
 			    throw new WrongValueException(comp,
 				    "Adresse email invalide.");
 			}
 		}
+                else if("nomGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                        throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.NOM_MAX_LENGTH) {
+                         throw new WrongValueException(comp,"Le champ doit contenir " + Guest.NOM_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("prenomGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.PRENOM_MAX_LENGTH){
+                         throw new WrongValueException(comp, "Le champ doit contenir " + Guest.PRENOM_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("servCbox".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                }
+                else if("fonctionGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.FAX_MAX_LENGTH){
+                         throw new WrongValueException(comp, "Le champ doit contenir " + Guest.FAX_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("mobileGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.MOBILE_MAX_LENGTH){
+                         throw new WrongValueException(comp, "Le champ doit contenir " + Guest.MOBILE_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("mobilePriveGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.MOBILEPRIVE_MAX_LENGTH){
+                         throw new WrongValueException(comp, "Le champ doit contenir " + Guest.MOBILEPRIVE_MAX_LENGTH+" caractères max.");
+                    }
+                }
+                else if("telDomGuestTxt".equals(comp.getId())){
+                    if (value == null || ((String) value).isEmpty()){
+                         throw new WrongValueException(comp,"Champ vide non autorisé.\n Vous devez spécifier une valeur.");
+                    }
+                    if(((String) value).length() > Guest.TELDOMICILE_MAX_LENGTH){
+                         throw new WrongValueException(comp, "Le champ doit contenir " + Guest.TELDOMICILE_MAX_LENGTH+" caractères max.");
+                    }
+                }
 	    }
 	}
     }
