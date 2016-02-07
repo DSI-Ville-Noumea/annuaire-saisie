@@ -27,11 +27,9 @@ package nc.noumea.mairie.annuairev2.saisie.service.impl;
  * #L%
 */
 
-import java.util.ArrayList;
 import java.util.List;
 import nc.noumea.mairie.annuairev2.saisie.config.security.TestConfig;
 import nc.noumea.mairie.annuairev2.saisie.core.exception.BusinessException;
-import nc.noumea.mairie.annuairev2.saisie.core.security.CodePermission;
 import nc.noumea.mairie.annuairev2.saisie.core.security.CodeProfil;
 import nc.noumea.mairie.annuairev2.saisie.core.security.Permission;
 import nc.noumea.mairie.annuairev2.saisie.core.security.Profil;
@@ -50,7 +48,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,167 +58,56 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestConfig.class})
-public class UtilisateurServiceTest {
+public class ProfilServiceTest {
     
-    private static Logger LOGGER = LoggerFactory.getLogger(UtilisateurServiceTest.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(ProfilServiceTest.class);
     
     @Autowired
-            IUtilisateurService utilisateurService;
+    IUtilisateurService utilisateurService;
     @Autowired
-            IProfilDao profilDao;
+    IProfilDao profilDao;
     @Autowired
-            IPermissionDao permissionDao;
+    IPermissionDao permissionDao;
     @Autowired
-            IProfilService profilService;
+    IProfilService profilService;
+    
+    private Profil profilGestionnaireGuest;
+    private Profil profilGestionnaireLocality;
+    private Profil profilGestionnaire;
+    private Profil profilAdmin;
+    private Profil profilConsultant;
     
     @Before
     public void init(){
-        
-        Permission permission1 = new Permission();
-        permission1.setCode(CodePermission.GUEST_ADD);
-        permission1 = permissionDao.findById(permissionDao.save(permission1));
-        
-        Permission permission2 = new Permission();
-        permission2.setCode(CodePermission.GUEST_DEL);
-        permission2 = permissionDao.findById(permissionDao.save(permission2));
-        
-        Permission permission3 = new Permission();
-        permission3.setCode(CodePermission.GUEST_CONSULT);
-        permission3 = permissionDao.findById(permissionDao.save(permission3));
-        
-        Profil profilGestionnaire = new Profil();
-        profilGestionnaire.setNom(CodeProfil.GESTIONNAIRE_GUEST);
-        profilGestionnaire.setPermissions(new ArrayList<>());
-        
-        profilGestionnaire.getPermissions().add(permission1);
-        profilGestionnaire.getPermissions().add(permission2);
-        profilGestionnaire.getPermissions().add(permission3);
-        
-        profilDao.save(profilGestionnaire);
-    }
-    
-    
-    @Test(expected = BusinessException.class)
-    @Transactional
-    @Rollback(true)
-    public void createUtilisateurTest_failNom() throws BusinessException {
-        
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond98");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        utilisateurService.createUtilisateur(user);
+      
+        profilGestionnaire = new Profil();
+        profilGestionnaire.setNom(CodeProfil.GESTIONNAIRE);
+        profilGestionnaire = profilDao.findById(profilDao.save(profilGestionnaire));
         
     }
     
-    @Transactional
-    @Rollback(true)
-    @Test(expected = BusinessException.class)
-    public void createUtilisateurTest_failPrenom() throws BusinessException {
-        
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("tot9o");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        utilisateurService.createUtilisateur(user);
-        
-    }
-    
-    @Transactional
-    @Rollback(true)
-    @Test(expected = BusinessException.class)
-    public void createUtilisateurTest_failIdentifiant() throws BusinessException {
-        
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto969");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        utilisateurService.createUtilisateur(user);
-        
-    }
-    
-    @Transactional
-    @Rollback(true)
-    @Test(expected = BusinessException.class)
-    public void createUtilisateurTest_failLoginAlreadyExists() throws BusinessException {
-        
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("simon");
-        user.setActif(true);
-        user.setIdentifiant("dupsi99");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        utilisateurService.createUtilisateur(user);
-        
-        Utilisateur user2 = new Utilisateur();
-        user2.setNom("dupont");
-        user2.setPrenom("simone");
-        user2.setActif(true);
-        user2.setIdentifiant("dupsi99");
-        user2.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        utilisateurService.createUtilisateur(user2);
-        
-    }
     
     @Transactional
     @Rollback(true)
     @Test
-    public void createUtilisateurTest() throws BusinessException {
+    public void findByLoginTest() throws BusinessException {
+        
+        Assert.assertNull(profilService.findByLogin("dupto96"));
         
         Utilisateur user = new Utilisateur();
         user.setNom("dupond");
         user.setPrenom("toto");
         user.setActif(true);
         user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
+        user.setProfil(profilGestionnaire);
         
-        Utilisateur result = utilisateurService.createUtilisateur(user);
+        utilisateurService.createUtilisateur(user);
+        
+        Profil result = profilService.findByLogin("dupto96");
         Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getId());
-        Assert.assertEquals("DUPOND", result.getNom());
-        Assert.assertEquals("toto", result.getPrenom());
-        Assert.assertEquals(true, result.isActif());
-        Assert.assertEquals("dupto96", result.getIdentifiant());
-        Assert.assertEquals(CodeProfil.GESTIONNAIRE_GUEST, result.getProfil().getNom());
+        Assert.assertEquals(CodeProfil.GESTIONNAIRE, result.getNom());
         
-    }
-    
-    @Transactional
-    @Rollback(true)
-    @Test
-    public void findByIdTest() throws BusinessException {
         
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        Utilisateur result = utilisateurService.createUtilisateur(user);
-        Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getId());
-        
-        Utilisateur result2 = utilisateurService.findById(result.getId());
-        Assert.assertNotNull(result2);
-        Assert.assertNotNull(result2.getId());
-        
-        Assert.assertEquals("DUPOND", result2.getNom());
-        Assert.assertEquals("toto", result2.getPrenom());
-        Assert.assertEquals(true, result2.isActif());
-        Assert.assertEquals("dupto96", result2.getIdentifiant());
-        Assert.assertEquals(CodeProfil.GESTIONNAIRE_GUEST, result2.getProfil().getNom());
         
     }
     
@@ -230,104 +116,28 @@ public class UtilisateurServiceTest {
     @Test
     public void findAllTest() throws BusinessException {
         
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        user = utilisateurService.createUtilisateur(user);
-        Assert.assertNotNull(user);
-        Assert.assertNotNull(user.getId());
-        
-        Utilisateur user2 = new Utilisateur();
-        user2.setNom("barre");
-        user2.setPrenom("michele");
-        user2.setActif(true);
-        user2.setIdentifiant("barmi83");
-        user2.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        user2 = utilisateurService.createUtilisateur(user2);
-        Assert.assertNotNull(user2);
-        Assert.assertNotNull(user2.getId());
-        
-        List<Utilisateur> results = utilisateurService.findAll();
-        Assert.assertNotNull(results);
-        Assert.assertEquals(2, results.size());
-        
-    }
-    
-    @Transactional
-    @Rollback(true)
-    @Test
-    public void updateTest() throws BusinessException {
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        user = utilisateurService.createUtilisateur(user);
-        Assert.assertNotNull(user);
-        Assert.assertNotNull(user.getId());
-        Assert.assertEquals("DUPOND", user.getNom());
-        Assert.assertEquals("toto", user.getPrenom());
-        Assert.assertEquals(true, user.isActif());
-        Assert.assertEquals("dupto96", user.getIdentifiant());
-        
-        user.setNom("dupont");
-        user.setPrenom("titi");
-        user.setIdentifiant("dupti96");
-        
-        user = utilisateurService.updateUtilisateur(user);
-        Assert.assertNotNull(user);
-        Assert.assertNotNull(user.getId());
-        Assert.assertEquals("DUPONT", user.getNom());
-        Assert.assertEquals("titi", user.getPrenom());
-        Assert.assertEquals(true, user.isActif());
-        Assert.assertEquals("dupti96", user.getIdentifiant());
-        
-    }
-    
-    
-    @Transactional
-    @Rollback(true)
-    @Test
-    public void deleteTest() throws BusinessException {
-        
-        Utilisateur user = new Utilisateur();
-        user.setNom("dupond");
-        user.setPrenom("toto");
-        user.setActif(true);
-        user.setIdentifiant("dupto96");
-        user.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        user = utilisateurService.createUtilisateur(user);
-        Assert.assertNotNull(user);
-        Assert.assertNotNull(user.getId());
-        
-        Utilisateur user2 = new Utilisateur();
-        user2.setNom("barre");
-        user2.setPrenom("michele");
-        user2.setActif(true);
-        user2.setIdentifiant("barmi83");
-        user2.setProfil(profilService.findByProfilName(CodeProfil.GESTIONNAIRE_GUEST));
-        
-        user2 = utilisateurService.createUtilisateur(user2);
-        Assert.assertNotNull(user2);
-        Assert.assertNotNull(user2.getId());
-        
-        List<Utilisateur> results = utilisateurService.findAll();
-        Assert.assertNotNull(results);
-        Assert.assertEquals(2, results.size());
-        
-        utilisateurService.deleteUtilisateur(user2);
-        results = utilisateurService.findAll();
-        Assert.assertNotNull(results);
+        List<Profil> results = profilService.findAll();
         Assert.assertEquals(1, results.size());
-        Assert.assertEquals("DUPOND", results.get(0).getNom());
+        
+        profilGestionnaireGuest = new Profil();
+        profilGestionnaireGuest.setNom(CodeProfil.GESTIONNAIRE_GUEST);
+        profilDao.save(profilGestionnaireGuest);
+        
+        profilGestionnaireLocality = new Profil();
+        profilGestionnaireLocality.setNom(CodeProfil.GESTIONNAIRE_LOCALITY);
+        profilDao.save(profilGestionnaireLocality);
+        
+        profilAdmin = new Profil();
+        profilAdmin.setNom(CodeProfil.ADMIN);
+        profilDao.save(profilAdmin);
+        
+        profilConsultant = new Profil();
+        profilConsultant.setNom(CodeProfil.CONSULTANT);
+        profilDao.save(profilConsultant);
+        
+        results = profilService.findAll();
+        Assert.assertEquals(5, results.size());
+                
         
     }
     
